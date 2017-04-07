@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AJAX</title>
+  <style>
+    div {
+      border: 1px solid red;
+      min-height: 300px;
+    }
+  </style>
+</head>
+<body>
+<button id="btn1" type="button">버튼1</button>
+<div id="d1"></div>
+
+<script>
+//
+var btn1 = document.querySelector("#btn1");
+
+btn1.addEventListener('click', function() {
+  // 1) AJAX를 처리할 객체를 준비한다.
+  var xhr = new XMLHttpRequest();
+
+  // 2) 서버에 연결
+  xhr.open('get', 'test01_1_p1.html', false)
+
+  // 3) 서버에 요청정보를 보낸다.
+  xhr.send();
+
+  // 4) 서버가 응답한 데이터를 출력한다.
+  console.log(xhr.responseText)
+})
+
+
+</script>
+</body>
+</html>

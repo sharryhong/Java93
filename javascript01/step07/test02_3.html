@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DOM API</title>
+  <style>
+    .c1 {
+      background-color: yellow;
+    }
+    .c2 {
+      background-color: red;
+    }
+    .c3 {
+      border: 3px solid black;
+    }
+  </style>
+</head>
+<body>
+<div id="d1" class="c1">d1</div>
+<a id="a1" href="http://www.google.com">구글</a><br>
+<button id="btn1" type="button">속성 추가하기</button>
+<button id="btn2" type="button">속성 추가하기 Ⅱ</button>
+<button id="btn3" type="button">속성 추가하기 Ⅲ</button>
+
+<script>
+// 태그의 속성 다루기 Ⅱ - 속성 추가하기
+var d1 = document.querySelector("#d1");
+var a1 = document.querySelector("#a1");
+var btn1 = document.querySelector("#btn1");
+var btn2 = document.querySelector("#btn2");
+var btn3 = document.querySelector("#btn3");
+
+btn1.addEventListener('click', function(){
+  // 방법1. 속성에 들어가있지만 html상에 보이지 않는다.
+  // 일반적인 객체에 프로퍼티 추가할 땐 이렇게한다.
+  // 태그에 추가할 땐 가능하면 이 방법보다는 아래의 setAttribute() 사용을 추천한다.
+  d1.okok = "하하하"
+  a1.nono = "호호호"
+  // 이렇게 조회한다.
+  console.log(d1.okok)
+  console.log(a1.nono)
+  // 이건 안되지
+  console.log(d1.getAttribute("okok")) // null
+  console.log(a1.getAttribute("nono")) // null
+  console.log('------------------------------------')
+})
+
+btn2.addEventListener('click', function(){
+  // 방법2. setAttribute() 사용. 속성에 들어가는 것이 바로 보인다.
+  // 개발할 때 디버깅이 쉬워진다.
+  // 메모리에서 별도로 관리한다.
+  d1.setAttribute("okok2", "오키~")
+  a1.setAttribute("nono2", "노노~")
+  // 이렇게 안된다.
+  console.log(d1.okok2) // undefined
+  console.log(a1.nono2) // undefined
+  // 이렇게 조회한다.
+  console.log(d1.getAttribute("okok2"))
+  console.log(a1.getAttribute("nono2"))
+  console.log('------------------------------------')
+})
+
+btn3.addEventListener('click', function(){
+  // 속성 이름 권고 "data-xxxx"
+  d1.setAttribute("data-okok2", "그렇구나~")
+  a1.setAttribute("data-nono2", "당연하지~")
+  // 이렇게 조회한다.
+  console.log(d1.getAttribute("data-okok2"))
+  console.log(a1.getAttribute("data-nono2"))
+  console.log('------------------------------------')
+})
+
+</script>
+</body>
+</html>

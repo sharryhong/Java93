@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DOM API</title>
+</head>
+<style>
+  div {
+    border: 1px solid red;
+    padding: 10px;
+  }
+  .child {
+    width: 50px;
+    height: 20px;
+    border: 5px solid gray;
+  }
+</style>
+<body>
+<button id="btn1" type="button">태그 생성</button>
+<div id="d1"></div>
+
+<script>
+// 태그 생성하기 Ⅱ - innerHTML  // 실무에서 많이 씀.
+var d1 = document.querySelector("#d1");
+var btn1 = document.querySelector("#btn1");
+
+//
+btn1.addEventListener('click', function(){
+  //
+  d1.innerHTML += "<div class='child'>내용</div>" // 계속 추가하려면 += 
+})
+
+</script>
+</body>
+</html>

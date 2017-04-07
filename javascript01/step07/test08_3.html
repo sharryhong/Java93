@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DOM API</title>
+</head>
+<body>
+<button id="btn1" type="button">버튼1</button>
+<button id="btn2" type="button">버튼2</button>
+
+<script>
+// 사용자 정의 이벤트(custom event) 발생시키기(triggering event)
+var btn1 = document.querySelector("#btn1");
+var btn2 = document.querySelector("#btn2");
+
+btn1.addEventListener('click', function() {
+  // custom data는 detail 프로퍼티에 저장한다.
+  // 지금은 객체를 담은 것이고, 물론 값, 배열 등 모두 저장가능하다.
+  // CustomEvent를 사용하는 이유는 아무래도 custom data를 전달하기 위함일 것
+  var ce = new CustomEvent('okok', {detail: {name: '홍길동', age: 20, working: false}})
+  btn2.dispatchEvent(ce)
+})
+
+btn2.addEventListener('okok', function(event) {
+  console.log(event)
+  console.log(event.detail.name + '버튼2 눌렀다.')
+})
+
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DOM API</title>
+</head>
+<body>
+<button id="btn1" type="button">버튼1</button>
+<button id="btn2" type="button">버튼2</button>
+
+<script>
+// Event 다루기 -  여러개의 이벤트리스너(핸들러) 등록하기
+var btn1 = document.querySelector("#btn1");
+
+btn1.addEventListener('click', function() {
+  console.log('11111')
+})
+btn1.addEventListener('click', function() {
+  console.log('22222')
+})
+btn1.addEventListener('click', function() {
+  console.log('33333')
+})
+btn1.addEventListener('click', function() {
+  console.log('44444')
+})
+
+</script>
+</body>
+</html>

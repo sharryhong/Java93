@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DOM API</title>
+</head>
+<style>
+  div {
+    border: 1px solid red;
+    padding: 10px;
+  }
+  .child {
+    width: 50px;
+    height: 20px;
+    border: 5px solid gray;
+  }
+</style>
+<body>
+<button id="btn1" type="button">태그 생성</button>
+<div id="d1"></div>
+
+<script>
+// 태그 생성하기 Ⅰ - createElement(), createTextNode(), appendChild() // 계속 추가된다. 
+var d1 = document.querySelector("#d1");
+var btn1 = document.querySelector("#btn1");
+
+//
+btn1.addEventListener('click', function(){
+  //
+  var e = document.createElement("div")
+  // e.className = "child" // 이것도 되고 아래도 되고
+  e.setAttribute("class", "child")
+  //
+  var c = document.createTextNode("내용")
+  //
+  e.appendChild(c) // 생성되었다.
+  //
+  // 어디에 붙일것인가
+  var d1 = document.querySelector("#d1")
+  d1.appendChild(e)
+})
+
+</script>
+</body>
+</html>

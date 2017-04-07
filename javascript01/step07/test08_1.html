@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DOM API</title>
+</head>
+<body>
+<button id="btn1" type="button">버튼1</button>
+<button id="btn2" type="button">버튼2</button>
+
+<script>
+// 애플리케이션에서 이벤트를 발생시키기
+var btn1 = document.querySelector("#btn1");
+var btn2 = document.querySelector("#btn2");
+// 버튼 1 누르면 버튼 2에 클릭 이벤트 발생 시키기
+btn1.addEventListener('click', function() {
+  // 1) 빈 객체 준비, 생성자 호출, 객체 주소 저장(변수에)
+  var me = new MouseEvent('click')
+  // 2) 대상객체(태그)에게 이벤트 정보 보내기
+  btn2.dispatchEvent(me)
+})
+
+btn2.addEventListener('click', function() {
+  console.log('버튼2 눌렀다.')
+})
+
+</script>
+</body>
+</html>

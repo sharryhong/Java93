@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DOM API</title>
+</head>
+<body>
+<button id="btn1" type="button">버튼1</button>
+<!-- 여기에서는 반드시 event라고 써야해 -->
+<button id="btn2" type="button" onclick="console.log(event)">버튼2</button>
+
+<script>
+// 이벤트 정보
+var btn1 = document.querySelector("#btn1");
+var btn2 = document.querySelector("#btn2");
+
+// 제거하려면 함수주소를 알아야한다.
+var btn1Click = function() {
+  console.log('1111')
+}
+
+// 파라미터(event)에 mouseEvent 정보가 넘어온다. 여기서는 당연히 event를 다르게 써도된다. 
+btn1.addEventListener('click', function(event) {
+  console.log(event)
+})
+
+
+
+</script>
+</body>
+</html>

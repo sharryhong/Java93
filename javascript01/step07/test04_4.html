@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DOM API</title>
+</head>
+<style>
+  div {
+    border: 1px solid red;
+    padding: 10px;
+  }
+  .child {
+    width: 150px;
+    height: 20px;
+    border: 5px solid gray;
+  }
+</style>
+<body>
+<div id="d1">
+  <div id="c1" class="child">자식 태그1</div>
+  <div id="c2" class="child">자식 태그2</div>
+  <div id="c3" class="child">자식 태그3</div>
+  <div id="c4" class="child">자식 태그4</div>
+  <div id="c5" class="child">자식 태그5</div>
+  <div id="c6" class="child">자식 태그6</div>
+  <div id="c7" class="child">자식 태그7</div>
+</div>
+
+<script>
+// 태그 삭제하기
+var d1 = document.querySelector("#d1");
+// var el = document.querySelectorAll("#d1 > div");
+// var el = document.querySelectorAll("div[id^='c']");
+var el = document.querySelectorAll(".child");
+console.log(el)
+
+for (var i = 0; i < el.length; i++) {
+  el[i].addEventListener('click', clickDiv) // 함수를 여기에 직접 적으면 for문 돌 때마다 함수가 생긴다. 메모리 낭비
+}
+
+function clickDiv() {
+  // 
+  this.parentNode.removeChild(this)
+}
+
+</script>
+</body>
+</html>
