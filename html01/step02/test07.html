@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>HTML</title>
+  <style>
+    h1,h2,h3,h4,h5,h6,p,div,a,strong,b,i,form{
+      border-style: solid;
+      border-color: red;
+      border-width: 1px;
+    }
+    #ta1 {
+      width: 200px;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+<!-- form -->
+<form action="http://www.naver.com" method="get">
+  학력 :
+  <select name="school">
+    <!-- <option>최종학력</option> -->
+    <option>고졸</option>
+    <option selected>학사</option> <!--selected안하면 처음 것이 선택됨-->
+    <option>석사</option>
+    <option>박사</option>
+  </select> <br>
+  <!-- textarea는 끝태그 필요 -->
+  내용 : <textarea id="ta1"
+                  name="content"
+                  placeholder="내용을 입력하세요."></textarea><br>  <!-- <textarea></textarea>사이에 엔터치면 그것도 기본값이되니 조심하자. -->
+  자기소개 : <textarea name="intro" cols="80" rows="4">내 소개</textarea><br>
+
+  <!-- button type지정하지 않으면 submit -->
+  <button>제출버튼</button> <!-- 누르는 순간 action에 지정되어 있는 서버로 보낸다.-->
+  <button type="submit">제출버튼</button>
+  <button type="reset">리셋버튼</button>
+  <button type="button">일반버튼</button> <!-- 프로그래밍 안되어있다. 우리가 JS로 프로그래밍 해야함 -->
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>HTML</title>
+  <style>
+    h1,h2,h3,h4,h5,h6,p,div,a,strong,b,i,form{
+      border-style: solid;
+      border-color: red;
+      border-width: 1px;
+    }
+  </style>
+</head>
+<body>
+<!-- form -->
+<form action="http://www.naver.com" method="get">
+  이름: <input type="text" name="name" value="홍길동"> <br>
+  암호: <input type="password" name="password"><br>
+  이메일: <input type="text" name="email" placeholder="예) hong@test.com"><br>
+  전화번호: <input type="tel" name="tel" placeholder="예) 010-111-1111"><br>
+  재직여부: <input type="checkbox" name="working" checked>재직중<br>
+  결혼여부 : <input type="radio" name="married">기혼
+            <input type="radio" name="married" checked>미혼<br>
+  최종학력 : <input type="radio" name="school">고졸
+            <input type="radio" name="school">학사
+            <input type="radio" name="school" checked="okok">석사<br>
+  <input type="submit" value="전송버튼">
+  <input type="reset" value="초기화버튼"> <!-- 만약 checkbox가 checked면 체크된 상태로-->
+  <input type="button" value="일반버튼"> <!-- 따로 JavaScript로 프로그래밍 해야한다. -->
+</form>
+
+</body>
+</html>

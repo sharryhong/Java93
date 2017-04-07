@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<!--
+엘리먼트 규칙 정의하는 방법
+  <!ELEMENT 태그명 내용물의형식>
+
+내용물의 형식
+3) #PCDATA   (Parsed Character Data)
+  => 내용물이 텍스트임을 지정한다.
+  => 내용물에 자식 태그가 있는지 검사한다.
+
+4) 태그의 수량 정의
+  <!ELEMENT 태그명 (자식태그명, 자식태그명?, 자식태그명+, 자식태그명*...)>
+none => 수량을 지정하지 않으면 필수이다.
+? => 0 또는 1
++ => 1개 이상
+* => 0개 이상
+
+-->
+<!DOCTYPE student [
+<!ELEMENT student (name, tel+, email?, alias*)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT tel (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT alias (#PCDATA)>
+]>
+
+<student>
+  <name>홍길동</name>
+  <tel>1111-1111</tel>
+  <tel>1111-2222</tel>
+  <tel>1111-3333</tel>
+  <alias>오소리</alias>
+  <alias>식충이</alias>
+</student>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- ID
+문자로 시작해야한다. 숫자가 먼저오면 안된다. 공백이 들어가면 안된다.
+IDREF : 반드시 ID로 있는 값이어야 한다. ID를 하나만 지정한다.
+IDREFS : 공백을 기준으로 ID를 여러개 지정할 수 있다.
+-->
+
+<!DOCTYPE students [
+<!ELEMENT students (class+)>
+
+<!ELEMENT class (computer)>
+<!ELEMENT computer (abc)>
+<!ELEMENT abc (#PCDATA)>
+]>
+
+<students>
+  <class>
+    <computer>
+      <abc/>
+    </computer>
+  </class>
+</students>

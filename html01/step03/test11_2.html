@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!-- 외부 CSS 라이브러리 도입 (Bootstrap) -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CSS</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="sweetalert.css">
+  <link rel="stylesheet" href="test11_1.css">
+</head>
+<body>
+<div id="main" class="container">
+  <div id="menu">
+    <img src="http://bitcamp.co.kr/resources/images/logo/head_logo.gif" alt="">
+    <div class="btn-group-vertical" role="group">
+      <button type="button" class="btn btn-default">BIT Camp</button>
+      <button type="button" class="btn btn-default">교육안내</button>
+      <button type="button" class="btn btn-default">교육과정</button>
+      <button type="button" class="btn btn-default">수강신청</button>
+      <button id="onlineBtn" type="button" class="btn btn-default">온라인상담</button>
+      <div>
+        <button type="button"
+                class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="true"
+                id="dropdownMenu1">
+          커뮤니티
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a href="#">게시판</a></li>
+          <li><a href="#">QnA</a></li>
+          <li><a href="#">방명록</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <from>
+      <div class="form-group">
+        <input type="text" name="username" class="form-control" placeholder="이메일">
+      </div>
+      <div class="form-group">
+        <input type="password" name="pwd" class="form-control" placeholder="암호">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-success btn-sm">로그인</button>
+        <button class="btn btn-success btn-sm">회원가입</button><br>
+      </div>
+    </from>
+    <div>
+      <a href="http://www.facebook.com" class="btn btn-info btn-xs">페이스북</a>
+      <a href="http://www.google.com" class="btn btn-info btn-xs">구글</a>
+      <a href="http://www.twitter.com" class="btn btn-info btn-xs">트위터</a>
+    </div>
+  </div>
+
+  <div id="content">
+    <h1>2017년 여름방학 특강</h1>
+    <p>IT분야로의 성공적인 취업 준비<br>이젠 실무 프로젝트로 승부한다.</p>
+    <ul>
+      <li>자바 웹 개발자 양성과정</li>
+      <li>IoT 개발자 양성과정</li>
+      <li>윈도우 프로그래머 과정</li>
+      <li>빅데이터 프로패셔널 과정</li>
+    </ul>
+    비트캠프는 우수한 개발자를 양성합니다.
+    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+  </div>
+
+  <div id="footer">
+    <span id="bitcamp">비트캠프</span> |
+    <address>서울시 서초구 서초동 비트아카데미 빌딩 3층</address>
+    <span id="company">(주)비트컴퓨터 서초지점</span>
+    <p>Copyright by BITCamp</p>
+  </div>
+</div>  <!-- #main -->
+
+<div id="ad">
+  <!-- <button id="closeBtn" type="button">X</button> -->
+  <button type="button" id="closeBtn" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <img src="http://data.siwonschool.com/banner/img/www/2017/03/31/bimg_src_1490956508.jpg">
+  <img src="http://data.siwonschool.com/banner/img/www/2017/03/31/bimg_src_1490927237.jpg">
+  <img src="http://data.siwonschool.com/banner/img/www/2017/04/04/bimg_src_1491271205.jpg">
+</div>
+<!-- jquery CDN. bootstrap에서 jqeury가 필요하므로, 먼저 선언한다. -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"></script>
+<script src="sweetalert.min.js"></script>
+<script src="test11_1.js"></script>
+<script>
+  let onlineBtn = document.getElementById('onlineBtn');
+  onlineBtn.addEventListener('click', function(){
+    // window.alert('okok');
+    swal({
+      title: "정보!",
+      text: "커뮤니티 메뉴를 준비중입니다.",
+      type: "info",
+    });
+  });
+</script>
+</body>
+</html>

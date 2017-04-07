@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CSS</title>
+  <style>
+  /* 배경 색상 지정하기(background-color)
+    => 미리 정의된 상수 값: aqua, black, white, gray 등
+       예) wikipedia의 web color 참고
+    => rgb(%, %, %): rgb(100%, 0%, 0%), rgb(0%, 0%, 100%)
+    => rgb(0~255,0~255,0~255): rgb(255,0,0), rgb(0,0,255)
+    => #RRGGBB : #FF0000(=#ff0000), #0000FF(=#0000ff)
+    => #F56 : #FF5566의 단축 표현법
+  */
+    div {
+      padding: 20px;
+      margin: 20px;
+      border: 10px solid #f56;
+      width: 300px;
+      height: 100px;
+      float: left;
+    }
+    #menu {
+      background-color: DarkSlateBlue;
+      color: rgb(100%,100%,100%);
+    }
+    #content {
+      background-color: rgb(29, 142, 71);
+      color: #0000ff;
+    }
+  </style>
+</head>
+<body>
+<div id="menu">menu</div>
+<div id="content">content</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>HTML</title>
+  <style>
+    input[name^="office"] {  /* 시작 */
+      background-color: yellow;
+    }
+
+    input[name$="fax"] { /* 끝 */
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<form action="http://www.naver.com" method="get">
+  이름: <input type="text" name="name" value="홍길동"> <br>
+  암호: <input type="password" name="password"><br>
+  이메일: <input type="text" name="email" placeholder="예) hong@test.com"><br>
+  집전화: <input type="tel" name="hometel"><br>
+  집팩스: <input type="tel" name="homefax"><br>
+  회사전화: <input type="tel" name="officetel"><br>
+  회사팩스: <input type="tel" name="officefax"><br>
+  재직여부: <input type="checkbox" name="working" checked>재직중<br>
+  결혼여부 : <input type="radio" name="married">기혼
+            <input type="radio" name="married" checked>미혼<br>
+  최종학력 : <input type="radio" name="school">고졸
+            <input type="radio" name="school">학사
+            <input type="radio" name="school" checked="okok">석사<br>
+  <input type="submit" value="전송버튼">
+  <input type="reset" value="초기화버튼">
+  <input type="button" value="일반버튼"><br>
+
+  혈액형 :
+  <select name="school">
+    <option>선택하세요</option>
+    <option>O 형</option>
+    <option>A 형</option>
+    <option>B 형</option>
+    <option>AB 형</option>
+  </select> <br>
+  자기소개 : <textarea name="intro" cols="80" rows="4">내 소개</textarea><br>
+</form>
+
+</body>
+</html>

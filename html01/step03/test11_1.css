@@ -1,0 +1,79 @@
+body {
+  font-family: '맑은 고딕', '굴림체', 'Apple SD Gothic Neo', sans-serif;
+  font-size:  small;
+  /*border: 1px solid lightgray;*/
+  margin: 0;
+}
+address{
+  font-style: normal;
+  display: inline;
+}
+#main {
+  position: relative;
+  width: 980px;
+  margin: 0px auto;
+  /*border: 1px solid red;*/
+}
+#menu {
+  position: absolute;
+  width: 180px;
+  font-size: 1.2em;
+  background-color: lightgray;
+  /*border: 1px solid blue;*/
+}
+/*#menu > img {
+  position: relative;
+  left: 50px;
+  top: 10px;
+}*/
+#menu ul > li {
+  font-weight: bold;
+}
+#menu ol {
+  font-weight: normal;
+}
+#content {
+  min-height: 430px;
+  margin-left: 190px;
+  /*border: 1px solid green;*/
+  font-family: 바탕체, 궁서체, AppleMyungjo, serif;
+}
+#footer {
+  width: 98%;
+  text-align: center;
+  font-size: 80%;
+  /*border: 1px solid purple;*/
+}
+#footer > p {
+  font-style: italic;
+}
+#bitcamp{
+  background-color: gray;
+  color: white;
+  border-radius: 4px;
+  padding: 3px 3px 0px 3px;
+}
+#company {
+  color: navy;
+}
+#ad {
+  position: fixed;
+  /*px보다 %로 하면 브라우저화면에 따라 움직인다.*/
+  left: 35%;
+  top: 20%;
+  border: 5px solid orange;
+}
+#ad > button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+/*#ad > img:last-child {
+  position: relative;
+  left: 10px;
+  top: 10px;
+}*/

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CSS</title>
+  <style>
+  /* 폰트 다루기
+    => font-family : 폰트 그룹
+       예) sans-serif(고딕체), serif(명조체), monospace(고정너비),
+           cursive(흘림체), fantasy
+    => font : 폰트 그룹에 속해 있는 폰트
+       예) sans-serif => 맑은 고딕, 돋움체, 굴림체, Arial 등
+           serif => 궁서체, 바탕체, Times 등
+           monospace => monaco, consolas, Currier New 등
+           cursive => 나눔 손글씨, 필기체 등
+  */
+    /*마지막은 보통 폰트페밀리를 지정해준다.*/
+    #menu {
+      /*앞의 폰트들 순서대로 없으면 웹브라우저에 설치되어 있는 sans-serif체 중 기본 고딕체를 보여줘라. */
+      /*한글폰트만 설정하면 영어는 브라우저의 기본폰트로 설정된다.*/
+      font-family: '맑은 고딕', '굴림체', 'Apple SD Gothic Neo', sans-serif;
+    }
+    #content {
+      font-family: 바탕체, 궁서체, AppleMyungjo, serif;
+    }
+    #footer {
+      /*각각의 폰트의 너비가 같은 모노스페이스체*/
+      font-family: consolas, monaco, sans-serif;
+    }
+  </style>
+</head>
+<body>
+<div id="menu">
+  <img src="http://bitcamp.co.kr/resources/images/logo/head_logo.gif" alt="">
+  <ul>
+    <li class="c1">BIT Camp</li>
+    <li class="c1">교육안내</li>
+    <li class="c1">교육과정</li>
+    <li class="c2">수강신청</li>
+    <li class="c2">온라인상담</li>
+    <li class="c2">커뮤니티
+      <ol>
+        <li>게시판</li>
+        <li>QnA</li>
+        <li>방명록</li>
+        <li>FAQ</li>
+      </ol>
+    </li>
+  </ul>
+  아이디 : <input type="text" name="username"><br>
+  암 호 : <input type="password" name="pwd"><br>
+  <button>로그인</button>
+  <button>회원가입</button><br>
+  <a href="http://www.facebook.com">페이스북</a>
+  <a href="http://www.google.com">구글</a>
+  <a href="http://www.twitter.com">트위터</a>
+</div>
+
+<div id="content">
+  <h1>2017년 여름방학 특강</h1>
+  <p>IT분야로의 성공적인 취업 준비<br>이젠 실무 프로젝트로 승부한다.</p>
+  <ul>
+    <li>자바 웹 개발자 양성과정</li>
+    <li>IoT 개발자 양성과정</li>
+    <li>윈도우 프로그래머 과정</li>
+    <li>빅데이터 프로패셔널 과정</li>
+  </ul>
+</div>
+
+<div id="footer">
+  <img src="http://bitcamp.co.kr/resources/images/logo/bottom_logo1.png" alt="">
+  비트캠프 |
+  <address>서울시 서초구 서초동 비트아카데미 빌딩 3층</address>
+  (주)비트컴퓨터 서초지점
+  <p>Copyright by BITCamp</p>
+</div>
+
+</body>
+</html>

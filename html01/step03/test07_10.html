@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CSS</title>
+  <style>
+  /* 배경 응용 III
+    => bullet 아이콘 폰트 파일을 이용하여 아이콘 출력하기
+    => 장점
+       폰트이기 때문에 출력 속도가 빠르다.
+    => 단점
+       폰트이기 때문에 단색만 가능하다.
+  */
+  /* 웹에서 다운로드 하는 폰트는 별도로 선언하고 써야 한다.*/
+    @font-face {
+      font-family: "myfont"; /*폰트 그룹명 설정*/
+      src: url('test.woff') format('woff');
+    }
+    #state {
+      font-family: myfont; /*OS에 설치된 폰트가 아니라 외부에서 다운받은 폰트*/
+      position: relative;
+      top: 4px;
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-left: 20px;
+    }
+    #state:before {
+      content: '\f056'; /*폰트 파일에서 출력할 폰트의 코드 값 지정*/
+    }
+  </style>
+</head>
+<body>
+<form>
+  <div id="d1">이메일: <input id="email" type="text"><div id="state"></div></div>
+  <div>암호: <input id="pwd" type="password"></div>
+  <div><button id="signupBtn" type="button">회원가입</button></div>
+</form>
+
+<script>
+// DOM API를 이용하여 이메일 입력상자를 알아낸다.
+var email = document.getElementById('email')
+var state = document.getElementById('state')
+var btn = document.getElementById('signupBtn')
+
+//
+btn.addEventListener('click', function(){ // 이벤트 발생시 콜백함수 호출을 "웹브라우저"에게 요청
+  //
+  if (email.value == "hong@test.com") { // 존재하는 사용자
+    state.style.backgroundPosition = "-204px -1px;"
+  } else {
+    state.style.backgroundPosition = "-167px -1px;"
+  }
+})
+
+</script>
+</body>
+</html>
