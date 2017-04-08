@@ -3,10 +3,6 @@
 let numbers = document.querySelectorAll(".number")
 let opText = document.querySelectorAll(".op")
 let numInput = document.querySelector("#numInput")
-let plusBtn = document.querySelector("#plus")
-let minusBtn = document.querySelector("#minus")
-let multiplyBtn = document.querySelector("#multiply")
-let divideBtn = document.querySelector("#divide")
 let acBtn = document.querySelector("#acBtn")
 let equalBtn = document.querySelector("#equal")
 // 연산 버튼 클릭시 input에 새로 입력받기
@@ -17,7 +13,7 @@ let checkPreNum = false
 for (let i = 0; i < numbers.length; i++) {
   numbers[i].addEventListener('click', inputNum)
 }
-// 해당 콘텐츠내용을 input box에 뿌리기
+// 해당 element의 content를 input box에 뿌리기
 function inputNum() {
   if(checkBtn)
     clearNum()
