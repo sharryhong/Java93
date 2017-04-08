@@ -48,9 +48,11 @@ let cal = {
     } else {
       cal.nextNum = Number(numInput.value)
       console.log(cal.nextNum)
-      cal.resultFn(cal.preOp)
       clearNum()
-      checkPreNum = false
+      cal.resultFn(cal.preOp)
+      cal.preNum = cal.result
+      if (cal.op == '=')
+        checkPreNum = false
     }
     cal.preOp = cal.op
   },
@@ -83,6 +85,6 @@ for (let i = 0; i < opText.length; i++) {
 }
 acBtn.addEventListener('click', function() {
   numInput.value = ""
-  cal.result, cal.preNum, cal.nowNum = 0
+  cal.result, cal.preNum, cal.nextNum = 0
   checkPreNum = false
 })
