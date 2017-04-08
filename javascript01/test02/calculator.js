@@ -21,10 +21,12 @@ for (let i = 0; i < numbers.length; i++) {
 function inputNum() {
   var inputText = this.innerHTML
   numInput.value += inputText
+  checkBtn = false
 }
 // 입력창 콘텐츠 내용 삭제
 function clearNum() {
-  numInput.value = ""
+    numInput.value = ""
+    console.log("clear")
 }
 
 // 계산기 객체
@@ -32,8 +34,11 @@ let cal = {
   result: 0,
   preNum: 0,
   nextNum: 0,
+  preOp: null,
+  op: null,
   calculator: function() {
     checkBtn = true
+    cal.op = this.innerHTML
     if (!checkPreNum) {
       cal.preNum = Number(numInput.value)
       console.log(cal.preNum)
@@ -42,11 +47,32 @@ let cal = {
     } else {
       cal.nextNum = Number(numInput.value)
       console.log(cal.nextNum)
-      cal.result = cal.preNum * cal.nextNum
-      clearNum()
-      numInput.value = cal.result
       checkPreNum = false
+      clearNum()
+      cal.resultFn(cal.preOp)
     }
+    cal.preOp = cal.op
+  },
+  resultFn: function(op) {
+    switch (op) {
+    case '+':
+    cal.result = cal.preNum + cal.nextNum
+    console.log("result"+cal.result)
+    break;
+    case '-':
+    cal.result = cal.preNum - cal.nextNum
+    console.log("result"+cal.result)
+    break;
+    case '*':
+    cal.result = cal.preNum * cal.nextNum
+    console.log("result"+cal.result)
+    break;
+    case '/':
+    cal.result = cal.preNum / cal.nextNum
+    console.log("result"+cal.result)
+    break;
+    }
+    numInput.value = cal.result
   }
 }
 
