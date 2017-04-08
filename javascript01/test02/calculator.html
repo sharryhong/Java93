@@ -8,8 +8,44 @@
 <body>
 <!-- 우선 기능부터 구현 -->
 <div class="wrap">
-  <input id="numInput" type="text" placeholder="숫자입력">
-  <button id="acBtn">AC</button>
+  <div class="input-box">
+    <div class="show-box"></div>
+    <input id="numInput" type="text" placeholder="숫자입력">
+  </div>
+  <table>
+    <tbody>
+      <tr>
+        <td colspan="3" class="col3"><button id="acBtn">AC</button></td>
+        <td><button class="op">/</button></td>
+      </tr>
+      <tr>
+        <td><button class="number">7</button></td>
+        <td><button class="number">8</button></td>
+        <td><button class="number">9</button></td>
+        <td><button class="op">*</button></td>
+      </tr>
+      <tr>
+        <td><button class="number">4</button></td>
+        <td><button class="number">5</button></td>
+        <td><button class="number">6</button></td>
+        <td><button class="op">-</button></td>
+      </tr>
+      <tr>
+        <td><button class="number">1</button></td>
+        <td><button class="number">2</button></td>
+        <td><button class="number">3</button></td>
+        <td><button class="op">+</button></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="col2"><button class="number">0</button></td>
+        <td><button class="number">.</button></td>
+        <td><button class="op">=</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- <button id="acBtn">AC</button>
   <button class="number">0</button>
   <button class="number">1</button>
   <button class="number">2</button>
@@ -25,7 +61,7 @@
   <button class="op">-</button>
   <button class="op">*</button>
   <button class="op">/</button>
-  <button id="equal" class="op">=</button>
+  <button id="equal" class="op">=</button> -->
 </div>
 <script src="calculator.js"></script>
 </body>
