@@ -19,6 +19,8 @@ for (let i = 0; i < numbers.length; i++) {
 }
 // 해당 콘텐츠내용을 input box에 뿌리기
 function inputNum() {
+  if(checkBtn)
+    clearNum()
   var inputText = this.innerHTML
   numInput.value += inputText
   checkBtn = false
@@ -43,13 +45,12 @@ let cal = {
       cal.preNum = Number(numInput.value)
       console.log(cal.preNum)
       checkPreNum = true
-      clearNum()
     } else {
       cal.nextNum = Number(numInput.value)
       console.log(cal.nextNum)
-      checkPreNum = false
-      clearNum()
       cal.resultFn(cal.preOp)
+      clearNum()
+      checkPreNum = false
     }
     cal.preOp = cal.op
   },
@@ -80,3 +81,8 @@ let cal = {
 for (let i = 0; i < opText.length; i++) {
   opText[i].addEventListener('click', cal.calculator)
 }
+acBtn.addEventListener('click', function() {
+  numInput.value = ""
+  cal.result, cal.preNum, cal.nowNum = 0
+  checkPreNum = false
+})
