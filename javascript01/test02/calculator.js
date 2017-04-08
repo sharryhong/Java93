@@ -5,6 +5,7 @@ let opText = document.querySelectorAll(".op")
 let numInput = document.querySelector("#numInput")
 let acBtn = document.querySelector("#acBtn")
 let equalBtn = document.querySelector("#equal")
+let showBox = document.querySelector(".show-box")
 // 연산 버튼 클릭시 input에 새로 입력받기
 let checkBtn = false
 // preNum과 nextNum 구분
@@ -19,6 +20,7 @@ function inputNum() {
     clearNum()
   var inputText = this.innerHTML
   numInput.value += inputText
+  showBox.innerHTML += inputText
   checkBtn = false
 }
 // 입력창 콘텐츠 내용 삭제
@@ -35,6 +37,8 @@ let cal = {
   preOp: null,
   op: null,
   calculator: function() {
+    var inputText = this.innerHTML
+    showBox.innerHTML += inputText
     checkBtn = true
     cal.op = this.innerHTML
     if (!checkPreNum) {
@@ -47,8 +51,10 @@ let cal = {
       clearNum()
       cal.resultFn(cal.preOp)
       cal.preNum = cal.result
-      if (cal.op == '=')
+      if (cal.op == '=') {
         checkPreNum = false
+        showBox.innerHTML += cal.result +', '
+      }
     }
     cal.preOp = cal.op
   },
@@ -81,6 +87,7 @@ for (let i = 0; i < opText.length; i++) {
 }
 acBtn.addEventListener('click', function() {
   numInput.value = ""
+  showBox.innerHTML = ""
   cal.result, cal.preNum, cal.nextNum = 0
   checkPreNum = false
 })
