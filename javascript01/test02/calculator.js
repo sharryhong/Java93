@@ -16,8 +16,10 @@ for (let i = 0; i < numbers.length; i++) {
 }
 // 해당 element의 content를 input box에 뿌리기
 function inputNum() {
-  if(checkBtn)
+  if (checkBtn)
     clearNum()
+  if (cal.preOp === '=' && checkBtn === true)
+    clearShowBox()
   var inputText = this.innerHTML
   numInput.value += inputText
   showBox.innerHTML += inputText
@@ -27,6 +29,9 @@ function inputNum() {
 function clearNum() {
     numInput.value = ""
     console.log("clear")
+}
+function clearShowBox() {
+  showBox.innerHTML = ""
 }
 
 // 계산기 객체
@@ -38,9 +43,9 @@ let cal = {
   op: null,
   calculator: function() {
     var inputText = this.innerHTML
+    cal.op = inputText
     showBox.innerHTML += inputText
     checkBtn = true
-    cal.op = this.innerHTML
     if (!checkPreNum) {
       cal.preNum = Number(numInput.value)
       console.log(cal.preNum)
