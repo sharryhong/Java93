@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+<table id="student-tbl">
+  <tr>
+    <th>번호</th>
+    <th>이름</th>
+    <th>전화</th>
+    <th>이메일</th>
+    <th>재직여부</th>
+  </tr>
+</table>
+<script>
+/*
+*/
+"use strict"
+
+var xhr = new XMLHttpRequest()
+xhr.onreadystatechange = function() {
+  if (xhr.readyState < 4)
+    return
+  //
+  var result = JSON.parse(xhr.responseText)
+  if (result.status != 'success') {
+    alert('학생 목록을 가져오는데 실패했습니다.')
+    return
+  }
+
+  var list = result.data.list
+  for (var s of list) {
+    console.log(s)
+  }
+
+  console.log('-----------------------------------------------------')
+}
+xhr.open('get', 'http://localhost:8080/webapp/student/list.json?pageNo=2&pageSize=8', true)
+xhr.send()
+
+</script>
+</body>
+</html>

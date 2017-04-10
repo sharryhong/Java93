@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+
+  </style>
+</head>
+<body>
+<table id="student-tbl">
+  <tr>
+    <th>번호</th>
+    <th>이름</th>
+    <th>전화</th>
+    <th>이메일</th>
+    <th>재직여부</th>
+  </tr>
+</table>
+<script>
+/*
+*/
+"use strict"
+
+var xhr = new XMLHttpRequest()
+xhr.onreadystatechange = function() {
+  if (xhr.readyState < 4)
+    return
+  //
+  var result = JSON.parse(xhr.responseText)
+  console.log(result)
+  console.log('-----------------------------------------------------')
+}
+xhr.open('get', 'http://localhost:8080/webapp/student/list.json?pageNo=2&pageSize=8', true)
+xhr.send()
+
+</script>
+</body>
+</html>

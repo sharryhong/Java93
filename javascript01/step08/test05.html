@@ -1,0 +1,48 @@
+<!-- AJAX 사용법 -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>HTML</title>
+  <style>
+    body {
+      background-color: gray;
+    }
+    body > div {
+      border: 1px solid red;
+      min-height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <button id="btn1" type="button">서버에 요청하기</button><br>
+  <textarea id="ta" rows="20" cols="80"></textarea>
+<script>
+/* AJAX(Asynchonous JavaScript and XML)
+*/
+"use strict"
+
+var btn1 = document.querySelector('#btn1')
+var ta = document.querySelector('#ta')
+var xhr;
+
+btn1.addEventListener('click', function() {
+  xhr = new XMLHttpRequest()
+  xhr.onreadystatechange = function() {
+    // 방법 2.
+    // if (xhr.readyState === 4) {
+    //   ta.value = xhr.responseText
+    // }
+    // 방법 1. 이 방법으로 하면 들여쓰기가 줄어든다. 
+    if (xhr.readyState < 4)
+      return
+    ta.value = xhr.responseText
+    // 이 아래에 코딩하는 것이다.
+  }
+  xhr.open('get', 'http://localhost:8080/webapp/student/list.json', true)
+  xhr.send()
+})
+
+</script>
+</body>
+</html>

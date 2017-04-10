@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+<script>
+/* JSON 배열
+  => JSON 객체 생성 코드와 같다.
+*/
+"use strict"
+
+// JSON규칙을 따르지 않는 코드
+var str = '["홍길동", "임꺽정", "유관순"]'
+
+// eval() 사용 : ok. 배열인 경우는 괄호로 묶지 않아도 되네
+var obj1 = eval(str)
+console.log(obj1)
+
+// parse() 사용 : ok. 안따지니까 걍 얘를 쓰자.
+var obj2 = JSON.parse(str)
+console.log(obj2)
+
+</script>
+</body>
+</html>
