@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>AJAX</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+  <style>
+  .container {
+    width: 600px;
+    margin: 0px auto;
+  }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>학생 정보</h1>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">번호</label>
+      <div class="col-sm-10">
+        <p class="form-control-static" id="stu-no"></p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="stu-email" class="col-sm-2 control-label">이메일</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="stu-email" placeholder="Email">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="stu-name" class="col-sm-2 control-label">이름</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="stu-name" placeholder="Password">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="stu-tel" class="col-sm-2 control-label">전화번호</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="stu-tel" placeholder="Password">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="stu-school" class="col-sm-2 control-label">학교명</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="stu-school" placeholder="Password">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="stu-working"> 재직중
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="button" class="btn btn-default" id="update-btn">변경</button>
+        <button type="button" class="btn btn-default" id="list-btn">목록</button>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+"use strict"
+
+var stuNo = document.querySelector('#stu-no'),
+    stuEmail = document.querySelector('#stu-email'),
+    stuName = document.querySelector('#stu-name'),
+    stuTel = document.querySelector('#stu-tel'),
+    stuSchool = document.querySelector('#stu-school'),
+    stuWorking = document.querySelector('#stu-working'),
+    updateBtn = document.querySelector('#update-btn'),
+    listBtn = document.querySelector('#list-btn')
+
+// 현재 location객체의 search에 "?no=10" 가 들어있다. 이 값을 이용
+var no = location.search.substring(1).split('=')[1]
+
+var xhr = new XMLHttpRequest()
+xhr.onreadystatechange = function() {
+  if (xhr.readyState < 4) return
+  var result = JSON.parse(xhr.responseText)
+  var stuList = result.data
+  console.log(stuList)
+  stuNo.textContent = stuList.memberNo
+  stuEmail.value = stuList.email
+  stuName.value = stuList.name
+  stuTel.value = stuList.tel
+  stuSchool.value = stuList.schoolName
+  // stuList.working값이 true면 checked된다.
+  stuWorking.checked = stuList.working
+
+}
+// detail.json, memberNo는 DB에서 지정한 대로 사용한다.
+xhr.open('get', 'http://localhost:8080/webapp/student/detail.json?memberNo=' + no)
+xhr.send()
+
+updateBtn.onclick = function() {
+  // update는 post방식
+  var xhr = new XMLHttpRequest()
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState < 4) return
+    var result = JSON.parse(xhr.responseText)
+    if (result.status != 'success') {
+      alert('변경 실패')
+      return
+    }
+    alert('변경 완료')
+  }
+  xhr.open('post', 'http://localhost:8080/webapp/student/update.json', true)
+  // post방식은 아래가 필요하다.
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+  // post방식은 여기에서 데이터를 보낸다.
+  xhr.send('memberNo=' + no +
+  '&name=' + stuName.value +
+  '&email=' + stuEmail.value +
+  '&tel=' + stuTel.value +
+  '&schoolName=' + stuSchool.value +
+  '&working=' + stuWorking.checked)
+}
+
+
+listBtn.onclick = function() {
+  location.href = 'test09_list-hs-3.html'
+}
+
+</script>
+</body>
+</html>
+
+
+
+
+<!-- -->
