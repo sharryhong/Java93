@@ -5,20 +5,20 @@
 // 2. createElement도 해보자.
 function bit(value) {
   // 리턴값으로써 배열로 만든다. element들이 담길 배열
-  console.log("value=", value)
+  // console.log("value=", value)
   var el = []
   // 파라미터값이 태그라면
   if (value instanceof HTMLElement) {
     el[0] = value // 무조건 태그를 배열로 포장한다.
                   // 배열에 들어있는 플러그인을 쓰기 위해
     // console.log(value)
-    console.log('case1', value)
+    // console.log('case1', value)
 
   // 예) $("<tr>"). 시작 문자가 "<"이면, 새 태그 생성으로 간주
   } else if (value.startsWith('<')) {
     // < 빼고 태그 이름만 들어가도록
     el[0] = document.createElement(value.substr(1, value.length - 2))
-    console.log('case2', value)
+    // console.log('case2', value)
 
   // css selector문법으로 간주
   } else {
@@ -27,7 +27,7 @@ function bit(value) {
       // 순수한 배열로 반환하기 위해, 또한 원본인 list에는 원래 있는 함수도 있을 수 있다.
       // el배열에 아래처럼 함수를 붙여도 안심
       el.push(e)
-      console.log('case3', e)
+      // console.log('case3', e)
     }
   }
 
@@ -85,9 +85,10 @@ function bit(value) {
     for (var p of parents) {
       for (var e of this) { // 자식을 담은 배열
         p.appendChild(e) // 부모에 붙인다.
+        // parents[parents.length-1].appendChild(this[this.length-1])
       }
     }
-    return this
+    return el
   }
 
   // 6) 배열 안에 있는 각각의 태그에 대해 CSS 스타일을 다루는 함수
