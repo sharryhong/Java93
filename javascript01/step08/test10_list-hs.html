@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JSON</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+  <style>
+    .container {
+      width: 600px;
+      margin: 0px auto;
+    }
+    table {
+      border: 1px solid yellow;
+    }
+    th {
+      background-color: lightgray;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>학생 목록</h1>
+  <table id="student-tbl" class="table table-hover">
+    <thead>
+      <tr>
+        <th class="t">번호</th>
+        <th class="t">이름</th>
+        <th class="t">전화</th>
+        <th class="t">이메일</th>
+        <th class="t">재직여부</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-primary" id="add-btn">추가</button>
+</div>
+<script src="test10.js"></script>
+<script>
+/* AJAX 응용 2
+=> 학생 목록 출력
+*/
+"use strict"
+
+var t = $('.t'),
+    addBtn = $('#add-btn');
+
+$.ajax('http://localhost:8080/webapp/student/list.json?pageNo=1&pageSize=8', {
+  dataType: 'json',
+  success: function(result) {
+    if (result.status != 'success') {
+      alert('학생 목록을 가져오는데 실패했습니다.')
+      return
+    }
+
+    var list = result.data.list
+    for (var s of list) {
+      $("<p>").appendTo(t)
+    }
+    $('table .view-link').click(onClickViewLink)
+  }
+})
+
+function onClickViewLink(event) {
+  console.log(this)
+  console.log(event.target)
+  location.href = 'test10_view.html?no=' + $(this).attr('data-no')
+  event.preventDefault()
+}
+
+addBtn.click(function() {
+    location.href = "test10_view.html"
+})
+
+
+</script>
+</body>
+</html>
