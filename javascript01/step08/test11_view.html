@@ -1,9 +1,8 @@
-<!-- AJAX 사용법 -->
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>HTML</title>
+  <title>jQuery</title>
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -68,7 +67,8 @@
   </div>
 </form>
 </div>
-<script src="test10.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script>
 "use strict"
 /* AJAX 응용 II
@@ -106,7 +106,7 @@ if (location.search == "") {
           alert('추가하는데 실패했습니다.')
           return
         }
-        location.href = 'test10_list.html'
+        location.href = 'test11_list.html'
       },
       'json'
     ) // post()
@@ -163,14 +163,14 @@ if (location.search == "") {
           alert('삭제하는데 실패했습니다.')
           return
         }
-        location.href = 'test10_list.html'
+        location.href = 'test11_list.html'
       }
     ) // getJSON()
   }) // click()
 }
 
 $('#lst-btn').click(function() {
-  location.href = "test10_list.html"
+  location.href = "test11_list.html"
 })
 </script>
 </body>

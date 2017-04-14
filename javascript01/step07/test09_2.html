@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DOM API</title>
+</head>
+<body>
+  <p id="p1"></p>
+  <a id="btn1" href="http://www.daum.net">버튼1</a>
+  <!-- 방법 1 -->
+  <a id="btn2" href="http://www.daum.net">버튼2</a>
+  <!-- 방법 2. 가능하면 이렇게 쓰지 않는게 좋지만, 아직 이렇게 쓰는 경우도 있으므로 알아야지
+    return false하면 더이상 실행안하므로 a 링크 href실행안된다. -->
+  <a id="btn3" href="http://www.daum.net" onclick="f1(event); return false">버튼3</a>
+  <!-- 방법 3. f2함수를 호출해서 리턴값을 리턴하라. 따라서 f2가 실행되고, f2가 false를 리턴하므로 a 링크 href실행안된다.-->
+  <a id="btn4" href="http://www.daum.net" onclick="return f2(event)">버튼4</a>
+
+<script>
+/* event.preventDefault()
+*/
+var p1 = document.querySelector('#p1')
+var btn1 = document.querySelector("#btn1")
+var btn2 = document.querySelector("#btn2")
+
+btn1.addEventListener('click', function(event) {
+  // 실행되지만 a링크 href도 실행된다.
+  p1.textContent = this.textContent
+})
+
+btn2.addEventListener('click', function(event) {
+  p1.innerHTML = this.textContent
+  //
+  event.preventDefault()
+})
+
+// 이 방법은 this를 못쓰고 event.target을 써야한다.
+function f1() {
+  p1.innerHTML = event.target.textContent
+  // console.log(this) // 얜 window
+}
+
+function f2() {
+  p1.innerHTML = event.target.textContent
+  return false
+}
+
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>JSON</title>
+  <title>jQuery</title>
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -32,7 +32,8 @@
   </table>
   <button type="button" class="btn btn-primary" id="add-btn">추가</button>
 </div>
-<script src="test10.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script>
 /* AJAX 응용 2
 => 학생 목록 출력
@@ -64,12 +65,12 @@ $.ajax('http://localhost:8080/webapp/student/list.json?pageNo=1&pageSize=8', {
 })
 
 function onClickViewLink(event) {
-  location.href = 'test10_view.html?no=' + $(this).attr('data-no')
+  location.href = 'test11_view.html?no=' + $(this).attr('data-no')
   event.preventDefault()
 }
 
 addBtn.click(function() {
-    location.href = "test10_view.html"
+    location.href = "test11_view.html"
 })
 
 

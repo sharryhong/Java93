@@ -1,13 +1,9 @@
-<!-- AJAX 사용법 -->
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>HTML</title>
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
+  <title>phoneGap</title>
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
   <style>
   .container {
     width: 600px;
@@ -68,7 +64,8 @@
   </div>
 </form>
 </div>
-<script src="test10.min.js"></script>
+<script src="context.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script>
 "use strict"
 /* AJAX 응용 II
@@ -93,7 +90,7 @@ if (location.search == "") {
   // 추가 버튼에 click 이벤트 핸들러(리스너)를 등록한다.
   // $.post()
   $('#add-btn').click(function() {
-    $.post('http://localhost:8080/webapp/student/add.json',
+    $.post(serverUrl + '/webapp/student/add.json',
       {
         name: fiName.val(),
         email: fiEmail.val(),
@@ -106,7 +103,7 @@ if (location.search == "") {
           alert('추가하는데 실패했습니다.')
           return
         }
-        location.href = 'test10_list.html'
+        location.href = 'index.html'
       },
       'json'
     ) // post()
@@ -118,7 +115,7 @@ if (location.search == "") {
   var no = location.search.substring(1).split('=')[1]
 
   //
-  $.getJSON('http://localhost:8080/webapp/student/detail.json?memberNo=' + no, function(result){
+  $.getJSON(serverUrl + '/webapp/student/detail.json?memberNo=' + no, function(result){
     if (result.status != 'success') {
       alert('데이터를 가져오는데 실패했습니다.')
       return
@@ -135,7 +132,7 @@ if (location.search == "") {
 
   // $.ajax(), post방식
   $('#upd-btn').click(function() {
-    $.ajax('http://localhost:8080/webapp/student/update.json', {
+    $.ajax(serverUrl + '/webapp/student/update.json', {
       method: 'POST',
       dataType: 'json',
       data: { //
@@ -157,20 +154,20 @@ if (location.search == "") {
   }) // click()
 
   $('#del-btn').click(function() {
-    $.getJSON('http://localhost:8080/webapp/student/delete.json?memberNo=' + no,
+    $.getJSON(serverUrl + '/webapp/student/delete.json?memberNo=' + no,
       function(result) {
         if (result.status != 'success') {
           alert('삭제하는데 실패했습니다.')
           return
         }
-        location.href = 'test10_list.html'
+        location.href = 'index.html'
       }
     ) // getJSON()
   }) // click()
 }
 
 $('#lst-btn').click(function() {
-  location.href = "test10_list.html"
+  location.href = "index.html"
 })
 </script>
 </body>
