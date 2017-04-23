@@ -1,88 +1,89 @@
 "use strict"
 window.$ = window.jQuery = require('jquery')
-// var studentDao = createStudentDao(con)
-// var memberDao = createMemberDao(con)
-// var studentService = createStudentService(memberDao, studentDao)
+var teacherService = require('electron').remote.getGlobal('teacherService')
 
-var studentService = require('electron').remote.getGlobal('studentService')
 
 var fiNo = $('#fi-no'),
     fiEmail = $('#fi-email'),
     fiName = $('#fi-name'),
     fiTel = $('#fi-tel'),
-    fiSchoolName = $('#fi-school-name'),
-    fiWorking = $('#fi-working');
+    fiPassword = $('#fi-password'),
+    fiHomepage = $('#fi-homepage'),
+    fiFacebook = $('#fi-facebook'),
+    fiTwitter = $('#fi-twitter');
 
-// 추가 버튼 눌렀을 때 view.html
 if (location.search == "") {
   $('.bit-view').css('display', 'none')
   $('.bit-new').css('display', '')
 
   $('#add-btn').click(function() {
-    studentService.insert(
+    teacherService.insert(
       {
         name: fiName.val(),
         tel: fiTel.val(),
         email: fiEmail.val(),
-        password: '1111',
-        working: (fiWorking.prop('checked') ? 'Y' : 'N'),
-        schoolName: fiSchoolName.val()
+        password: fiPassword.val(),
+        homepage: fiHomepage.val(),
+        facebook: fiFacebook.val(),
+        twitter: fiTwitter.val()
       },
       function() {
-        console.log('ok')
         location.href = 'index.html'
       },
       function(error) {
-        alert('회원 등록 중 오류 발생!')
+        alert('강사 등록 중 오류 발생!')
         throw error;
     }) //insertMember()
   }) // click()
 
-} else { // 기존 사용자 정보를 가져오는 view.html
+} else { // 기존 사용자 정보를 가져온다.
   $('.bit-new').css('display', 'none')
   var no = location.search.substring(1).split('=')[1]
 
-  studentService.detail(no,
+  teacherService.detail(no,
     function(result) {
-      var student = result
-      fiNo.text(student.mno)
-      fiEmail.val(student.email)
-      fiName.val(student.name)
-      fiTel.val(student.tel)
-      fiSchoolName.val(student.schl_nm)
-      fiWorking.attr('checked', (student.work == 'Y' ? true : false))
+      var teacher = result
+      fiNo.text(teacher.mno)
+      fiEmail.val(teacher.email)
+      fiName.val(teacher.name)
+      fiTel.val(teacher.tel)
+      fiHomepage.val(teacher.hmpg)
+      fiFacebook.val(teacher.fcbk)
+      fiTwitter.val(teacher.twit)
     },
     function(error) {
-      alert('학생 데이터 가져오는 중 오류 발생!')
+      alert('강사 데이터 가져오는 중 오류 발생!')
       throw error
   })
 
   $('#upd-btn').click(function() {
-    studentService.update(
+    teacherService.update(
       {
         "no": no,
         "name": fiName.val(),
         "tel": fiTel.val(),
         "email": fiEmail.val(),
-        "working": (fiWorking.prop('checked') ? 'Y' : 'N'),
-        "schoolName": fiSchoolName.val()
+        "password": fiPassword.val(),
+        "homepage": fiHomepage.val(),
+        "facebook": fiFacebook.val(),
+        "twitter": fiTwitter.val()
       },
       function(result) {
         alert('변경하였습니다.')
       },
       function(error) {
-        alert('회원 기본 데이터 변경 중 오류 발생!')
+        alert('강사 기본 데이터 변경 중 오류 발생!')
         throw error;
     })//update()
   }) //click()
 
   $('#del-btn').click(function() {
-    studentService.delete(no,
+    teacherService.delete(no,
       function(result) {
         location.href = 'index.html'
       },
       function(error) {
-        alert('학생 기본 데이터 삭제 중 오류 발생!')
+        alert('강사 기본 데이터 삭제 중 오류 발생!')
         throw error;
     })
   }) // click()

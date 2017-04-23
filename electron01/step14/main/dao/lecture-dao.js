@@ -9,9 +9,8 @@ module.exports = {
 
   selectList(pageNo, successFn, errorFn) {
     this.connection.query(
-      'select m.mno, m.name, mr.posi, m.tel \
-      from mgr mr inner join memb m on mr.mrno=m.mno  \
-      order by m.name asc \
+      'select lno, titl, dscp, sdt, edt, qty, pric, thrs \
+      from lect l \
       limit ?, ?',
       [(pageNo - 1) * 3, 3],
       function(error, results) {
@@ -25,7 +24,7 @@ module.exports = {
 
   countAll(successFn, errorFn) {
     this.connection.query(
-      'select count(*) cnt from mgr',
+      'select count(*) cnt from lect',
       function(error, results) {
         if (error) {
           errorFn(error)
@@ -37,9 +36,9 @@ module.exports = {
 
   selectOne(no, successFn, errorFn) {
     this.connection.query(
-      'select m.mno, m.name, m.email, m.tel, m.pwd, mr.posi, mr.fax, mr.path  \
-      from mgr mr inner join memb m on mr.mrno=m.mno \
-      where mr.mrno=?',
+      'select lno, titl, dscp, sdt, edt, qty, pric, thrs  \
+      from lect l \
+      where l.lno=?',
       [no],
       function(error, results) {
         if (error) {
@@ -50,10 +49,10 @@ module.exports = {
       }) // connection.query()
   },//selectOne()
 
-  insert(manager, successFn, errorFn) {
+  insert(lecture, successFn, errorFn) {
     this.connection.query(
-      'insert into mgr(mrno, posi, fax, path) values(?,?,?,?)',
-      [ manager.no, manager.posi, manager.fax, manager.path],
+      'insert into lect(lno, titl, dscp, sdt, edt, qty, pric, thrs) values(?,?,?,?,?,?,?,?)',
+      [ lecture.no, lecture.titl, lecture.dscp, lecture.sdt, lecture.edt, lecture.qty, lecture.pric, lecture.thrs],
       function(error, result) {
         if (error) {
           errorFn(error)
@@ -63,10 +62,10 @@ module.exports = {
       }) //connection.query()
   }, //insert()
 
-  update(manager, successFn, errorFn) {
+  update(lecture, successFn, errorFn) {
     this.connection.query(
-      'update mgr set posi=?, fax=?, path=? where mrno=?',
-      [manager.posi, manager.fax, manager.path, manager.no],
+      'update lect set titl=?, dscp=?, sdt=?, edt=?, qty=?, pric=?, thrs=? where lno=?',
+      [lecture.titl, lecture.dscp, lecture.sdt, lecture.edt, lecture.qty, lecture.pric, lecture.thrs, lecture.no],
       function(error, result) {
         if (error) {
           errorFn(error)
@@ -78,7 +77,7 @@ module.exports = {
 
   delete(no, successFn, errorFn) {
     this.connection.query(
-      'delete from mgr where mrno=?',
+      'delete from lect where lno=?',
       [no],
       function(error, result) {
         if (error) {

@@ -1,16 +1,14 @@
 "use strict"
 
 module.exports = {
-  //
   setConnection(con) {
-    //이 함수가 소속된 객체에 connection 프로퍼티 추가하고 그 자체를 넘긴다.
     this.connection = con
   },
 
   selectList(pageNo, successFn, errorFn) {
     this.connection.query(
-      'select m.mno, m.name, mr.posi, m.tel \
-      from mgr mr inner join memb m on mr.mrno=m.mno  \
+      'select m.mno, m.name, m.tel, m.email, s.work \
+      from stud s inner join memb m on s.sno=m.mno  \
       order by m.name asc \
       limit ?, ?',
       [(pageNo - 1) * 3, 3],
@@ -25,7 +23,7 @@ module.exports = {
 
   countAll(successFn, errorFn) {
     this.connection.query(
-      'select count(*) cnt from mgr',
+      'select count(*) cnt from stud',
       function(error, results) {
         if (error) {
           errorFn(error)
@@ -37,9 +35,9 @@ module.exports = {
 
   selectOne(no, successFn, errorFn) {
     this.connection.query(
-      'select m.mno, m.name, m.email, m.tel, m.pwd, mr.posi, mr.fax, mr.path  \
-      from mgr mr inner join memb m on mr.mrno=m.mno \
-      where mr.mrno=?',
+      'select m.mno, m.name, m.tel, m.email, s.work, s.schl_nm \
+      from stud s inner join memb m on s.sno=m.mno \
+      where s.sno=?',
       [no],
       function(error, results) {
         if (error) {
@@ -50,10 +48,10 @@ module.exports = {
       }) // connection.query()
   },//selectOne()
 
-  insert(manager, successFn, errorFn) {
+  insert(student, successFn, errorFn) {
     this.connection.query(
-      'insert into mgr(mrno, posi, fax, path) values(?,?,?,?)',
-      [ manager.no, manager.posi, manager.fax, manager.path],
+      'insert into stud(sno,work,schl_nm) values(?,?,?)',
+      [ student.no, student.working, student.schoolName],
       function(error, result) {
         if (error) {
           errorFn(error)
@@ -61,12 +59,12 @@ module.exports = {
           successFn(result)
         }
       }) //connection.query()
-  }, //insert()
+  }, //insert
 
-  update(manager, successFn, errorFn) {
+  update(student, successFn, errorFn) {
     this.connection.query(
-      'update mgr set posi=?, fax=?, path=? where mrno=?',
-      [manager.posi, manager.fax, manager.path, manager.no],
+      'update stud set work=?, schl_nm=? where sno=?',
+      [student.working, student.schoolName, student.no],
       function(error, result) {
         if (error) {
           errorFn(error)
@@ -78,7 +76,7 @@ module.exports = {
 
   delete(no, successFn, errorFn) {
     this.connection.query(
-      'delete from mgr where mrno=?',
+      'delete from stud where sno=?',
       [no],
       function(error, result) {
         if (error) {
@@ -89,4 +87,4 @@ module.exports = {
       })
   }//delete()
 
-}//module.exports
+}//exports

@@ -18,18 +18,21 @@ module.exports = {
         if (error) {
           errorFn(error)
         } else {
+          // 쿼리 결과값을 results에 담아 보낸다.
           successFn(results)
         }
       }) // connection.query()
   },//selectList()
 
   countAll(successFn, errorFn) {
+    // count(*) : row갯수. cnt는 별명. 이 값을 results에 담는다.
     this.connection.query(
       'select count(*) cnt from stud',
       function(error, results) {
         if (error) {
           errorFn(error)
         } else {
+          // 성공하면 row갯수를 매개변수인 successFn함수의 아규먼트로 보낸다.
           successFn(results)
         }
       }) //connection.query()

@@ -2,8 +2,8 @@
 
 module.exports = {
   //
-  setStudentDao(dao) {
-    this.studentDao = dao
+  setManagerDao(dao) {
+    this.managerDao = dao
   },
 
   setMemberDao(dao) {
@@ -12,34 +12,34 @@ module.exports = {
 
   list(pageNo, success, error) {
     var obj = this
-    this.studentDao.selectList(pageNo, function(students) {
-      obj.studentDao.countAll(function(result) {
-        success(students, result[0].cnt)
+    this.managerDao.selectList(pageNo, function(managers) {
+      obj.managerDao.countAll(function(result) {
+        success(managers, result[0].cnt)
       }, error)
     }, error)
   },
 
   detail(no, success, error) {
-    this.studentDao.selectOne(no, success, error)
+    this.managerDao.selectOne(no, success, error)
   },
-  insert(student, success, error) {
+  insert(manager, success, error) {
     var obj = this
-    this.memberDao.insert(student, function(result) {
-      student.no = result.insertId
-      obj.studentDao.insert(student, success, error)
+    this.memberDao.insert(manager, function(result) {
+      manager.no = result.insertId
+      obj.managerDao.insert(manager, success, error)
     }, error)
   },
 
-  update(student, success, error) {
+  update(manager, success, error) {
     var obj = this
-    this.memberDao.update(student, function(result) {
-      obj.studentDao.update(student, success, error)
+    this.memberDao.update(manager, function(result) {
+      obj.managerDao.update(manager, success, error)
     }, error)
   },
 
   delete(no, success, error) {
     var obj = this
-    this.studentDao.delete(no, function(result) {
+    this.managerDao.delete(no, function(result) {
       obj.memberDao.delete(no, success, error)
     }, error)
   } // delete()

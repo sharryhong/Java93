@@ -1,22 +1,10 @@
 /* MVC패턴의 Control담당 */
 "use strict"
 window.$ = window.jQuery = require('jquery')
-/* 이렇게 한 것을 아래에서 한줄로 적어준 것
-// electron 관리자 객체 얻기
-var electron = require('electron')
-// main 프로세스에 접근하기
-var remote = electron.remote
-// main 프로세스의 global변수에서 값 꺼내기
-var studentService = remote.getGlobal('studentService')
-*/
 
-/* electron에서 main.js(메인 프로세스). 크롬 브라우저 영역(렌더러 프로세스)이 있다.
-  크롬브라우저위에서 html, js, css파일들이 돌아가고, main.js에 global.studentService가 있다.
-  둘이 연결해줘야 하는데, 이 것을 remote가 해준다. (Doc참고)
-*/
-var studentService = require('electron').remote.getGlobal('studentService')
+var lectureService = require('electron').remote.getGlobal('lectureService')
 
-var tbody = $('#student-tbl > tbody')
+var tbody = $('#lecture-tbl > tbody')
 
 displayList(1)
 
@@ -35,23 +23,28 @@ $('#next-btn').click(function() {
 })
 
 function displayList(pageNo) {
-  studentService.list(
+  lectureService.list(
     pageNo,
     // service에서 처리한 값을 받는다.
-    // results엔 selectList에서 처리한 데이터객체, totalCount엔 result[0].cnt인 row갯수가 들어온다. 
+    // results엔 selectList에서 처리한 데이터객체, totalCount엔 result[0].cnt인 row갯수가 들어온다.
     function(results, totalCount) {
       tbody.html('');
       for (var i = 0; i < 3; i++) {
         if (i < results.length) {
           let s = results[i]
-          $("<tr>").html("<td>" + s.mno +
-          "</td><td><a href='#' data-no='" + s.mno + "' class='view-link'>" + s.name +
-          "</a></td><td>" + s.tel +
-          "</td><td>" + s.email +
-          "</td><td>" + (s.work == "Y" ? "재직중" : "실업") + "</td>")
+          let startDay = new Date(s.sdt)
+          let endDay = new Date(s.edt)
+          $("<tr>").html("<td>" + s.lno +
+          "</td><td><a href='#' data-no='" + s.lno + "' class='view-link'>" + s.titl +
+          "</a></td><td>" + s.dscp +
+          "</td><td>" + startDay.getFullYear() +"년 "+ (startDay.getMonth()+1) +"월 "+ startDay.getDate()+"일" +
+          "</td><td>" + endDay.getFullYear() +"년 "+ (endDay.getMonth()+1) +"월 "+ endDay.getDate()+"일" +
+          "</td><td>" + s.qty +
+          "</td><td>" + s.pric +
+          "</td><td>" + s.thrs )
           .appendTo(tbody)
         } else {
-          $("<tr><td colspan='5'>&nbsp;</td></tr>").appendTo(tbody)
+          $("<tr><td colspan='8'>&nbsp;</td></tr>").appendTo(tbody)
         }
       }
 

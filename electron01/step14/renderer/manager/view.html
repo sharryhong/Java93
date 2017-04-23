@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container">
-<h1>학생 정보</h1>
+<h1>매니저 정보</h1>
 <form class="form-horizontal">
   <div class="form-group bit-view">
     <label class="col-sm-2 control-label">번호</label>
@@ -28,9 +28,21 @@
     </div>
   </div>
   <div class="form-group">
+    <label for="fi-password" class="col-sm-2 control-label">비밀번호</label>
+    <div class="col-sm-7">
+      <input type="password" class="form-control" id="fi-password" placeholder="비밀번호">
+    </div>
+  </div>
+  <div class="form-group">
     <label for="fi-name" class="col-sm-2 control-label">이름</label>
     <div class="col-sm-4">
       <input type="text" class="form-control" id="fi-name" placeholder="이름">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="fi-posi" class="col-sm-2 control-label">직위</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="fi-posi" placeholder="직위">
     </div>
   </div>
   <div class="form-group">
@@ -40,20 +52,18 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="fi-school-name" class="col-sm-2 control-label">학교명</label>
+    <label for="fi-fax" class="col-sm-2 control-label">팩스</label>
     <div class="col-sm-4">
-      <input type="text" class="form-control" id="fi-school-name" placeholder="학교명">
+      <input type="text" class="form-control" id="fi-fax" placeholder="팩스">
     </div>
   </div>
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" id="fi-working"> 재직중
-        </label>
-      </div>
+    <label for="fi-path" class="col-sm-2 control-label">사진</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="fi-path" placeholder="사진">
     </div>
   </div>
+
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="button" class="btn btn-primary bit-view" id="upd-btn">변경</button>

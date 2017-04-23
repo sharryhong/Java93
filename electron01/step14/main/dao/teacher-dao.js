@@ -9,9 +9,9 @@ module.exports = {
 
   selectList(pageNo, successFn, errorFn) {
     this.connection.query(
-      'select m.mno, m.name, m.tel, m.email, s.work \
-      from stud s inner join memb m on s.sno=m.mno  \
-      order by m.name asc \
+      'select m.mno, m.name, m.tel, m.email, t.hmpg \
+      from tcher t inner join memb m on t.tno=m.mno  \
+      order by m.mno asc \
       limit ?, ?',
       [(pageNo - 1) * 3, 3],
       function(error, results) {
@@ -25,7 +25,7 @@ module.exports = {
 
   countAll(successFn, errorFn) {
     this.connection.query(
-      'select count(*) cnt from stud',
+      'select count(*) cnt from tcher',
       function(error, results) {
         if (error) {
           errorFn(error)
@@ -37,9 +37,9 @@ module.exports = {
 
   selectOne(no, successFn, errorFn) {
     this.connection.query(
-      'select m.mno, m.name, m.tel, m.email, s.work, s.schl_nm \
-      from stud s inner join memb m on s.sno=m.mno \
-      where s.sno=?',
+      'select m.mno, m.name, m.tel, m.email, t.hmpg, t.fcbk, t.twit \
+      from tcher t inner join memb m on t.tno=m.mno \
+      where t.tno=?',
       [no],
       function(error, results) {
         if (error) {
@@ -50,10 +50,10 @@ module.exports = {
       }) // connection.query()
   },//selectOne()
 
-  insert(student, successFn, errorFn) {
+  insert(teacher, successFn, errorFn) {
     this.connection.query(
-      'insert into stud(sno,work,schl_nm) values(?,?,?)',
-      [ student.no, student.working, student.schoolName],
+      'insert into tcher(tno, hmpg, fcbk, twit) values(?,?,?,?)',
+      [ teacher.no, teacher.homepage, teacher.facebook, teacher.twitter],
       function(error, result) {
         if (error) {
           errorFn(error)
@@ -63,10 +63,10 @@ module.exports = {
       }) //connection.query()
   }, //insert()
 
-  update(student, successFn, errorFn) {
+  update(teacher, successFn, errorFn) {
     this.connection.query(
-      'update stud set work=?, schl_nm=? where sno=?',
-      [student.working, student.schoolName, student.no],
+      'update tcher set hmpg=?, fcbk=?, twit=? where tno=?',
+      [teacher.homepage, teacher.facebook, teacher.twitter, teacher.no],
       function(error, result) {
         if (error) {
           errorFn(error)
@@ -78,7 +78,7 @@ module.exports = {
 
   delete(no, successFn, errorFn) {
     this.connection.query(
-      'delete from stud where sno=?',
+      'delete from tcher where tno=?',
       [no],
       function(error, result) {
         if (error) {

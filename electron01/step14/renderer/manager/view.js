@@ -1,17 +1,16 @@
 "use strict"
 window.$ = window.jQuery = require('jquery')
-// var studentDao = createStudentDao(con)
-// var memberDao = createMemberDao(con)
-// var studentService = createStudentService(memberDao, studentDao)
 
-var studentService = require('electron').remote.getGlobal('studentService')
+var managerService = require('electron').remote.getGlobal('managerService')
 
 var fiNo = $('#fi-no'),
     fiEmail = $('#fi-email'),
+    fiPassword = $('#fi-password'),
     fiName = $('#fi-name'),
+    fiPosi = $('#fi-posi'),
     fiTel = $('#fi-tel'),
-    fiSchoolName = $('#fi-school-name'),
-    fiWorking = $('#fi-working');
+    fiFax = $('#fi-fax'),
+    fiPath = $('#fi-path');
 
 // 추가 버튼 눌렀을 때 view.html
 if (location.search == "") {
@@ -19,17 +18,17 @@ if (location.search == "") {
   $('.bit-new').css('display', '')
 
   $('#add-btn').click(function() {
-    studentService.insert(
+    managerService.insert(
       {
-        name: fiName.val(),
-        tel: fiTel.val(),
         email: fiEmail.val(),
-        password: '1111',
-        working: (fiWorking.prop('checked') ? 'Y' : 'N'),
-        schoolName: fiSchoolName.val()
+        password: fiPassword.val(),
+        name: fiName.val(),
+        posi: fiPosi.val(),
+        tel: fiTel.val(),
+        fax: fiFax.val(),
+        path: fiPath.val()
       },
       function() {
-        console.log('ok')
         location.href = 'index.html'
       },
       function(error) {
@@ -42,30 +41,33 @@ if (location.search == "") {
   $('.bit-new').css('display', 'none')
   var no = location.search.substring(1).split('=')[1]
 
-  studentService.detail(no,
+  managerService.detail(no,
     function(result) {
-      var student = result
-      fiNo.text(student.mno)
-      fiEmail.val(student.email)
-      fiName.val(student.name)
-      fiTel.val(student.tel)
-      fiSchoolName.val(student.schl_nm)
-      fiWorking.attr('checked', (student.work == 'Y' ? true : false))
+      var manager = result
+      fiNo.text(manager.mno)
+      fiEmail.val(manager.email)
+      fiName.val(manager.name)
+      fiPosi.val(manager.posi)
+      fiTel.val(manager.tel)
+      fiFax.val(manager.fax)
+      fiPath.val(manager.path)
     },
     function(error) {
-      alert('학생 데이터 가져오는 중 오류 발생!')
+      alert('매니저 데이터 가져오는 중 오류 발생!')
       throw error
   })
 
   $('#upd-btn').click(function() {
-    studentService.update(
+    managerService.update(
       {
         "no": no,
-        "name": fiName.val(),
-        "tel": fiTel.val(),
         "email": fiEmail.val(),
-        "working": (fiWorking.prop('checked') ? 'Y' : 'N'),
-        "schoolName": fiSchoolName.val()
+        "password": fiPassword.val(),
+        "name": fiName.val(),
+        "posi": fiPosi.val(),
+        "tel": fiTel.val(),
+        "fax": fiFax.val(),
+        "path": fiPath.val()
       },
       function(result) {
         alert('변경하였습니다.')
@@ -77,12 +79,12 @@ if (location.search == "") {
   }) //click()
 
   $('#del-btn').click(function() {
-    studentService.delete(no,
+    managerService.delete(no,
       function(result) {
         location.href = 'index.html'
       },
       function(error) {
-        alert('학생 기본 데이터 삭제 중 오류 발생!')
+        alert('강사 기본 데이터 삭제 중 오류 발생!')
         throw error;
     })
   }) // click()
