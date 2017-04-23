@@ -57,7 +57,11 @@ if (location.search == "") {
       fiQuantity.val(lecture.qty)
       fiPrice.val(lecture.pric)
       fiTotalhours.val(lecture.thrs)
-      
+      for (var i = 0; i < managers.length; i++) {
+        let m = managers[i]
+        console.log(m)
+        $("<option>").html(m.name).appendTo(fiManager)
+      }
     },
     function(error) {
       alert('강의 데이터 가져오는 중 오류 발생!')
