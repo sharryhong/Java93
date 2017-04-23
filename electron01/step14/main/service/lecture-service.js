@@ -29,10 +29,9 @@ module.exports = {
   },
 
   insert(lecture, success, error) {
-    var obj = this
     this.lectureDao.insert(lecture, function(result) {
       lecture.no = result.insertId
-      obj.lectureDao.insert(lecture, success, error)
+      success()
     }, error)
   },
 
