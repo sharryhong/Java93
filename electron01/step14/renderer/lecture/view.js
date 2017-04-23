@@ -10,7 +10,8 @@ var fiNo = $('#fi-no'),
     fiEnddate = $('#fi-enddate'),
     fiQuantity = $('#fi-quantity'),
     fiPrice = $('#fi-price'),
-    fiTotalhours = $('#fi-totalhours');
+    fiTotalhours = $('#fi-totalhours'),
+    fiManager = $('#fi-manager');
 
 // 추가 버튼 눌렀을 때 view.html
 if (location.search == "") {
@@ -42,8 +43,10 @@ if (location.search == "") {
   var no = location.search.substring(1).split('=')[1]
 
   lectureService.detail(no,
-    function(result) {
+    function(result, managers) {
       var lecture = result
+      var managers = managers
+      console.log(managers)
       var startDay = new Date(lecture.sdt)
       var endDay = new Date(lecture.edt)
       fiNo.text(lecture.lno)
@@ -54,6 +57,7 @@ if (location.search == "") {
       fiQuantity.val(lecture.qty)
       fiPrice.val(lecture.pric)
       fiTotalhours.val(lecture.thrs)
+      
     },
     function(error) {
       alert('강의 데이터 가져오는 중 오류 발생!')

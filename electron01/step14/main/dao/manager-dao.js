@@ -35,6 +35,19 @@ module.exports = {
       }) //connection.query()
   },//countAll()
 
+  nameList(successFn, errorFn) {
+    this.connection.query(
+      'select m.name \
+      from memb m join mgr mr on m.mno=mrno',
+      function(error, results) {
+        if (error) {
+          errorFn(error)
+        } else {
+          successFn(results)
+        }
+      }) // connection.query()
+  }, // nameList()
+
   selectOne(no, successFn, errorFn) {
     this.connection.query(
       'select m.mno, m.name, m.email, m.tel, m.pwd, mr.posi, mr.fax, mr.path  \

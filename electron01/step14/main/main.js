@@ -33,7 +33,7 @@ managerService.setManagerDao(managerDao)
 
 const lectureService = require('./service/lecture-service')
 lectureService.setLectureDao(lectureDao)
-managerService.setManagerDao(managerDao)
+lectureService.setManagerDao(managerDao)
 // classroomService.setClassroomDao(classroomDao)
 
 // 글로벌 변수로 지정
