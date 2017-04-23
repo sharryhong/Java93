@@ -43,7 +43,8 @@ if (location.search == "") {
         edt: fiEnddate.val(),
         qty: fiQuantity.val(),
         pric: fiPrice.val(),
-        thrs: fiTotalhours.val()
+        thrs: fiTotalhours.val(),
+        mgr: fiManager.val()
       },
       function() {
         location.href = 'index.html'
