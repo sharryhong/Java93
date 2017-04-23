@@ -24,22 +24,22 @@ module.exports = {
     }, error)
   },
 
-  // nameList(function(results) {
-  //   this.managerDao.nameList(success, error)
-  // }, error),
-
-  // detail(no, success, error) {
-  //   this.lectureDao.selectOne(no, success, error)
-  // },
-  detail(no, success, error) {
-    var obj = this
-    this.managerDao.nameList(function(managers) {
-      obj.lectureDao.selectOne(no, function(result) {
-        console.log(managers)
-        success(result, managers)
-      }, error)
-    }, error)
+  nameList(success, error) {
+    this.managerDao.nameList(success, error)
   },
+
+  detail(no, success, error) {
+    this.lectureDao.selectOne(no, success, error)
+  },
+  // detail(no, success, error) {
+  //   var obj = this
+  //   this.managerDao.nameList(function(managers) {
+  //     obj.lectureDao.selectOne(no, function(result) {
+  //       console.log(managers)
+  //       success(result, managers)
+  //     }, error)
+  //   }, error)
+  // },
 
   insert(lecture, success, error) {
     this.lectureDao.insert(lecture, function(result) {

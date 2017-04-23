@@ -37,7 +37,7 @@ module.exports = {
 
   nameList(successFn, errorFn) {
     this.connection.query(
-      'select m.name \
+      'select m.name, mr.mrno \
       from memb m join mgr mr on m.mno=mrno',
       function(error, results) {
         if (error) {

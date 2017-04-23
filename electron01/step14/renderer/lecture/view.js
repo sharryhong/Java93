@@ -13,6 +13,22 @@ var fiNo = $('#fi-no'),
     fiTotalhours = $('#fi-totalhours'),
     fiManager = $('#fi-manager');
 
+managerList()
+
+function managerList() {
+  lectureService.nameList(function(managers) {
+    for (var i = 0; i < managers.length; i++) {
+      let m = managers[i]
+      console.log(m)
+      $("<option>").html(m.name).appendTo(fiManager)
+    }
+  },
+  function(error) {
+    alert('오류 발생!')
+    throw error
+  })
+}
+
 // 추가 버튼 눌렀을 때 view.html
 if (location.search == "") {
   $('.bit-view').css('display', 'none')
@@ -43,10 +59,8 @@ if (location.search == "") {
   var no = location.search.substring(1).split('=')[1]
 
   lectureService.detail(no,
-    function(result, managers) {
+    function(result) {
       var lecture = result
-      var managers = managers
-      console.log(managers)
       var startDay = new Date(lecture.sdt)
       var endDay = new Date(lecture.edt)
       fiNo.text(lecture.lno)
@@ -57,11 +71,11 @@ if (location.search == "") {
       fiQuantity.val(lecture.qty)
       fiPrice.val(lecture.pric)
       fiTotalhours.val(lecture.thrs)
-      for (var i = 0; i < managers.length; i++) {
-        let m = managers[i]
-        console.log(m)
-        $("<option>").html(m.name).appendTo(fiManager)
-      }
+      // for (var i = 0; i < managers.length; i++) {
+      //   let m = managers[i]
+      //   console.log(m)
+      //   $("<option>").html(m.name).appendTo(fiManager)
+      // }
     },
     function(error) {
       alert('강의 데이터 가져오는 중 오류 발생!')
