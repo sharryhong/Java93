@@ -1,8 +1,18 @@
 // nodejs http모듈 필요
 var http = require('http')
 var url = require('url')
+var path = require('path')
+var fs = require('fs')
 
 var getHandler = {}
+// 없는 url일 때 
+function notFound(request, response) {
+  response.writeHead(200, {'Content-Type': 'text/html;charset=UTF-8'})
+  fs.readFile(path.join(__dirname, './html/http-404.html'), function(err, data) {
+    if (err) throw error
+    response.end(data)
+  })
+}
 // 서버 생성 완료
 var server = http.createServer(function(request, response) {
   // method=get일 때 url query가 필요하기 때문에
@@ -17,8 +27,10 @@ var server = http.createServer(function(request, response) {
     request.query = urlInfo.query
   }
   if (handler) { // http://localhost:8888/들어갔을 때 실행
-    console.log('???')
+    // test.js의 두번째 아규먼트인 함수에 아규먼트 값 줌
     handler(request, response)
+  } else {
+    notFound(request, response)
   }
 })
 
