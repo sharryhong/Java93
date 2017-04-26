@@ -5,6 +5,8 @@ var path = require('path')
 var fs = require('fs')
 // post요청시 querystring모듈 필요
 var qs = require('querystring')
+// 정작 파일을 처리하기 위한 객체
+var envVars = {}
 // get요청일 때 담을 객체
 var getHandler = {}
 // post요청일 때 담을 객체
@@ -17,6 +19,31 @@ function notFound(request, response) {
     response.end(data)
   })
 }
+// 정적 파일 관련 함수
+function isStaticResource(method, servicePath) {
+  // 정적 자원은 get요청에 대해서만 처리하므로
+  if (method != 'GET') return false
+  // 환경변수에서 'static_dir'이라는 이름으로 저장된 디렉토리 경로가 있다면
+  // 그 경로에서 클라이언트가 요구하는 파일이 있는지 찾아본다.
+  // 있다면 true, 없다면 false를 리턴한다.
+  if (envVars.static_dir) { // 헤딩폴더가 있다면 
+    return fs.existsSync(path.join(__dirname, '..', envVars.static_dir, servicePath))
+  }
+  return false
+}
+
+function processStaticResource(servicePath, response) {
+  var filePath = path.join(__dirname, '..', envVars.static_dir, servicePath)
+  fs.readFile(filePath, function(err, data) {
+    if (err) {
+      response.write('URL 자원 처리중 오류 발생!')
+      response.end()
+      return
+    }
+    response.end(data)
+  })
+}
+
 // 함수로 코드 분리
 function findHandler(method, servicePath) {
   // console.log(method + servicePath);
@@ -33,6 +60,13 @@ function findHandler(method, servicePath) {
 var server = http.createServer(function(request, response) {
   // method=get일 때 url query가 필요하기 때문에
   var urlInfo = url.parse(request.url, true)
+  // 정적 자원이 있다면 데이터 가져온다.
+  // 즉, 지금은 정적자원인 test.html을 서버에서 실행하도록 한다.
+  if (isStaticResource(request.method, urlInfo.pathname)) {
+    processStaticResource(urlInfo.pathname, response)
+    return;
+  }
+
   var handler = findHandler(request.method, urlInfo.pathname)
   // console.log('..'+findHandler(request.method, urlInfo.pathname));
   if (handler) {
@@ -62,6 +96,9 @@ var server = http.createServer(function(request, response) {
 
 module.exports = function() {
   return {
+    use(name, value) {
+      envVars[name] = value
+    },
     get(url, cb) {
       // console.log('1' + url + cb); // test.js의 아규먼트들이 잘들어옴
       getHandler[url] = cb

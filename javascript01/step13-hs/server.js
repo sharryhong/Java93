@@ -1,7 +1,10 @@
-var miniExpress = require('./mini-express')
+// 폴더분리한 후 해당 폴더로 가서 모듈가져오기
+var miniExpress = require('./mini-express/mini-express')
 
 var app = miniExpress()
-// 8888포트번호로 서버 시작.
+// static source가 있는 폴더 지정하기
+app.use('static_dir', './static')
+
 app.get('/get_test.do', function(request, response) {
   response.writeHead(200, {'Content-Type': 'text/plain;charset=UTF-8'})
   response.write('GET 요청 처리!')
