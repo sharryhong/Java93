@@ -9,10 +9,10 @@ var app = express()
 app.use(express.static('public'))
 //
 app.use(bodyParser.urlencoded({ extended: false }))
-// 
-app.engine('html', cons.handlebars)
-app.set('view engine', 'html')
-app.set('views', path.join(__dirname, '/views'))
+//
+app.engine('hbs', cons.handlebars)
+app.set('view engine', 'hbs')
+app.set('aa', path.join(__dirname, '/aa'))
 // 서비스 라우터를 등록한다.
 // url이 student로 시작한다면,
 app.use('/student', require('./control/student-control'))
