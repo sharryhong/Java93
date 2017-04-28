@@ -5,14 +5,13 @@ module.exports = {
     this.connection = con
   },
 
-  selectList(pageNo, pageSize, successFn, errorFn) {
+  selectList(pageNo, successFn, errorFn) {
     this.connection.query(
-      "select lno, titl, date_format(sdt,'%Y-%m-%d') sdt2 , \
-      date_format(edt,'%Y-%m-%d') edt2, thrs, pric \
-      from lect \
-      order by sdt desc \
-      limit ?, ?",
-      [(pageNo - 1) * pageSize, pageSize],
+      'select m.mno, m.name, m.tel, m.email, t.hmpg \
+      from tcher t inner join memb m on t.tno=m.mno \
+      order by m.name asc \
+      limit ?, ?',
+      [(pageNo - 1) * 3, 3],
       function(error, results) {
         if (error) {
           errorFn(error)
@@ -24,7 +23,7 @@ module.exports = {
 
   countAll(successFn, errorFn) {
     this.connection.query(
-      'select count(*) cnt from lect',
+      'select count(*) cnt from tcher',
       function(error, results) {
         if (error) {
           errorFn(error)
@@ -36,12 +35,9 @@ module.exports = {
 
   selectOne(no, successFn, errorFn) {
     this.connection.query(
-      "select lno, titl, dscp, \
-      date_format(sdt,'%Y-%m-%d') sdt2, \
-      date_format(edt,'%Y-%m-%d') edt2, \
-      qty, pric, thrs, crmno, mrno \
-      from lect \
-      where lno=?",
+      'select m.mno, m.name, m.tel, m.email, t.hmpg, t.fcbk, t.twit \
+      from tcher t inner join memb m on t.tno=m.mno \
+      where t.tno=?',
       [no],
       function(error, results) {
         if (error) {
@@ -52,13 +48,10 @@ module.exports = {
       }) // connection.query()
   },//selectOne()
 
-  insert(lecture, successFn, errorFn) {
+  insert(teacher, successFn, errorFn) {
     this.connection.query(
-      'insert into lect(titl,dscp,sdt,edt,qty,pric,thrs,crmno,mrno) \
-       values(?,?,?,?,?,?,?,?,?)',
-      [lecture.title, lecture.content, lecture.startDate,
-       lecture.endDate, lecture.quantity, lecture.price,
-       lecture.hours, lecture.classroom, lecture.manager],
+      'insert into tcher(tno,hmpg,fcbk,twit) values(?,?,?,?)',
+      [ teacher.no, teacher.homepage, teacher.facebook, teacher.twitter],
       function(error, result) {
         if (error) {
           errorFn(error)
@@ -68,12 +61,10 @@ module.exports = {
       }) //connection.query()
   }, //insert
 
-  update(l, successFn, errorFn) {
+  update(teacher, successFn, errorFn) {
     this.connection.query(
-      'update lect set titl=?, dscp=?, sdt=?, edt=?, qty=?, pric=?, thrs=?, crmno=?, mrno=? \
-      where lno=?',
-      [l.title, l.content, l.startDate, l.endDate, l.quantity,
-      l.price, l.hours, l.classroom, l.manager, l.no],
+      'update tcher set hmpg=?, fcbk=?, twit=? where tno=?',
+      [teacher.homepage, teacher.facebook, teacher.twitter, teacher.no],
       function(error, result) {
         if (error) {
           errorFn(error)
@@ -85,7 +76,7 @@ module.exports = {
 
   delete(no, successFn, errorFn) {
     this.connection.query(
-      'delete from lect where lno=?',
+      'delete from tcher where tno=?',
       [no],
       function(error, result) {
         if (error) {

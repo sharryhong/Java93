@@ -7,11 +7,10 @@ module.exports = {
 
   selectList(pageNo, pageSize, successFn, errorFn) {
     this.connection.query(
-      "select lno, titl, date_format(sdt,'%Y-%m-%d') sdt2 , \
-      date_format(edt,'%Y-%m-%d') edt2, thrs, pric \
-      from lect \
-      order by sdt desc \
-      limit ?, ?",
+      'select m.mno, m.name, m.tel, m.email, s.work \
+      from stud s inner join memb m on s.sno=m.mno  \
+      order by m.name asc \
+      limit ?, ?',
       [(pageNo - 1) * pageSize, pageSize],
       function(error, results) {
         if (error) {
@@ -24,7 +23,7 @@ module.exports = {
 
   countAll(successFn, errorFn) {
     this.connection.query(
-      'select count(*) cnt from lect',
+      'select count(*) cnt from stud',
       function(error, results) {
         if (error) {
           errorFn(error)
@@ -36,12 +35,9 @@ module.exports = {
 
   selectOne(no, successFn, errorFn) {
     this.connection.query(
-      "select lno, titl, dscp, \
-      date_format(sdt,'%Y-%m-%d') sdt2, \
-      date_format(edt,'%Y-%m-%d') edt2, \
-      qty, pric, thrs, crmno, mrno \
-      from lect \
-      where lno=?",
+      'select m.mno, m.name, m.tel, m.email, s.work, s.schl_nm \
+      from stud s inner join memb m on s.sno=m.mno \
+      where s.sno=?',
       [no],
       function(error, results) {
         if (error) {
@@ -52,13 +48,10 @@ module.exports = {
       }) // connection.query()
   },//selectOne()
 
-  insert(lecture, successFn, errorFn) {
+  insert(student, successFn, errorFn) {
     this.connection.query(
-      'insert into lect(titl,dscp,sdt,edt,qty,pric,thrs,crmno,mrno) \
-       values(?,?,?,?,?,?,?,?,?)',
-      [lecture.title, lecture.content, lecture.startDate,
-       lecture.endDate, lecture.quantity, lecture.price,
-       lecture.hours, lecture.classroom, lecture.manager],
+      'insert into stud(sno,work,schl_nm) values(?,?,?)',
+      [ student.no, student.working, student.schoolName],
       function(error, result) {
         if (error) {
           errorFn(error)
@@ -68,12 +61,10 @@ module.exports = {
       }) //connection.query()
   }, //insert
 
-  update(l, successFn, errorFn) {
+  update(student, successFn, errorFn) {
     this.connection.query(
-      'update lect set titl=?, dscp=?, sdt=?, edt=?, qty=?, pric=?, thrs=?, crmno=?, mrno=? \
-      where lno=?',
-      [l.title, l.content, l.startDate, l.endDate, l.quantity,
-      l.price, l.hours, l.classroom, l.manager, l.no],
+      'update stud set work=?, schl_nm=? where sno=?',
+      [student.working, student.schoolName, student.no],
       function(error, result) {
         if (error) {
           errorFn(error)
@@ -85,7 +76,7 @@ module.exports = {
 
   delete(no, successFn, errorFn) {
     this.connection.query(
-      'delete from lect where lno=?',
+      'delete from stud where sno=?',
       [no],
       function(error, result) {
         if (error) {

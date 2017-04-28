@@ -16,27 +16,29 @@
 </head>
 <body>
 <div class="container">
-<h1>학생 목록</h1>
-<table id="student-tbl" class="table table-hover">
+<h1>강의 목록</h1>
+<table id="lecture-tbl" class="table table-hover">
 <thead>
   <tr>
     <th>번호</th>
-    <th>이름</th>
-    <th>전화</th>
-    <th>이메일</th>
-    <th>재직여부</th>
+    <th>제목</th>
+    <th>시작일</th>
+    <th>종료일</th>
+    <th>강의시간</th>
+    <th>수업료</th>
   </tr>
 </thead>
-<tbody>
 {{#each data}}
   <tr>
-    <td>{{mno}}</td>
-    <td><a href="detail.do?no={{mno}}">{{name}}</a></td>
-    <td>{{tel}}</td>
-    <td>{{email}}</td>
-    <td>{{work}}</td>
+    <td>{{lno}}</td>
+    <td><a href="detail.do?no={{lno}}">{{titl}}</a></td>
+    <td>{{sdt2}}</td>
+    <td>{{edt2}}</td>
+    <td>{{thrs}}</td>
+    <td>{{pric}}</td>
   </tr>
 {{/each}}
+<tbody>
 </tbody>
 </table>
 
@@ -45,6 +47,7 @@
 <a href="list.do?pageNo={{nextPageNo}}" class="btn btn-primary" {{disabledNextBtn}}>다음</a>
 <a href="form.do" class="btn btn-primary">추가</a>
 </div>
+
 
 </body>
 </html>

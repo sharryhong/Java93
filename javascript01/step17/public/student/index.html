@@ -28,7 +28,18 @@
   </tr>
 </thead>
 <tbody>
-{{#each data}}
+</tbody>
+</table>
+
+<button type="button" class="btn btn-primary" id="prev-btn">이전</button>
+<span id="page-no">1</span>
+<button type="button" class="btn btn-primary" id="next-btn">다음</button>
+<a href="view.html" class="btn btn-primary">추가</a>
+</div>
+
+<script id="tbody-template" type="text/x-handlebars-template">
+  <!-- result안에 있는 list반복 -->
+{{#each list}}
   <tr>
     <td>{{mno}}</td>
     <td><a href="detail.do?no={{mno}}">{{name}}</a></td>
@@ -37,15 +48,11 @@
     <td>{{work}}</td>
   </tr>
 {{/each}}
-</tbody>
-</table>
+</script>
 
-<a href="list.do?pageNo={{prevPageNo}}" class="btn btn-primary" {{disabledPrevBtn}}>이전</a>
-<span id="page-no">{{pageNo}}</span>
-<a href="list.do?pageNo={{nextPageNo}}" class="btn btn-primary" {{disabledNextBtn}}>다음</a>
-<a href="form.do" class="btn btn-primary">추가</a>
-</div>
-
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/handlebars/dist/handlebars.min.js"></script>
+<script src="index.js"></script>
 </body>
 </html>
 
