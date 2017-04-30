@@ -64,35 +64,6 @@ router.get('/detail.json', function(request, response) {
   })
 })
 
-// router.get('/detail.json', function(request, response) {
-//   var no = parseInt(request.query.no)
-//   lectureService.detail(no, function(result) {
-//     classroomService.listName(function(classrooms) {
-//       managerService.listName(function(managers) {
-//         response.render('lecture/view', {
-//           'detail': true,
-//           'data': result,
-//           'classrooms': classrooms,
-//           'managers': managers
-//         })
-//
-//       }, function(error) {
-//         response.render('error', {
-//           'message': '강의실 데이터를 가져오는 중 오류가 발생했습니다.'})
-//         console.log(error)
-//       })
-//     }, function(error) {
-//       response.render('error', {
-//         'message': '강의실 데이터를 가져오는 중 오류가 발생했습니다.'})
-//       console.log(error)
-//     })
-//   }, function(error) {
-//     response.render('error', {
-//       'message': '강의 데이터를 가져오는 중 오류가 발생했습니다.'})
-//     console.log(error)
-//   })
-// })
-
 router.post('/update.json', function(request, response) {
   lectureService.update({
     no: request.body.no,
@@ -109,8 +80,9 @@ router.post('/update.json', function(request, response) {
     response.redirect('list.json')
 
   }, function(error) {
-    response.render('error', {
-      'message': '강의 데이터를 변경하는 중 오류가 발생했습니다.'})
+    response.status(200)
+            .set('Content-Type', 'text/plain;charset=UTF-8')
+            .end('error')
     console.log(error)
   })
 })

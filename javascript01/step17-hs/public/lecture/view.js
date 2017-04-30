@@ -1,7 +1,7 @@
 var viewTags = $('.bit-view'),
     newTags = $('.bit-new'),
-    classroomsTag = $('#fi-classroom'),
-    managersTag = $('#fi-manager'),
+    fiClassroom = $('#fi-classroom'),
+    fiManager = $('#fi-manager'),
     fiNo = $('#fi-no'),
     fiTitle = $('#fi-title'),
     fiContent = $('#fi-content'),
@@ -21,9 +21,15 @@ if (no == 0) { // 새 강의 등록
 
   $('#add-btn').click(function() {
     $.post('add.json', {
-      'email': fiEmail.val(),
-      'name': fiName.val(),
-      'tel': fiTel.val()
+      'title': fiTitle.val(),
+      'content': fiContent.val(),
+      'startDate': fiStartDate.val(),
+      'endDate': fiEndDate.val(),
+      'quantity': fiQuantity.val(),
+      'price': fiPrice.val(),
+      'hours': fiHours.val(),
+      'classroom': fiClassroom.val(),
+      'manager': fiManager.val()
     }, function(result) {
       location.href = 'index.html'
     }, 'json')
@@ -43,21 +49,27 @@ if (no == 0) { // 새 강의 등록
 
     var templateFn1 = Handlebars.compile($('#classrooms-template').text())
     var generatedHTML1 = templateFn1(result)
-    classroomsTag.html(generatedHTML1)
-    classroomsTag.children().filter("option[value=" + result.result.crmno +"]").prop('selected', true)
+    fiClassroom.html(generatedHTML1)
+    fiClassroom.children().filter("option[value=" + result.result.crmno +"]").prop('selected', true)
 
     var templateFn2 = Handlebars.compile($('#managers-template').text())
     var generatedHTML2 = templateFn2(result)
-    managersTag.html(generatedHTML2)
-    managersTag.children().filter("option[value=" + result.result.mrno +"]").prop('selected', true)
+    fiManager.html(generatedHTML2)
+    fiManager.children().filter("option[value=" + result.result.mrno +"]").prop('selected', true)
   })
 
   $('#upd-btn').click(function() {
     $.post('update.json', {
       'no': fiNo.text(),
-      'email': fiEmail.val(),
-      'name': fiName.val(),
-      'tel': fiTel.val(),
+      'title': fiTitle.val(),
+      'content': fiContent.val(),
+      'startDate': fiStartDate.val(),
+      'endDate': fiEndDate.val(),
+      'quantity': fiQuantity.val(),
+      'price': fiPrice.val(),
+      'hours': fiHours.val(),
+      'classroom': fiClassroom.val(),
+      'manager': fiManager.val()
     }, function(result) {
       location.href = 'index.html'
     }, 'json')
