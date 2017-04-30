@@ -1,5 +1,5 @@
 var pageNoTag = $('#page-no'),
-    tbody = $('#student-tbl > tbody'),
+    tbody = $('#lecture-tbl > tbody'),
     prevBtn = $('#prev-btn'),
     nextBtn = $('#next-btn'),
     pageSize = 3;
@@ -9,7 +9,7 @@ var currPageNo = parseInt(pageNoTag.text())
 displayList(1)
 
 function displayList(pageNo) {
-  // 서버에서 학생 목록 데이터를 받아 온다.
+  // 서버에서 강의 목록 데이터를 받아 온다.
   $.getJSON('list.json', {'pageNo':pageNo, 'pageSize': pageSize}, function(result) {
     var list = result.list;
     var totalCount = result.totalCount;
