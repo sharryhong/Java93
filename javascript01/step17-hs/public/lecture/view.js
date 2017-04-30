@@ -16,6 +16,19 @@ try {
   no = location.href.split('?')[1].split('=')[1]
 } catch (err) {}
 
+// 강의실, 매니저 select, option elements
+function CroomManagerList() {
+  $.getJSON('detail.json', {'no': no}, function(result) {
+    var templateFn1 = Handlebars.compile($('#classrooms-template').text())
+    var generatedHTML1 = templateFn1(result)
+    fiClassroom.html(generatedHTML1)
+    var templateFn2 = Handlebars.compile($('#managers-template').text())
+    var generatedHTML2 = templateFn2(result)
+    fiManager.html(generatedHTML2)
+  })
+}
+CroomManagerList()
+
 if (no == 0) { // 새 강의 등록
   viewTags.css('display', 'none')
 
@@ -37,6 +50,7 @@ if (no == 0) { // 새 강의 등록
 } else { // 강의 정보 조회
   newTags.css('display', 'none')
 
+
   $.getJSON('detail.json', {'no': no}, function(result) {
     fiNo.text(result.result.lno)
     fiTitle.val(result.result.titl)
@@ -47,14 +61,8 @@ if (no == 0) { // 새 강의 등록
     fiHours.val(result.result.thrs)
     fiPrice.val(result.result.pric)
 
-    var templateFn1 = Handlebars.compile($('#classrooms-template').text())
-    var generatedHTML1 = templateFn1(result)
-    fiClassroom.html(generatedHTML1)
+    // mysql에서 데이터 받아온 강의실, 매니저 selected 체크하기
     fiClassroom.children().filter("option[value=" + result.result.crmno +"]").prop('selected', true)
-
-    var templateFn2 = Handlebars.compile($('#managers-template').text())
-    var generatedHTML2 = templateFn2(result)
-    fiManager.html(generatedHTML2)
     fiManager.children().filter("option[value=" + result.result.mrno +"]").prop('selected', true)
   })
 
