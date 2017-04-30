@@ -41,10 +41,15 @@ if (no == 0) { // 새 강의 등록
     fiHours.val(result.result.thrs)
     fiPrice.val(result.result.pric)
 
-    var templateFn = Handlebars.compile($('#classrooms-template').text())
-    var generatedHTML = templateFn(result)
-    classroomsTag.html(generatedHTML)
+    var templateFn1 = Handlebars.compile($('#classrooms-template').text())
+    var generatedHTML1 = templateFn1(result)
+    classroomsTag.html(generatedHTML1)
     classroomsTag.children().filter("option[value=" + result.result.crmno +"]").prop('selected', true)
+
+    var templateFn2 = Handlebars.compile($('#managers-template').text())
+    var generatedHTML2 = templateFn2(result)
+    managersTag.html(generatedHTML2)
+    managersTag.children().filter("option[value=" + result.result.mrno +"]").prop('selected', true)
   })
 
   $('#upd-btn').click(function() {
