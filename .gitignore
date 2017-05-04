@@ -3,6 +3,7 @@
 **/node_modules
 **/.gradle
 **.class
+**/.settings
 html01/build.gradle
 XML.pdf
 javascript01/build.gradle
