@@ -4,7 +4,7 @@ window.$ = window.jQuery = require('jquery')
 let xCol = 4, // 행의 갯수
     yRow = 4, // 열의 갯수
     numArray = [], // 숫자들 담을 배열
-    blankEl = '', // 빈칸 엘리먼트
+    blankEl = null, // 빈칸 엘리먼트
     puzzleTable = $('#puzzle-table');
 
 makeNumArray()
@@ -31,9 +31,15 @@ function displayNum() {
   for (let i = 0; i < xCol; i++) {
     html += '<tr>'
     for (let j = 0; j < yRow; j++) {
-      html += '<td class="num btn btn-default">' + numArray[i][j] + '</td>'
+      if (numArray[i][j] == '') {
+        html += '<td id="blank">' + numArray[i][j] + '</td>'
+      } else {
+        html += '<td class="num">' + numArray[i][j] + '</td>'
+      }
     }
     html += '</tr>'
+    blankEl = $('#blank')
+    console.log(blankEl);
   }
   puzzleTable.html(html)
 }
