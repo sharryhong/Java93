@@ -1,5 +1,8 @@
 .container {
+  padding: 0;
+  width: 400px;
   margin-top: 20px;
+  box-sizing: border-box;
 }
 .num {
   padding: 0;
