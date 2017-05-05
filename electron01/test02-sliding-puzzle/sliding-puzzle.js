@@ -14,19 +14,20 @@ function makeNumArray() {
       numArray[i][j] = i * xCol + j + 1 // 숫자 넣기
     }
   }
+  displayNum()
 }
-
-makeNumArray()
 
 // 숫자 화면 UI
 function displayNum() {
-  var col = null
+  var html = ''
   for (let i = 0; i < xCol; i++) {
-    col = puzzleTable.append('<tr>')
+    html += '<tr>'
     for (let j = 0; j < yRow; j++) {
-      col.append('<td>')
+      html += '<td class="num btn btn-default">' + numArray[i][j] + '</td>'
     }
+    html += '</tr>'
   }
+  puzzleTable.html(html)
 }
 
-displayNum()
+makeNumArray()

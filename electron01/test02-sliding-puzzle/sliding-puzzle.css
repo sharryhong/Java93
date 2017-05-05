@@ -1,4 +1,11 @@
 .container {
-  width: 90%;
-  border: 1px solid purple;
+  margin-top: 20px;
+}
+.num {
+  padding: 0;
+  width: 100px;
+  height: 100px;
+  font-size: 30px;
+  text-align: center;
+  line-height: 100px;
 }
