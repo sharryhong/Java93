@@ -1,19 +1,19 @@
 "use strict"
 window.$ = window.jQuery = require('jquery')
 
-let xCol = 4, // 행의 갯수
-    yRow = 4, // 열의 갯수
-    numArray = [], // 숫자들 담을 배열
-    nums = null, // 숫자버튼 엘리먼트
-    blankEl = null, // 빈칸 엘리먼트
-    blankX = 0,
-    blankY = 0,
+let xCol = 4,        // 행의 갯수
+    yRow = 4,        // 열의 갯수
+    numArray = [],   // 숫자들 담을 배열
+    nums = null,     // 숫자들 엘리먼트
+    blankEl = null,  // 빈칸 엘리먼트
+    blankX = 0,      // 빈칸 엘리먼트의 행 값
+    blankY = 0,      // 빈칸 엘리먼트의 열 값
     canClickEl = [], // 클릭할 수 있는 엘리먼트
     puzzleTable = $('#puzzle-table');
 
 makeNumArray()
 
-// 배열에 숫자들 담는 함수
+// 배열에 숫자들 담기
 function makeNumArray() {
   var startNum = 1
   var totalNum = xCol * yRow
@@ -45,33 +45,57 @@ function displayNum() {
   }
   puzzleTable.html(html)
 
-  // 빈칸 엘리먼트의 위, 오른쪽, 아래, 왼쪽 엘리먼트만 클릭이 되도록하기
+  canClick()
+
+}
+
+// 빈칸 엘리먼트의 위, 오른쪽, 아래, 왼쪽 엘리먼트만 클릭이 되도록하기
+function canClick() {
   blankEl = $('#blank')
   blankX = blankEl.attr("data-x")
   blankY = blankEl.attr("data-y")
+  // console.log(blankX, blankY);
+  // nums = null
   nums = $('.num')
+  nums.removeClass('can-click')
+  canClickEl = []
   for (let el of nums) {
-    if (el.getAttribute("data-x") == blankX && el.getAttribute("data-y") == blankY - 1) { // 위
-      el.classList.add('can-click')
-      canClickEl.push(el)
+    console.log(el);
+    el = $(el)
+    if (el.attr("data-x") == blankX && el.attr("data-y") == blankY - 1) { // 위
+      // console.log(el , '위')
+      el.addClass('can-click')
+      canClickEl.push(el[0])
     }
-    if (el.getAttribute("data-x") == blankX - 1 && el.getAttribute("data-y") == blankY) { // 왼쪽
-      el.classList.add('can-click')
-      canClickEl.push(el)
+    if (el.attr("data-x") == blankX + 1 && el.attr("data-y") == blankY) { // 오른쪽
+      // console.log(el , '오')
+      el.addClass('can-click')
+      canClickEl.push(el[0])
+    }
+    if (el.attr("data-x") == blankX - 1 && el.attr("data-y") == blankY) { // 왼쪽
+      // console.log(el , '왼')
+      el.addClass('can-click')
+      canClickEl.push(el[0])
+    }
+    if (el.attr("data-x") == blankX && el.attr("data-y") == blankY + 1) { // 아래
+      // console.log(el , '아래')
+      el.addClass('can-click')
+      canClickEl.push(el[0])
     }
   }
-
+  console.log('-----------------------------------------------------');
   canClickEl.push(blankEl[0]) // 빈칸도 추가해야 제대로 동작한다.
-  for (let el of canClickEl) {
-    el = $(el) // 일반 DOM 엘리먼트를 jQuery 엘리먼트로
-    el.click(function() {
-      var firstNum = $(this)
-      var txt = parseInt(firstNum.text())
-      blankEl.removeAttr('id').addClass('num can-click').html(txt)
-      firstNum.removeClass('num can-click').text('').attr('id', 'blank')
-      blankEl = firstNum
-    })
-  }
+  canClickEl = $(canClickEl)
+  console.log(canClickEl);
+
+  canClickEl.click(function() {
+    var firstNum = $(this)
+    var txt = parseInt(firstNum.text())
+    blankEl.removeAttr('id').addClass('num can-click').html(txt)
+    firstNum.removeClass('num can-click').text('').attr('id', 'blank')
+    blankEl = firstNum
+    canClick()
+  })
 }
 
 
