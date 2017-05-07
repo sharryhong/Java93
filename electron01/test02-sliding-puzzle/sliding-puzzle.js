@@ -9,6 +9,7 @@ let xCol = 4,        // 행의 갯수
     blankX = 0,      // 빈칸 엘리먼트의 행 값
     blankY = 0,      // 빈칸 엘리먼트의 열 값
     canClickEl = null, // 클릭할 수 있는 엘리먼트
+    setClick = null,
     puzzleTable = $('#puzzle-table');
 
 makeNumArray()
@@ -55,34 +56,43 @@ function canClick() {
   blankX = parseInt(blankEl.attr("data-x"))
   blankY = parseInt(blankEl.attr("data-y"))
   btns = $('.btn')
-  for (let el of btns) {
-    el = $(el)
-    if (el.attr("data-x") == blankX && el.attr("data-y") == blankY - 1) { // 위
-      el.addClass('can-click')
-    }
-    else if (el.attr("data-x") == blankX - 1 && el.attr("data-y") == blankY) { // 왼쪽
-      el.addClass('can-click')
-    }
-    else if (el.attr("data-x") == blankX + 1 && el.attr("data-y") == blankY) { // 오른쪽
-      el.addClass('can-click')
-    }
-    else if (el.attr("data-x") == blankX && el.attr("data-y") == blankY + 1) { // 아래
-      el.addClass('can-click')
-    } else {
-      el.removeClass('can-click')
-    }
-  }
-  canClickEl = null
-  canClickEl = $('.can-click')
-
+  // for (let el of btns) {
+  //   el = $(el)
+  //   console.log(el);
+  //   if (el.attr("data-x") == blankX && el.attr("data-y") == blankY - 1) { // 위
+  //     el.addClass('can-click')
+  //   }
+  //   else if (el.attr("data-x") == blankX - 1 && el.attr("data-y") == blankY) { // 왼쪽
+  //     el.addClass('can-click')
+  //   }
+  //   else if (el.attr("data-x") == blankX + 1 && el.attr("data-y") == blankY) { // 오른쪽
+  //     el.addClass('can-click')
+  //   }
+  //   else if (el.attr("data-x") == blankX && el.attr("data-y") == blankY + 1) { // 아래
+  //     el.addClass('can-click')
+  //   } else {
+  //     el.removeClass('can-click')
+  //   }
+  // }
+  // canClickEl = null
+  // canClickEl = $('.can-click')
   // class="can-click" 인 녀석들만 클릭되게 하기
-  canClickEl.click(function() {
+  // setClick = canClickEl.click(function() {
+  //   console.log(canClickEl);
+  //   exchange($(this))
+  // })
+  btns.click(function() {
+    // console.log(canClickEl);
     exchange($(this))
   })
 }
 
+
+
 // 빈칸과 클릭한 숫자 바꾸기
 function exchange(thisEl) {
+  console.log('ok');
+  setClick = null
   // 자꾸 기존 class="can-click" 이었던 놈들도 클릭이 되어 조건문을 두었다.
   // canClickEl.click()이 메모리에 남아있는 것같다. clear할 수 있는 방법은?
   if ( (thisEl.attr("data-x") == blankX && thisEl.attr("data-y") == blankY - 1) ||
@@ -94,12 +104,17 @@ function exchange(thisEl) {
     thisEl.removeClass('num can-click').text('').attr('id', 'blank')
     blankEl = thisEl
   }
-  canClick()
+  // canClick()
+  blankEl = $('#blank')
+  blankX = parseInt(blankEl.attr("data-x"))
+  blankY = parseInt(blankEl.attr("data-y"))
+  btns = $('.btn')
 }
 
 // 섞기
 $('.mix').click(function() {
   var no = parseInt(Math.random() * canClickEl.length)
+  console.log(no);
   canClickEl = canClickEl[no]
   canClickEl.click(function() {
     exchange($(this))

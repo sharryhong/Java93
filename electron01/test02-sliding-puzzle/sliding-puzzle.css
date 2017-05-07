@@ -26,18 +26,18 @@ table {
   border-radius: 5px;
   box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
 }
-.can-click {
+/*.can-click {
   color: white;
   background-color: #27C5B4;
   cursor: pointer;
-}
-.can-click:hover {
+}*/
+/*.can-click:hover {
   color: #426F6A;
   background-color: #04FAE0;
 }
 .can-click:active {
   background-color: #27C5B4;
-}
+}*/
 
 #blank {
   background-color: #A09D95;
