@@ -13,7 +13,9 @@ let xCol = 4,          // 행의 갯수
     clickMix = false,  // 섞기버튼 클릭했는지 여부체크
     correctAnswer = '', // 정답확인
     puzzleTable = $('#puzzle-table'),
-    countNum = $('#count');
+    countNum = $('#count'),
+    easyMode = $("#easymode"),
+    hardMode = $("#hardmode");
 
 makeNumArray()
 
@@ -117,6 +119,9 @@ function clickBtn() {
 
 // 섞기
 $('.mix').click(function() {
+  console.log($("input:checked").val());
+  var mode = $("input:checked").val()
+  // console.log(easyMode.val());
   countNum.text("0")
   clickMix = true
   var interval = setInterval(function() {
@@ -124,12 +129,12 @@ $('.mix').click(function() {
     var no = Math.floor(Math.random() * canClickEl.length)
     canClickEl = canClickEl[no]
     canClickEl.click()
-  }, 25) //25
+  }, 25)
   setTimeout(function() {
     clearInterval(interval)
     clickMix = false
     count = 1
-  }, 250) //2500 (100번섞기)
+  }, 25 * mode) 
 })
 
 
