@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Sliding Puzzle Game</title>
+    <link rel="stylesheet" href="sliding-puzzle.css">
+  </head>
+  <body>
+    <div class="container">
+      <table id="puzzle-table">
+        <tr>
+          <td class="btn num" data-x="0" data-y="0">1</td>
+          <td class="btn num" data-x="1" data-y="0">2</td>
+          <td class="btn num" data-x="2" data-y="0">3</td>
+          <td class="btn num" data-x="3" data-y="0">4</td>
+        </tr>
+        <tr>
+          <td class="btn num" data-x="0" data-y="1">5</td>
+          <!-- <td class="btn num" data-x="1" data-y="1">6</td> -->
+          <td id="blank" class="btn" data-x="1" data-y="1"></td>
+          <td class="btn num" data-x="2" data-y="1">7</td>
+          <td class="btn num" data-x="3" data-y="1">8</td>
+        </tr>
+        <tr>
+          <td class="btn num" data-x="0" data-y="2">9</td>
+          <td class="btn num" data-x="1" data-y="2">10</td>
+          <td class="btn num" data-x="2" data-y="2">11</td>
+          <td class="btn num" data-x="3" data-y="2">12</td>
+        </tr>
+        <tr>
+          <td class="btn num" data-x="0" data-y="3">13</td>
+          <td class="btn num" data-x="1" data-y="3">14</td>
+          <td class="btn num" data-x="2" data-y="3">15</td>
+          <td class="btn num" data-x="3" data-y="3">6</td>
+        </tr>
+      </table>
+    </div>
+  <script src="sliding-puzzle.js"></script>
+  </body>
+</html>
