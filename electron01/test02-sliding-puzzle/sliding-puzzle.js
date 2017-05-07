@@ -9,8 +9,10 @@ let xCol = 4,        // 행의 갯수
     blankX = 0,      // 빈칸 엘리먼트의 행 값
     blankY = 0,      // 빈칸 엘리먼트의 열 값
     canClickEl = null, // 클릭할 수 있는 엘리먼트
-    setClick = null,
-    puzzleTable = $('#puzzle-table');
+    count = 1,         // 몇 번 클릭했나
+    clickMix = false,  // 섞기버튼 클릭했는지 여부체크
+    puzzleTable = $('#puzzle-table'),
+    countNum = $('#count');
 
 makeNumArray()
 
@@ -82,8 +84,9 @@ function clickBtn() {
   canClick() // 초기 한번 셋팅
   btns.click(function() {
     console.log('ok');
+    if (!clickMix) countNum.text(count++)
     var thisEl = $(this)
-    // 상하좌우만
+    // 상하좌우만 바꿀 수 있게하기
     if ( (thisEl.attr("data-x") == blankX && thisEl.attr("data-y") == blankY - 1) ||
           (thisEl.attr("data-x") == blankX - 1 && thisEl.attr("data-y") == blankY) ||
           (thisEl.attr("data-x") == blankX + 1 && thisEl.attr("data-y") == blankY) ||
@@ -99,17 +102,18 @@ function clickBtn() {
 
 // 섞기
 $('.mix').click(function() {
+  clickMix = true
   var interval = setInterval(function() {
     // parseInt로 했더니 고르지않은 랜덤수가 얻어져서 Math.Floor로 수정함
     var no = Math.floor(Math.random() * canClickEl.length)
     canClickEl = canClickEl[no]
-    canClickEl.click(function() {
-      exchange($(this))
-    })
-  }, 50)
+    canClickEl.click()
+  }, 25) //25
   setTimeout(function() {
     clearInterval(interval)
-  }, 2500)
+    clickMix = false
+    count = 1
+  }, 2500) //2500 (100번섞기)
 })
 
 

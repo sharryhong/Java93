@@ -48,4 +48,11 @@ table {
   height: 50px;
   font-size: 20px;
   border-radius: 5px;
+  color: #554D41;
+  background-color: #FBE47A;
+}
+
+#count {
+  display: inline-block;
+  margin-left: 10px;
 }
