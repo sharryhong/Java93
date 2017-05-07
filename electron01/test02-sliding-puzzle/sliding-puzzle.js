@@ -99,11 +99,17 @@ function clickBtn() {
 
 // 섞기
 $('.mix').click(function() {
-  var no = parseInt(Math.random() * canClickEl.length)
-  canClickEl = canClickEl[no]
-  canClickEl.click(function() {
-    exchange($(this))
-  })
+  var interval = setInterval(function() {
+    // parseInt로 했더니 고르지않은 랜덤수가 얻어져서 Math.Floor로 수정함
+    var no = Math.floor(Math.random() * canClickEl.length)
+    canClickEl = canClickEl[no]
+    canClickEl.click(function() {
+      exchange($(this))
+    })
+  }, 50)
+  setTimeout(function() {
+    clearInterval(interval)
+  }, 2500)
 })
 
 
