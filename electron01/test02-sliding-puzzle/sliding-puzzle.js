@@ -1,16 +1,17 @@
 "use strict"
 window.$ = window.jQuery = require('jquery')
 
-let xCol = 4,        // 행의 갯수
-    yRow = 4,        // 열의 갯수
-    numArray = [],   // 숫자들 담을 배열
-    btns = null,     // 모든 엘리먼트
-    blankEl = null,  // 빈칸 엘리먼트
-    blankX = 0,      // 빈칸 엘리먼트의 행 값
-    blankY = 0,      // 빈칸 엘리먼트의 열 값
-    canClickEl = null, // 클릭할 수 있는 엘리먼트
-    count = 1,         // 몇 번 클릭했나
+let xCol = 4,          // 행의 갯수
+    yRow = 4,          // 열의 갯수
+    numArray = [],     // 숫자들 담을 배열
+    btns = null,       // 모든 엘리먼트
+    blankEl = null,    // 빈칸 엘리먼트
+    blankX = 0,        // 빈칸 엘리먼트의 행 값
+    blankY = 0,        // 빈칸 엘리먼트의 열 값
+    canClickEl = null, // 클릭할 수 있는 엘리먼트(상하좌우)
+    count = 1,         // 몇 번 클릭했나 카운트
     clickMix = false,  // 섞기버튼 클릭했는지 여부체크
+    correctAnswer = '', // 정답확인
     puzzleTable = $('#puzzle-table'),
     countNum = $('#count');
 
@@ -29,6 +30,12 @@ function makeNumArray() {
       }
     }
   }
+  // 정답확인을 위해 초기값 저장
+  for (let i in numArray) {
+    correctAnswer += numArray[i].join("")
+  }
+  console.log(correctAnswer);
+
   displayNum()
 }
 
@@ -96,12 +103,21 @@ function clickBtn() {
       thisEl.removeClass('num can-click').text('').attr('id', 'blank')
       blankEl = thisEl
     }
+
     canClick()
+
+    // 정답비교
+    var btnText = btns.text()
+    console.log(btnText);
+    if (btnText == correctAnswer && clickMix == false && blankEl.attr("data-x") == 3 && blankEl.attr("data-y") == 3) {
+      alert("축하합니다!!! ^0^*" + (count-1) + "번째에 성공하셨습니다!! ")
+    }
   })
 }
 
 // 섞기
 $('.mix').click(function() {
+  countNum.text("0")
   clickMix = true
   var interval = setInterval(function() {
     // parseInt로 했더니 고르지않은 랜덤수가 얻어져서 Math.Floor로 수정함
@@ -113,19 +129,8 @@ $('.mix').click(function() {
     clearInterval(interval)
     clickMix = false
     count = 1
-  }, 2500) //2500 (100번섞기)
+  }, 250) //2500 (100번섞기)
 })
-
-
-
-
-
-
-
-
-
-
-
 
 
 
