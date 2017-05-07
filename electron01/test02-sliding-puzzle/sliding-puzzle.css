@@ -6,6 +6,8 @@ body {
   width: 410px;
   margin: 20px auto;
   box-sizing: border-box;
+}
+table {
   border: 5px solid #A09D95;
 }
 
@@ -39,4 +41,12 @@ body {
 
 #blank {
   background-color: #A09D95;
+}
+
+.mix {
+  margin-top: 20px;
+  width: 100px;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 5px;
 }

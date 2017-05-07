@@ -74,24 +74,37 @@ function canClick() {
   }
   canClickEl = null
   canClickEl = $('.can-click')
+
   // class="can-click" 인 녀석들만 클릭되게 하기
   canClickEl.click(function() {
-    var thisEl = $(this)
-    // 자꾸 기존 class="can-click" 이었던 놈들도 클릭이 되어 조건문을 두었다.
-    // canClickEl.click()이 메모리에 남아있는 것같다. clear할 수 있는 방법은? 
-    if ( (thisEl.attr("data-x") == blankX && thisEl.attr("data-y") == blankY - 1) ||
-          (thisEl.attr("data-x") == blankX - 1 && thisEl.attr("data-y") == blankY) ||
-          (thisEl.attr("data-x") == blankX + 1 && thisEl.attr("data-y") == blankY) ||
-          (thisEl.attr("data-x") == blankX && thisEl.attr("data-y") == blankY + 1) ) {
-      var txt = parseInt(thisEl.text())
-      blankEl.removeAttr('id').addClass('num can-click').html(txt)
-      thisEl.removeClass('num can-click').text('').attr('id', 'blank')
-      blankEl = thisEl
-      canClick()
-    }
+    exchange($(this))
   })
 }
 
+// 빈칸과 클릭한 숫자 바꾸기
+function exchange(thisEl) {
+  // 자꾸 기존 class="can-click" 이었던 놈들도 클릭이 되어 조건문을 두었다.
+  // canClickEl.click()이 메모리에 남아있는 것같다. clear할 수 있는 방법은?
+  if ( (thisEl.attr("data-x") == blankX && thisEl.attr("data-y") == blankY - 1) ||
+        (thisEl.attr("data-x") == blankX - 1 && thisEl.attr("data-y") == blankY) ||
+        (thisEl.attr("data-x") == blankX + 1 && thisEl.attr("data-y") == blankY) ||
+        (thisEl.attr("data-x") == blankX && thisEl.attr("data-y") == blankY + 1) ) {
+    var txt = parseInt(thisEl.text())
+    blankEl.removeAttr('id').addClass('num can-click').html(txt)
+    thisEl.removeClass('num can-click').text('').attr('id', 'blank')
+    blankEl = thisEl
+  }
+  canClick()
+}
+
+// 섞기
+$('.mix').click(function() {
+  var no = parseInt(Math.random() * canClickEl.length)
+  canClickEl = canClickEl[no]
+  canClickEl.click(function() {
+    exchange($(this))
+  })
+})
 
 
 
