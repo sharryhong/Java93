@@ -33,6 +33,7 @@ function makeNumArray() {
     }
   }
   // 정답확인을 위해 초기값 저장
+  correctAnswer = ''
   for (let i in numArray) {
     correctAnswer += numArray[i].join("")
   }
@@ -119,9 +120,7 @@ function clickBtn() {
 
 // 섞기
 $('.mix').click(function() {
-  console.log($("input:checked").val());
   var mode = $("input:checked").val()
-  // console.log(easyMode.val());
   countNum.text("0")
   clickMix = true
   var interval = setInterval(function() {
@@ -134,10 +133,13 @@ $('.mix').click(function() {
     clearInterval(interval)
     clickMix = false
     count = 1
-  }, 25 * mode) 
+  }, 25 * mode)
 })
 
-
+// 리셋
+$('.reset').click(function() {
+  makeNumArray()
+})
 
 
 
