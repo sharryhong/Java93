@@ -1,0 +1,105 @@
+<!-- 학생선택 프로그램 -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>HTML</title>
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <style>
+  .container {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    margin: 0px auto;
+    border: 1px solid black;
+  }
+  #sun {
+    position: absolute;
+    left: 300px;
+    top: 300px;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: red;
+  }
+  #earth {
+    position: absolute;
+    left: 150px;
+    top: 300px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: green;
+  }
+  #moon {
+    position: absolute;
+    left: 100px;
+    top: 300px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: gray;
+  }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="sun"></div>
+  <div id="earth"></div>
+  <div id="moon"></div>
+</div> <!-- div.container -->
+
+<script>
+"use strict"
+window.$ = window.jQuery = require('jquery')
+var earth = $('#earth'),
+    moon = $('#moon');
+
+var degree = 0,
+    y = 0,
+    x = 0;
+
+setInterval(function() {
+  if (degree > 360) {
+    degree = 0
+  }
+  var r = radian(degree)
+  degree += 1
+  y = Math.floor(Math.sin(r) * 150 + 300) // 지구 y좌표. 300은 기준인 태양
+  x = Math.floor(Math.cos(r) * 150 + 300) // 지구 x좌표
+  // console.log(y); // 태양과 지구가 150px만큼 떨어져있다.
+  earth.css('top', y + 'px').css('left', x + 'px')
+}, 30); // 0.1초마다 10도만큼 증가시킨다.
+
+var moondegree = 0;
+setInterval(function () {
+  if (moondegree > 360) {
+    moondegree = 0
+  }
+  var r = radian(moondegree)
+  moondegree += 1
+  var my = Math.floor(Math.sin(r) * 50 + y+5) // 달 y좌표. 지구를 기준으로 돌기
+  var mx = Math.floor(Math.cos(r) * 50 + x+5) // 달 x좌표
+  moon.css('top', my + 'px').css('left', mx + 'px')
+}, 3);
+
+// radian구하는 함수
+function radian(degree) {
+  return degree / 180 * Math.PI // degrees / 180 : 전체(180) 각도에서 차지하는 비율(-1~1)
+                                 // Math.PI를 곱하면
+}
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,8 +1,8 @@
-/* MVC패턴의 Control담당 */
 "use strict"
 window.$ = window.jQuery = require('jquery')
 
 var teacherService = require('electron').remote.getGlobal('teacherService')
+
 
 var tbody = $('#teacher-tbl > tbody')
 
@@ -25,18 +25,16 @@ $('#next-btn').click(function() {
 function displayList(pageNo) {
   teacherService.list(
     pageNo,
-    // service에서 처리한 값을 받는다.
-    // results엔 selectList에서 처리한 데이터객체, totalCount엔 result[0].cnt인 row갯수가 들어온다.
     function(results, totalCount) {
       tbody.html('');
       for (var i = 0; i < 3; i++) {
         if (i < results.length) {
-          let s = results[i]
-          $("<tr>").html("<td>" + s.mno +
-          "</td><td><a href='#' data-no='" + s.mno + "' class='view-link'>" + s.name +
-          "</a></td><td>" + s.tel +
-          "</td><td>" + s.email +
-          "</td><td>" + ((s.hmpg != null) ? s.hmpg : '' ) + "</td>")
+          let r = results[i]
+          $("<tr>").html("<td>" + r.mno +
+          "</td><td><a href='#' data-no='" + r.mno + "' class='view-link'>" + r.name +
+          "</a></td><td>" + r.tel +
+          "</td><td>" + r.email +
+          "</td><td>" + ((r.hmpg != null) ? r.hmpg : '') + "</td>")
           .appendTo(tbody)
         } else {
           $("<tr><td colspan='5'>&nbsp;</td></tr>").appendTo(tbody)

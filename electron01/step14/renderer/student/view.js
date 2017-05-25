@@ -1,10 +1,7 @@
 "use strict"
 window.$ = window.jQuery = require('jquery')
-// var studentDao = createStudentDao(con)
-// var memberDao = createMemberDao(con)
-// var studentService = createStudentService(memberDao, studentDao)
-
 var studentService = require('electron').remote.getGlobal('studentService')
+
 
 var fiNo = $('#fi-no'),
     fiEmail = $('#fi-email'),
@@ -13,7 +10,6 @@ var fiNo = $('#fi-no'),
     fiSchoolName = $('#fi-school-name'),
     fiWorking = $('#fi-working');
 
-// 추가 버튼 눌렀을 때 view.html
 if (location.search == "") {
   $('.bit-view').css('display', 'none')
   $('.bit-new').css('display', '')
@@ -29,7 +25,6 @@ if (location.search == "") {
         schoolName: fiSchoolName.val()
       },
       function() {
-        console.log('ok')
         location.href = 'index.html'
       },
       function(error) {
@@ -38,7 +33,7 @@ if (location.search == "") {
     }) //insertMember()
   }) // click()
 
-} else { // 기존 사용자 정보를 가져오는 view.html
+} else { // 기존 사용자 정보를 가져온다.
   $('.bit-new').css('display', 'none')
   var no = location.search.substring(1).split('=')[1]
 
@@ -64,6 +59,7 @@ if (location.search == "") {
         "name": fiName.val(),
         "tel": fiTel.val(),
         "email": fiEmail.val(),
+        "password": '1111',
         "working": (fiWorking.prop('checked') ? 'Y' : 'N'),
         "schoolName": fiSchoolName.val()
       },

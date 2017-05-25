@@ -95,19 +95,46 @@ insert memb(name, tel, email, pwd)
 
 insert stud(sno, work, schl_nm)
   values('57', 'N', '크크학교');
+  update memb set name="' + data.name +  '", tel="' + data.tel + '", email="' + data.email + '" where mno=' + no,
+
+  var post  = {id: 1, title: 'Hello MySQL'};
+  var query = connection.query('INSERT INTO posts SET ?', post, function (error, results, fields) {
+
 */
 
   // 추가 버튼에 click 이벤트 핸들러(리스너)를 등록한다.
   $('#add-btn').click(function() {
-    connection.query(
-      'insert stud(name, tel, email) \
-        values("' + fiName.val() + ', " ' + fiTel.val() +'" , " ' + fiEmail.val() +'  )',
+    var membData  = {
+      name: fiName.val(),
+      tel: fiTel.val(),
+      email: fiEmail.val(),
+      pwd: "1111"
+    }
+    var studData = {
+      schl_nm: fiSchoolName.val(),
+      work: fiWorking.prop("checked")
+    }
+    var membQuery = connection.query(
+      'INSERT INTO memb SET ?', membData,
       function(error, results) {
         if (error) {
+          console.log(membQuery.sql)
+          console.log(membData.name)
           console.log(fiName.val(), fiTel.val(), fiEmail.val())
           // alert('추가하는데 실패했습니다.')
           throw error;
         }
+        // connection.query(
+        //   'INSERT INTO stud SET ?', studData,
+        //   function(error, results) {
+        //     if (error) {
+        //       console.log(fiSchoolName.val(), fiWorking.prop("checked"))
+        //       alert('추가하는데 실패했습니다.')
+        //       throw error;
+        //     }
+        // })
+        // location.href = 'index.html'
+        console.log(membQuery.query)
     })
 
 /*
@@ -163,29 +190,32 @@ select s.sno, m.email, m.name, m.tel, s.schl_nm, s.work
 
 
   $('#upd-btn').click(function() {
-    var data = {
-      // memberNo: no,
-      name: fiName.val(),
-      tel: fiTel.val(),
-      email: fiEmail.val(),
-      schoolName: fiSchoolName.val(),
-      working: fiWorking.prop('checked')
-    }
-    console.log(data)
+    // var data = {
+    //   // memberNo: no,
+    //   name: fiName.val(),
+    //   tel: fiTel.val(),
+    //   email: fiEmail.val(),
+    //   schoolName: fiSchoolName.val(),
+    //   working: fiWorking.prop('checked')
+    // }
+    // console.log(data)
 /* 테스트
     update stud set schl_nm="쿠1~" where sno=57;
     update memb set name="바꿔" where mno=57;
+
+    connection.query('UPDATE users SET foo = ?, bar = ?, baz = ? WHERE id = ?', ['a', 'b', 'c', userId],
 */
     connection.query(
-      'update stud set schl_nm="' + data.schoolName +  '" where sno=' + no,
+      'update stud set schl_nm= ?, work=? where sno = ?', [fiSchoolName.val(),fiWorking.prop('checked'), no],
+      // 'update stud set schl_nm="' + data.schoolName +  '" where sno=' + no,
       function(error, results) {
         if (error) {
           alert('변경하는데 실패했습니다.')
           throw error;
         }
         connection.query(
-          // values("' + fiName.val() + ', " ' + fiTel.val() +'" , " ' + fiEmail.val() +'  )'
-          'update memb set name="' + data.name +  '" where mno=' + no,
+          'update memb set name= ?, tel=?, email=? where mno = ?', [fiName.val(), fiTel.val(), fiSchoolName.val(), no],
+          // 'update memb set name="' + data.name +  '", tel="' + data.tel + '", email="' + data.email + '" where mno=' + no,
           function(error, results) {
             if (error) {
               alert('변경하는데 실패했습니다.')
@@ -195,34 +225,14 @@ select s.sno, m.email, m.name, m.tel, s.schl_nm, s.work
       location.href = 'index.html'
     })
 
-    /*
-    $.ajax(serverUrl + '/webapp/student/update.json', {
-      method: 'POST',
-      dataType: 'json',
-      data: { // 서버에 줄 값을 자바스크립트 객체에 담아서 넘긴다.
-        memberNo: no,
-        name: fiName.val(),
-        tel: fiTel.val(),
-        email: fiEmail.val(),
-        schoolName: fiSchoolName.val(),
-        working: fiWorking.prop('checked')
-      },
-      success: function(result) {
-        if (result.status != 'success') {
-          alert('변경하는데 실패했습니다.')
-          return
-        }
-        alert('변경했습니다!')
-      }
-    }) // ajax()*/
   }) // click()
 
   $('#del-btn').click(function() {
-    $.getJSON(serverUrl + '/webapp/student/delete.json?memberNo=' + no,
-      function(result) {
-        if (result.status != 'success') {
+    connection.query('',
+      function(error, results) {
+        if (error) {
           alert('삭제하는데 실패했습니다.')
-          return
+          throw error;
         }
         location.href = 'index.html'
       }
@@ -236,8 +246,3 @@ $('#lst-btn').click(function() {
 </script>
 </body>
 </html>
-
-
-
-
-<!-- -->

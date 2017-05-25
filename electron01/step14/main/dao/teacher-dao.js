@@ -1,17 +1,15 @@
 "use strict"
 
 module.exports = {
-  //
   setConnection(con) {
-    //이 함수가 소속된 객체에 connection 프로퍼티 추가하고 그 자체를 넘긴다.
     this.connection = con
   },
 
   selectList(pageNo, successFn, errorFn) {
     this.connection.query(
       'select m.mno, m.name, m.tel, m.email, t.hmpg \
-      from tcher t inner join memb m on t.tno=m.mno  \
-      order by m.mno asc \
+      from tcher t inner join memb m on t.tno=m.mno \
+      order by m.name asc \
       limit ?, ?',
       [(pageNo - 1) * 3, 3],
       function(error, results) {
@@ -52,7 +50,7 @@ module.exports = {
 
   insert(teacher, successFn, errorFn) {
     this.connection.query(
-      'insert into tcher(tno, hmpg, fcbk, twit) values(?,?,?,?)',
+      'insert into tcher(tno,hmpg,fcbk,twit) values(?,?,?,?)',
       [ teacher.no, teacher.homepage, teacher.facebook, teacher.twitter],
       function(error, result) {
         if (error) {
@@ -61,7 +59,7 @@ module.exports = {
           successFn(result)
         }
       }) //connection.query()
-  }, //insert()
+  }, //insert
 
   update(teacher, successFn, errorFn) {
     this.connection.query(
@@ -89,4 +87,4 @@ module.exports = {
       })
   }//delete()
 
-}//module.exports
+}//exports

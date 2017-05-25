@@ -1,18 +1,17 @@
 "use strict"
 window.$ = window.jQuery = require('jquery')
-
 var teacherService = require('electron').remote.getGlobal('teacherService')
+
 
 var fiNo = $('#fi-no'),
     fiEmail = $('#fi-email'),
-    fiPassword = $('#fi-password'),
     fiName = $('#fi-name'),
     fiTel = $('#fi-tel'),
+    fiPassword = $('#fi-password'),
     fiHomepage = $('#fi-homepage'),
     fiFacebook = $('#fi-facebook'),
     fiTwitter = $('#fi-twitter');
 
-// 추가 버튼 눌렀을 때 view.html
 if (location.search == "") {
   $('.bit-view').css('display', 'none')
   $('.bit-new').css('display', '')
@@ -20,10 +19,10 @@ if (location.search == "") {
   $('#add-btn').click(function() {
     teacherService.insert(
       {
-        email: fiEmail.val(),
-        password: fiPassword.val(),
         name: fiName.val(),
         tel: fiTel.val(),
+        email: fiEmail.val(),
+        password: fiPassword.val(),
         homepage: fiHomepage.val(),
         facebook: fiFacebook.val(),
         twitter: fiTwitter.val()
@@ -32,12 +31,12 @@ if (location.search == "") {
         location.href = 'index.html'
       },
       function(error) {
-        alert('회원 등록 중 오류 발생!')
+        alert('강사 등록 중 오류 발생!')
         throw error;
     }) //insertMember()
   }) // click()
 
-} else { // 기존 사용자 정보를 가져오는 view.html
+} else { // 기존 사용자 정보를 가져온다.
   $('.bit-new').css('display', 'none')
   var no = location.search.substring(1).split('=')[1]
 
@@ -61,10 +60,10 @@ if (location.search == "") {
     teacherService.update(
       {
         "no": no,
-        "email": fiEmail.val(),
-        "password": fiPassword.val(),
         "name": fiName.val(),
         "tel": fiTel.val(),
+        "email": fiEmail.val(),
+        "password": fiPassword.val(),
         "homepage": fiHomepage.val(),
         "facebook": fiFacebook.val(),
         "twitter": fiTwitter.val()
@@ -73,7 +72,7 @@ if (location.search == "") {
         alert('변경하였습니다.')
       },
       function(error) {
-        alert('회원 기본 데이터 변경 중 오류 발생!')
+        alert('강사 기본 데이터 변경 중 오류 발생!')
         throw error;
     })//update()
   }) //click()

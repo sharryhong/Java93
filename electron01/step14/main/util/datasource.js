@@ -8,15 +8,13 @@ const con = mysql.createConnection({
 })
 con.connect()
 
-module.exports = {
-  // 내가 만든 객체 리턴
-  getConnection() {
-    return con
-  }
-}
-
-/* 이렇게 할 수도 있다. 기존에 exports라는 객체가 있다.
+/* 주석에 작성된 코드와 그 아래의 코드는 같다.
 module.exports.getConnection = function() {
   return con
 }
 */
+module.exports = {
+  getConnection() {
+    return con
+  }
+}

@@ -1,8 +1,8 @@
-/* MVC패턴의 Control담당 */
 "use strict"
 window.$ = window.jQuery = require('jquery')
 
 var lectureService = require('electron').remote.getGlobal('lectureService')
+
 
 var tbody = $('#lecture-tbl > tbody')
 
@@ -25,26 +25,20 @@ $('#next-btn').click(function() {
 function displayList(pageNo) {
   lectureService.list(
     pageNo,
-    // service에서 처리한 값을 받는다.
-    // results엔 selectList에서 처리한 데이터객체, totalCount엔 result[0].cnt인 row갯수가 들어온다.
     function(results, totalCount) {
       tbody.html('');
       for (var i = 0; i < 3; i++) {
         if (i < results.length) {
-          let s = results[i]
-          let startDay = new Date(s.sdt)
-          let endDay = new Date(s.edt)
-          $("<tr>").html("<td>" + s.lno +
-          "</td><td><a href='#' data-no='" + s.lno + "' class='view-link'>" + s.titl +
-          "</a></td><td>" + s.dscp +
-          "</td><td>" + startDay.getFullYear() +"년 "+ (startDay.getMonth()+1) +"월 "+ startDay.getDate()+"일" +
-          "</td><td>" + endDay.getFullYear() +"년 "+ (endDay.getMonth()+1) +"월 "+ endDay.getDate()+"일" +
-          "</td><td>" + s.qty +
-          "</td><td>" + s.pric +
-          "</td><td>" + s.thrs )
+          let r = results[i]
+          $("<tr>").html("<td>" + r.lno +
+          "</td><td><a href='#' data-no='" + r.lno + "' class='view-link'>" + r.titl +
+          "</a></td><td>" + r.sdt2 +
+          "</td><td>" + r.edt2 +
+          "</td><td>" + r.thrs +
+          "</td><td>" + r.pric + "</td>")
           .appendTo(tbody)
         } else {
-          $("<tr><td colspan='8'>&nbsp;</td></tr>").appendTo(tbody)
+          $("<tr><td colspan='5'>&nbsp;</td></tr>").appendTo(tbody)
         }
       }
 

@@ -1,17 +1,17 @@
 "use strict"
 
 module.exports = {
-  //
   setConnection(con) {
-    //이 함수가 소속된 객체에 connection 프로퍼티 추가하고 그 자체를 넘긴다.
     this.connection = con
   },
 
   selectList(pageNo, successFn, errorFn) {
     this.connection.query(
-      'select lno, titl, dscp, sdt, edt, qty, pric, thrs \
-      from lect l \
-      limit ?, ?',
+      "select lno, titl, date_format(sdt,'%Y-%m-%d') sdt2 , \
+      date_format(edt,'%Y-%m-%d') edt2, thrs, pric \
+      from lect \
+      order by sdt desc \
+      limit ?, ?",
       [(pageNo - 1) * 3, 3],
       function(error, results) {
         if (error) {
@@ -36,9 +36,12 @@ module.exports = {
 
   selectOne(no, successFn, errorFn) {
     this.connection.query(
-      'select lno, titl, dscp, sdt, edt, qty, pric, thrs  \
-      from lect l \
-      where l.lno=?',
+      "select lno, titl, dscp, \
+      date_format(sdt,'%Y-%m-%d') sdt2, \
+      date_format(edt,'%Y-%m-%d') edt2, \
+      qty, pric, thrs, crmno, mrno \
+      from lect \
+      where lno=?",
       [no],
       function(error, results) {
         if (error) {
@@ -51,8 +54,11 @@ module.exports = {
 
   insert(lecture, successFn, errorFn) {
     this.connection.query(
-      'insert into lect(lno, titl, dscp, sdt, edt, qty, pric, thrs) values(?,?,?,?,?,?,?,?)',
-      [ lecture.no, lecture.titl, lecture.dscp, lecture.sdt, lecture.edt, lecture.qty, lecture.pric, lecture.thrs],
+      'insert into lect(titl,dscp,sdt,edt,qty,pric,thrs,crmno,mrno) \
+       values(?,?,?,?,?,?,?,?,?)',
+      [lecture.title, lecture.content, lecture.startDate,
+       lecture.endDate, lecture.quantity, lecture.price,
+       lecture.hours, lecture.classroom, lecture.manager],
       function(error, result) {
         if (error) {
           errorFn(error)
@@ -60,12 +66,14 @@ module.exports = {
           successFn(result)
         }
       }) //connection.query()
-  }, //insert()
+  }, //insert
 
   update(lecture, successFn, errorFn) {
     this.connection.query(
-      'update lect set titl=?, dscp=?, sdt=?, edt=?, qty=?, pric=?, thrs=? where lno=?',
-      [lecture.titl, lecture.dscp, lecture.sdt, lecture.edt, lecture.qty, lecture.pric, lecture.thrs, lecture.no],
+      'update lect set titl=?, dscp=?, sdt=?, edt=?, qty=?, pric=?, thrs=?, crmno=?, mrno=? where lno=?',
+      [lecture.title, lecture.content, lecture.startDate,
+        lecture.endDate, lecture.quantity, lecture.price,
+        lecture.hours, lecture.classroom, lecture.manager, lecture.no],
       function(error, result) {
         if (error) {
           errorFn(error)
@@ -88,4 +96,4 @@ module.exports = {
       })
   }//delete()
 
-}//module.exports
+}//exports

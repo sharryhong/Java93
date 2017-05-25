@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>HTML</title>
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+	<h1>H's Messenger</h1>
+	<!-- <textarea rows="15" cols="50" id="showMsg"></textarea> -->
+  <div id="showMsg">
+  </div>
+  <div class="msg-container">
+    <input type="text" id="msgBox" placeholder="메시지를 입력하세요.">
+    <button type="button" id="sendBtn">보내기</button>
+  </div>
+  <div class="connect-container">
+    <input type="text" value="localhost" id="host">
+    <input type="text" value="8888" id="port">
+    <button id="connectBtn" type="button">연결</button>
+	  <button id="closeBtn" type="button">끊기</button>
+  </div>
+  <input type="text" id="nickname" placeholder="닉네임">
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>

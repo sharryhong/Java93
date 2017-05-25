@@ -57,6 +57,9 @@ $('#start-btn').click(function() {
       clearInterval(interval)
       that.css("display", "inline-block")
       inputText.attr('disabled', 'disabled')
+      bottom.css({
+        "background-image": "none"
+      });
       if (scoreNo <= 80) {
         swal({
           title: "OH!! NO!",
