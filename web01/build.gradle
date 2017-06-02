@@ -1,0 +1,34 @@
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'war' 
+
+webAppDirName='WebContent'
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+        resources {
+            srcDir 'src'
+        }
+    }
+}
+
+compileJava {
+  options.encoding = 'UTF-8'
+  sourceCompatibility = '1.8' 
+}
+
+// 외부 라이브러리가 보관된 서버
+// 이 서버에서 dependencies{}에 지정된 라이브러리를 다운로드 한다.
+repositories {
+  mavenCentral()
+}
+
+// > gradle eclipse
+dependencies {
+  compile group: 'com.google.code.gson', name: 'gson', version: '2.8.0'
+  compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.42'
+  providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+}
