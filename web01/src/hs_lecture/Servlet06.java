@@ -1,6 +1,6 @@
-/* 지금까지 응용 - 매니저관리 만들기 : 매니저 삭제하기
+/* 지금까지 응용 - 강의관리 만들기 : 강의 삭제하기
  */
-package hs_manager;
+package hs_lecture;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,7 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet(urlPatterns="/hs_manager/Servlet06")
+@WebServlet(urlPatterns="/hs_lecture/Servlet06")
 public class Servlet06 extends GenericServlet {
   private static final long serialVersionUID = 1L;
 
@@ -25,10 +25,10 @@ public class Servlet06 extends GenericServlet {
     out.println("<html>");
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
-    out.println("<title>매니저관리</title>");
+    out.println("<title>강의관리</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>매니저 삭제</h1>");
+    out.println("<h1>강의 삭제</h1>");
     
     
     String jdbcDriver = "com.mysql.jdbc.Driver";
@@ -39,12 +39,12 @@ public class Servlet06 extends GenericServlet {
     try {
       DBConnectionPool conPool = new DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
       
-      ManagerDao memberDao = new ManagerDao(conPool);
+      LectureDao memberDao = new LectureDao(conPool);
       
-      int no = Integer.parseInt(req.getParameter("mrno"));
+      int no = Integer.parseInt(req.getParameter("no"));
       int count = memberDao.delete(no);
       if (count < 1) {
-        throw new Exception(no + "번 매니저을 찾을 수 없습니다.");
+        throw new Exception(no + "번 강의를 찾을 수 없습니다.");
       }
       out.println("<p>삭제 성공입니다.</p>");
       

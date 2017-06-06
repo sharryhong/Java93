@@ -1,7 +1,7 @@
-/* 지금까지 응용 - 매니저관리 만들기 : 매니저목록 출력하기
- * => 매니저 목록을 html로 만들어 출력한다. 
+/* 지금까지 응용 - 강의관리 만들기 : 강의목록 출력하기
+ * => 강의 목록을 html로 만들어 출력한다. 
  */
-package hs_manager;
+package hs_lecture;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,19 +13,18 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet(urlPatterns="/hs_manager/Servlet02")
+@WebServlet(urlPatterns="/hs_lecture/Servlet02")
 public class Servlet02 extends GenericServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException { 
-    // 페이지 번호, 페이지당 출력 개수
     int pageNo = 1;
     int pageSize = 5;
     
-    try { // pageNo 파라미터 값이 있다면 그 값으로 설정한다.
+    try { 
       pageNo = Integer.parseInt(req.getParameter("pageNo"));
-    } catch (Exception e) {} // 예외 발생 시 무시 (숫자가 아니거나, 정상적으로 넘어오지 않는다면)
+    } catch (Exception e) {} 
     
     try {
       pageSize = Integer.parseInt(req.getParameter("pageSize"));
@@ -38,10 +37,10 @@ public class Servlet02 extends GenericServlet {
     out.println("<html>");
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
-    out.println("<title>매니저관리</title>");
+    out.println("<title>강의관리</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>매니저 목록</h1>");
+    out.println("<h1>강의 목록</h1>");
     
     
     String jdbcDriver = "com.mysql.jdbc.Driver";
@@ -54,25 +53,28 @@ public class Servlet02 extends GenericServlet {
       DBConnectionPool conPool = new DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
       
       // DAO에 DB커넥션 풀을 전달한다. 
-      ManagerDao managerDao = new ManagerDao(conPool);
+      LectureDao lectureDao = new LectureDao(conPool);
       
-      List<Manager> list = managerDao.selectList(pageNo, pageSize);
+      List<Lecture> list = lectureDao.selectList(pageNo, pageSize);
       
-      out.println("<a href='form.html'>새매니저</a><br>");
+      out.println("<a href='form.html'>새강의</a><br>");
       
       out.println("<table border='1'>");
       out.println("<thead>");
-      out.println("<tr><th>번호</th><th>이름</th><th>전화</th><th>이메일</th><th>직급</th></tr>");
+      out.println("<tr><th>번호</th><th>강의명</th><th>시작일</th><th>종료일</th><th>인원</th><th>수강료</th><th>총시간</th></tr>");
       out.println("</thead>");
       out.println("<tbody>");
       
-      for (Manager m : list) {
+      for (Lecture m : list) {
         out.println("<tr>");
         out.printf("<td>%d</td>", m.getNo());
-        out.printf("<td><a href='Servlet04?no=%d'>%s</a></td>\n", m.getNo(), m.getName());
-        out.printf("<td>%s</td>\n", m.getTel());
-        out.printf("<td>%s</td>\n", m.getEmail());
-        out.printf("<td>%s</td>\n", m.getPosi());
+        out.printf("<td><a href='Servlet04?no=%d'>%s</a></td>\n", m.getNo(), m.getTitle());
+//        out.printf("<td>%s</td>\n", m.getDescription());
+        out.printf("<td>%s</td>\n", m.getStartDate());
+        out.printf("<td>%s</td>\n", m.getEndDate());
+        out.printf("<td>%s</td>\n", m.getQuantity());
+        out.printf("<td>%s</td>\n", m.getPrice());
+        out.printf("<td>%s</td>\n", m.getThrs());
         out.println("</tr>");
       }
       out.println("</tbody>");

@@ -2,21 +2,21 @@
  */
 package hs_manager;
 
-public class Manager {
-  int no;
+public class Manager extends step03.Member {
+  int mrno;
   String posi;
   String fax;
   String path;
   
   @Override
   public String toString() {
-    return "Manager [no=" + no + ", posi=" + posi + ", fax=" + fax + ", path=" + path + "]";
+    return "Manager [mrno=" + mrno + ", posi=" + posi + ", fax=" + fax + ", path=" + path + "]";
   }
-  public int getNo() {
-    return no;
+  public int getMrno() {
+    return mrno;
   }
-  public void setNo(int no) {
-    this.no = no;
+  public void setMrno(int mrno) {
+    this.mrno = mrno;
   }
   public String getPosi() {
     return posi;
@@ -36,4 +36,6 @@ public class Manager {
   public void setPath(String path) {
     this.path = path;
   }
+  
+  
 }

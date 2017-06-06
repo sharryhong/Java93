@@ -20,6 +20,31 @@ public class ClassroomDao {
   public ClassroomDao(DBConnectionPool conPool) {
     this.conPool = conPool;
   }
+  
+  public List<Classroom> selectNameList() throws Exception { 
+    // 
+    Connection con = conPool.getConnection();
+    try ( 
+      PreparedStatement stmt = con.prepareStatement(
+        "select crmno, name from croom order by name asc");) {
+      
+      ArrayList<Classroom> list = new ArrayList<>();
+      try (ResultSet rs = stmt.executeQuery();) {
+        Classroom classroom = null;
+        while (rs.next()) { 
+          classroom = new Classroom();
+          classroom.setNo(rs.getInt("crmno"));
+          classroom.setName(rs.getString("name"));
+          
+          list.add(classroom);
+        }
+        return list;
+      }
+      
+    } finally { 
+      conPool.returnConnection(con);
+    }
+  }
 
   public List<Classroom> selectList(int pageNo, int pageSize) throws Exception { 
     // 

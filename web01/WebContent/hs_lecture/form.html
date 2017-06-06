@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>강의관리</title>
+</head>
+<body>
+<h1>강의 등록</h1>
+<form action="Servlet03" method="post">
+강의명: <input type="text" name="title"><br>
+강의설명: <input type="text" name="description"><br>
+시작일: <input type="text" name="startDate"><br>
+종료일: <input type="text" name="endDate"><br>
+수강인원: <input type="text" name="quantity"><br>
+수강료: <input type="text" name="price"><br>
+총시간: <input type="text" name="thrs"><br>
+강의실: <select id='fi-classroom'>
+<option value='0'>강의실을 선택하세요!</option>
+</select><br>
+<button>등록</button>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var fiManager = $('#fi-manager')
+for (var r of results) {
+  $('<option>').val(r.mrno).text(r.name).appendTo(fiManager)
+}
+</script>
+</body>
+</html>

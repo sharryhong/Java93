@@ -1,6 +1,6 @@
-/* 지금까지 응용 - 매니저관리 만들기 : 매니저 삭제하기
+/* 지금까지 응용 - 강의관리 만들기 : 강의변경하기
  */
-package hs_manager;
+package hs_lecture;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,12 +12,21 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet(urlPatterns="/hs_manager/Servlet06")
-public class Servlet06 extends GenericServlet {
+@WebServlet(urlPatterns="/hs_lecture/Servlet05")
+public class Servlet05 extends GenericServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {     
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException { 
+    req.setCharacterEncoding("UTF-8");
+    
+    Lecture m = new Lecture();
+    m.setNo(Integer.parseInt(req.getParameter("no")));
+    m.setName(req.getParameter("name"));
+    m.setTel(req.getParameter("tel"));
+    m.setEmail(req.getParameter("email"));
+    m.setPassword(req.getParameter("password"));
+    
     res.setContentType("text/html;charset=UTF-8");
     PrintWriter out = res.getWriter();
     
@@ -25,10 +34,10 @@ public class Servlet06 extends GenericServlet {
     out.println("<html>");
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
-    out.println("<title>매니저관리</title>");
+    out.println("<title>강의관리</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>매니저 삭제</h1>");
+    out.println("<h1>강의 등록</h1>");
     
     
     String jdbcDriver = "com.mysql.jdbc.Driver";
@@ -37,16 +46,17 @@ public class Servlet06 extends GenericServlet {
     String jdbcPassword = "1111";
 
     try {
+      // DB커넥션을 관리할 객체를 만든다.
       DBConnectionPool conPool = new DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
       
-      ManagerDao memberDao = new ManagerDao(conPool);
+      // DAO에 DB커넥션 풀을 전달한다. 
+      LectureDao memberDao = new LectureDao(conPool);
       
-      int no = Integer.parseInt(req.getParameter("mrno"));
-      int count = memberDao.delete(no);
+      int count = memberDao.update(m);
       if (count < 1) {
-        throw new Exception(no + "번 매니저을 찾을 수 없습니다.");
+        throw new Exception(m.getNo() + "번 강의를 찾을 수 없습니다.");
       }
-      out.println("<p>삭제 성공입니다.</p>");
+      out.println("<p>변경 성공입니다.</p>");
       
     } catch (Exception e) {
       out.println("오류 발생!");

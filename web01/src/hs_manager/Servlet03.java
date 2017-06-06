@@ -20,11 +20,15 @@ public class Servlet03 extends GenericServlet {
   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException { 
     req.setCharacterEncoding("UTF-8");
     
-    Manager m = new Manager();
-    m.setName(req.getParameter("name"));
-    m.setTel(req.getParameter("tel"));
-    m.setEmail(req.getParameter("email"));
-    m.setPassword(req.getParameter("password"));
+    Manager mr = new Manager();
+    mr.setName(req.getParameter("name"));
+    mr.setTel(req.getParameter("tel"));
+    mr.setEmail(req.getParameter("email"));
+    mr.setPassword(req.getParameter("password"));
+    
+    mr.setPosi(req.getParameter("posi"));
+    mr.setFax(req.getParameter("fax"));
+    mr.setPath(req.getParameter("path"));
     
     res.setContentType("text/html;charset=UTF-8");
     PrintWriter out = res.getWriter();
@@ -45,14 +49,15 @@ public class Servlet03 extends GenericServlet {
     String jdbcPassword = "1111";
 
     try {
-      // DB커넥션을 관리할 객체를 만든다.
+      step03.DBConnectionPool conPool2 = new step03.DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
+      step03.MemberDao memberDao = new step03.MemberDao(conPool2);
+      memberDao.insert(mr);
+      
+      
       DBConnectionPool conPool = new DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
-      
-      // DAO에 DB커넥션 풀을 전달한다. 
-      ManagerDao memberDao = new ManagerDao(conPool);
-      
-      memberDao.insert(m);
-      out.println("<p>등록 성공입니다.</p>");
+      ManagerDao managerDao = new ManagerDao(conPool);
+      managerDao.insert(mr);
+//      out.println("<p>등록 성공입니다.</p>");
       
     } catch (Exception e) {
       out.println("오류 발생!");

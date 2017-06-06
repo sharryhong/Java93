@@ -42,21 +42,24 @@ public class Servlet04 extends GenericServlet {
       DBConnectionPool conPool = new DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
       
       // DAO에 DB커넥션 풀을 전달한다. 
-      ManagerDao memberDao = new ManagerDao(conPool);
+      ManagerDao managerDao = new ManagerDao(conPool);
       
       int no = Integer.parseInt(req.getParameter("no"));
       
-      Manager member = memberDao.selectOne(no);
-      if (member == null) {
+      Manager manager = managerDao.selectOne(no);
+      if (manager == null) {
         throw new Exception(no + "번 매니저이 없습니다.");
       } 
       
       out.println("<form action='Servlet05' method='post'>");
-      out.printf("번호: <input type='text' name='no' value='%d' readonly><br>\n", member.getNo());
-      out.printf("이름: <input type='text' name='name' value='%s'><br>\n", member.getName());
-      out.printf("전화: <input type='text' name='tel' value='%s'><br>\n", member.getTel());
-      out.printf("이메일: <input type='text' name='email' value='%s'><br>\n", member.getEmail());
+      out.printf("번호: <input type='text' name='no' value='%d' readonly><br>\n", manager.getNo());
+      out.printf("이름: <input type='text' name='name' value='%s'><br>\n", manager.getName());
+      out.printf("전화: <input type='text' name='tel' value='%s'><br>\n", manager.getTel());
+      out.printf("이메일: <input type='text' name='email' value='%s'><br>\n", manager.getEmail());
       out.println("암호: <input type='password' name='password'><br>");
+      out.printf("직위: <input type='text' name='posi' value='%s'><br>\n", manager.getPosi());
+      out.printf("팩스: <input type='text' name='fax' value='%s'><br>\n", manager.getFax());
+      out.printf("첨부파일: <input type='text' name='path' value='%s'><br>\n", manager.getPath());
       out.println("<button>변경</button>");
       out.println("<button type='button' onClick='doDelete()'>삭제</button>");
       out.println("<button type='button' onClick='doList()'>목록</button>");

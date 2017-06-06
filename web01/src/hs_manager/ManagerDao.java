@@ -26,7 +26,7 @@ public class ManagerDao {
     Connection con = conPool.getConnection(); // 자동해제되면 안되므로 try(...)안에 두면 안된다. 
     try ( 
       PreparedStatement stmt = con.prepareStatement(
-        "select mrno, posi, fax, path from mgr order by mrno asc limit ?, ?");) {
+        "select m.mno, m.name, m.tel, m.email, mr.posi from mgr mr inner join memb m on mr.mrno=m.mno order by m.name asc limit ?, ?");) {
       
       stmt.setInt(1, (pageNo - 1) * pageSize); // 시작 인덱스
       stmt.setInt(2, pageSize); // 꺼낼 갯수 
@@ -35,11 +35,12 @@ public class ManagerDao {
       try (ResultSet rs = stmt.executeQuery();) {
         Manager manager = null;
         while (rs.next()) { 
-          manager = new Manager(); // 새로 인스턴스 만들고 주소 저장
-          manager.setNo(rs.getInt("mrno")); // 그 주소의 인스턴스에 값 넣기 
+          manager = new Manager();
+          manager.setNo(rs.getInt("mno"));
+          manager.setName(rs.getString("name"));
+          manager.setTel(rs.getString("tel"));
+          manager.setEmail(rs.getString("email"));
           manager.setPosi(rs.getString("posi"));
-          manager.setFax(rs.getString("fax"));
-          manager.setPath(rs.getString("path"));
           
           list.add(manager);  // ArrayList에 주소 저장
         }
@@ -56,16 +57,20 @@ public class ManagerDao {
     Connection con = conPool.getConnection();
     try (  // try()괄호 안에는 객체를 준비하는 코드만 들어갈 수 있다.
       PreparedStatement stmt = con.prepareStatement(
-        "select mrno, posi, fax, path from mgr where mrno=?");) {
+        "select m.mno, m.name, m.email, m.tel, m.pwd, mr.posi, mr.fax, mr.path from mgr mr inner join memb m on mr.mrno=m.mno where mr.mrno=?");) {
       
       stmt.setInt(1, no);
       
-      try (ResultSet rs = stmt.executeQuery();) { // 자동으로 close()하라고 try()안에 넣은것
+      try (ResultSet rs = stmt.executeQuery();) {
         if (!rs.next()) {
           return null;
         }
         Manager manager = new Manager(); 
-        manager.setNo(rs.getInt("mrno")); // 그 주소의 인스턴스에 값 넣기 
+        manager.setNo(rs.getInt("mno"));
+        manager.setName(rs.getString("name"));
+        manager.setTel(rs.getString("tel"));
+        manager.setEmail(rs.getString("email"));
+        manager.setPassword(rs.getString("pwd"));
         manager.setPosi(rs.getString("posi"));
         manager.setFax(rs.getString("fax"));
         manager.setPath(rs.getString("path"));
@@ -77,16 +82,17 @@ public class ManagerDao {
     }
   }
   
-//아예 manager manager에 담아서 온다.
-  public int insert(Manager manager) throws Exception { // 1) manager manager 인스턴스 주소를 받아서 
+
+  public int insert(Manager manager) throws Exception {  
     Connection con = conPool.getConnection();
     try (
         PreparedStatement stmt = con.prepareStatement(
-            "insert into mgr(posi,fax,path) values(?,?,?)"); // 3) 인파라미터에 채워놓고
+            "insert into mgr(mrno, posi,fax,path) values(?,?,?,?)"); 
       ) {
-        stmt.setString(1, manager.getPosi()); // 2) 그 주소의 인스턴스 해당 값을 꺼내서
-        stmt.setString(2, manager.getFax());
-        stmt.setString(3, manager.getPath());
+        stmt.setInt(1, manager.getMrno());
+        stmt.setString(2, manager.getPosi()); 
+        stmt.setString(3, manager.getFax());
+        stmt.setString(4, manager.getPath());
         return stmt.executeUpdate(); // 4) insert실행  
       } finally {  
         conPool.returnConnection(con);
