@@ -22,10 +22,15 @@ public class Servlet05 extends GenericServlet {
     
     Lecture m = new Lecture();
     m.setNo(Integer.parseInt(req.getParameter("no")));
-    m.setName(req.getParameter("name"));
-    m.setTel(req.getParameter("tel"));
-    m.setEmail(req.getParameter("email"));
-    m.setPassword(req.getParameter("password"));
+    m.setTitle(req.getParameter("title"));
+    m.setDescription(req.getParameter("description"));
+    m.setStartDate(req.getParameter("startDate"));
+    m.setEndDate(req.getParameter("endDate"));
+    m.setQuantity(Integer.parseInt(req.getParameter("quantity")));
+    m.setPrice(Integer.parseInt(req.getParameter("price")));
+    m.setThrs(Integer.parseInt(req.getParameter("thrs")));
+    m.setCrmno(Integer.parseInt(req.getParameter("classroom")));
+    m.setMrno(Integer.parseInt(req.getParameter("manager")));
     
     res.setContentType("text/html;charset=UTF-8");
     PrintWriter out = res.getWriter();
@@ -50,9 +55,9 @@ public class Servlet05 extends GenericServlet {
       DBConnectionPool conPool = new DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
       
       // DAO에 DB커넥션 풀을 전달한다. 
-      LectureDao memberDao = new LectureDao(conPool);
+      LectureDao lectureDao = new LectureDao(conPool);
       
-      int count = memberDao.update(m);
+      int count = lectureDao.update(m);
       if (count < 1) {
         throw new Exception(m.getNo() + "번 강의를 찾을 수 없습니다.");
       }

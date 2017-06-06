@@ -17,15 +17,18 @@
 강의실: <select id='fi-classroom'>
 <option value='0'>강의실을 선택하세요!</option>
 </select><br>
+매니저: <select id='fi-manager'>
+<option value='0'>매니저를 선택하세요!</option>
+</select><br>
 <button>등록</button>
 </form>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-var fiManager = $('#fi-manager')
-for (var r of results) {
-  $('<option>').val(r.mrno).text(r.name).appendTo(fiManager)
-}
+//var fiManager = $('#fi-manager')
+//for (var r of results) {
+//  $('<option>').val(r.mrno).text(r.name).appendTo(fiManager)
+//}
 </script>
 </body>
 </html>

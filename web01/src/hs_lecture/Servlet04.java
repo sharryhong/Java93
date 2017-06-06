@@ -2,8 +2,10 @@
  */
 package hs_lecture;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.List;
 
 import javax.servlet.GenericServlet;
@@ -12,7 +14,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import hs_croom.Classroom;
+import hs_manager.Manager;
 
 @WebServlet(urlPatterns="/hs_lecture/Servlet04")
 public class Servlet04 extends GenericServlet {
@@ -52,8 +58,19 @@ public class Servlet04 extends GenericServlet {
       
       hs_croom.DBConnectionPool conPool2 = new hs_croom.DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
       hs_croom.ClassroomDao classroomDao = new hs_croom.ClassroomDao(conPool2);
-      System.out.println(classroomDao.selectNameList());
+//      System.out.println(classroomDao.selectNameList());
       List<Classroom> crooms = classroomDao.selectNameList();
+      
+//      Gson gson = new Gson();
+//      String json = gson.toJson(crooms);
+//      System.out.println(json);
+      Writer writer = new FileWriter("Output.json");
+        Gson gson = new GsonBuilder().create();
+        gson.toJson(crooms, writer);
+      
+      hs_manager.DBConnectionPool conPool3 = new hs_manager.DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
+      hs_manager.ManagerDao managerDao = new hs_manager.ManagerDao(conPool3);
+      List<Manager> mgrs = managerDao.selectNameList();
       
       if (lecture == null) {
         throw new Exception(no + "번 강의가 없습니다.");
@@ -68,16 +85,28 @@ public class Servlet04 extends GenericServlet {
       out.printf("수강인원: <input type='text' name='quantity' value='%d'><br>\n", lecture.getQuantity());
       out.printf("수강료: <input type='text' name='price' value='%d'><br>\n", lecture.getPrice());
       out.printf("총시간: <input type='text' name='thrs' value='%d'><br>\n", lecture.getThrs());
-      out.println("강의실: <select id='fi-classroom'>");
+      out.println("강의실: <select id='fi-classroom' name='classroom'>");
       System.out.println(lecture.getCrmno());
       out.println("<option value='0'>강의실을 선택하세요!</option>");
       for (Classroom croom : crooms) {
         if (lecture.getCrmno() == croom.getNo()) {
           out.printf("<option value='%d' selected>%s</option>", croom.getNo(), croom.getName());
+        } else {
+          out.printf("<option value='%d'>%s</option>", croom.getNo(), croom.getName());
         }
-        out.printf("<option value='%d'>%s</option>", croom.getNo(), croom.getName());
       }
 //      out.printf("<option value='%d'>%s</option>", lecture.getCrmno(), crooms.get(lecture.getCrmno()).getName());
+      out.println("</select><br>");
+      
+      out.println("매니저: <select id='fi-manager' name='manager'>");
+      out.println("<option value='0'>매니저를 선택하세요!</option>");
+      for (Manager mgr : mgrs) {
+        if (lecture.getMrno() == mgr.getNo()) {
+          out.printf("<option value='%d' selected>%s</option>", mgr.getNo(), mgr.getName());
+        } else {
+          out.printf("<option value='%d'>%s</option>", mgr.getNo(), mgr.getName());
+        }
+      }
       out.println("</select><br>");
       
       out.println("<button>변경</button>");

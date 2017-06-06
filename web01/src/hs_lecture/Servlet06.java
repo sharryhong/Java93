@@ -39,10 +39,10 @@ public class Servlet06 extends GenericServlet {
     try {
       DBConnectionPool conPool = new DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
       
-      LectureDao memberDao = new LectureDao(conPool);
+      LectureDao lectureDao = new LectureDao(conPool);
       
       int no = Integer.parseInt(req.getParameter("no"));
-      int count = memberDao.delete(no);
+      int count = lectureDao.delete(no);
       if (count < 1) {
         throw new Exception(no + "번 강의를 찾을 수 없습니다.");
       }

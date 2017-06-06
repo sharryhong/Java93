@@ -88,48 +88,60 @@ public class LectureDao {
   }
 //  
 ////아예 lecture lecture에 담아서 온다.
-//  public int insert(Lecture lecture) throws Exception { // 1) lecture lecture 인스턴스 주소를 받아서 
-//    Connection con = conPool.getConnection();
-//    try (
-//        PreparedStatement stmt = con.prepareStatement(
-//            "insert into memb(name,tel,email,pwd) values(?,?,?,password(?))");
-//      ) {
-//        stmt.setString(1, lecture.getTitle());
-//        stmt.setString(2, lecture.getDescription());
-//        stmt.setString(3, lecture.getStartDate());
-//        stmt.setString(4, lecture.getPassword());
-//        return stmt.executeUpdate(); // 4) insert실행  
-//      } finally {  
-//        conPool.returnConnection(con);
-//      }
-//  }
-//  
-//  public int delete(int no) throws Exception { // 1) 삭제할 데이터의 넘버를 받아서 
-//    Connection con = conPool.getConnection();
-//    try (
-//        PreparedStatement stmt = con.prepareStatement(
-//            "delete from memb where mno=?");) { // 2) sql문의 인파라미터에 넣고, delete를 실행한 후
-//        stmt.setInt(1, no); // 3) 그 번호에 해당하는 
-//        return stmt.executeUpdate(); // 4) delete된 갯수를 리턴한다
-//      } finally {  
-//        conPool.returnConnection(con);
-//      }
-//  }
-//  
-//  public int update(Lecture lecture) throws Exception {
-//    Connection con = conPool.getConnection();
-//    try (
-//        PreparedStatement stmt = con.prepareStatement(
-//            "update memb set name=?, tel=?, email=?, pwd=password(?) where mno=?");
-//      ) {
-//        stmt.setString(1, lecture.getName());
-//        stmt.setString(2, lecture.getTel());
-//        stmt.setString(3, lecture.getEmail());
-//        stmt.setString(4, lecture.getPassword());
-//        stmt.setInt(5, lecture.getNo());
-//        return stmt.executeUpdate();
-//      } finally {  
-//        conPool.returnConnection(con);
-//      }
-//  }
+  public int insert(Lecture lecture) throws Exception { // 1) lecture lecture 인스턴스 주소를 받아서 
+    Connection con = conPool.getConnection();
+    try (
+        PreparedStatement stmt = con.prepareStatement(
+            "insert into lect(titl,dscp,sdt,edt,qty,pric,thrs,crmno,mrno) "
+            + "values(?,?,?,?,?,?,?,?,?)");
+      ) {
+        stmt.setString(1, lecture.getTitle());
+        stmt.setString(2, lecture.getDescription());
+        stmt.setString(3, lecture.getStartDate());
+        stmt.setString(4, lecture.getEndDate());
+        stmt.setInt(5, lecture.getQuantity());
+        stmt.setInt(6, lecture.getPrice());
+        stmt.setInt(7, lecture.getThrs());
+        stmt.setInt(8, lecture.getCrmno());
+        stmt.setInt(9, lecture.getMrno());
+        return stmt.executeUpdate(); // 4) insert실행  
+      } finally {  
+        conPool.returnConnection(con);
+      }
+  }
+  
+  public int delete(int no) throws Exception { // 1) 삭제할 데이터의 넘버를 받아서 
+    Connection con = conPool.getConnection();
+    try (
+        PreparedStatement stmt = con.prepareStatement(
+            "delete from lect where lno=?");) { // 2) sql문의 인파라미터에 넣고, delete를 실행한 후
+        stmt.setInt(1, no); // 3) 그 번호에 해당하는 
+        return stmt.executeUpdate(); // 4) delete된 갯수를 리턴한다
+      } finally {  
+        conPool.returnConnection(con);
+      }
+  }
+  
+  public int update(Lecture lecture) throws Exception {
+    Connection con = conPool.getConnection();
+    try (
+        PreparedStatement stmt = con.prepareStatement(
+          "update lect set titl=?, dscp=?, sdt=?, edt=?, qty=?, pric=?, thrs=?, "
+          + "crmno=?, mrno=? where lno=?");
+      ) {
+        stmt.setString(1, lecture.getTitle());
+        stmt.setString(2, lecture.getDescription());
+        stmt.setString(3, lecture.getStartDate());
+        stmt.setString(4, lecture.getEndDate());
+        stmt.setInt(5, lecture.getQuantity());
+        stmt.setInt(6, lecture.getPrice());
+        stmt.setInt(7, lecture.getThrs());
+        stmt.setInt(8, lecture.getCrmno());
+        stmt.setInt(9, lecture.getMrno());
+        stmt.setInt(10, lecture.getNo());
+        return stmt.executeUpdate();
+      } finally {  
+        conPool.returnConnection(con);
+      }
+  }
 }

@@ -21,10 +21,15 @@ public class Servlet03 extends GenericServlet {
     req.setCharacterEncoding("UTF-8");
     
     Lecture m = new Lecture();
-    m.setName(req.getParameter("name"));
-    m.setTel(req.getParameter("tel"));
-    m.setEmail(req.getParameter("email"));
-    m.setPassword(req.getParameter("password"));
+    m.setTitle(req.getParameter("title"));
+    m.setDescription(req.getParameter("description"));
+    m.setStartDate(req.getParameter("startDate"));
+    m.setEndDate(req.getParameter("endDate"));
+    m.setQuantity(Integer.parseInt(req.getParameter("quantity")));
+    m.setPrice(Integer.parseInt(req.getParameter("price")));
+    m.setThrs(Integer.parseInt(req.getParameter("thrs")));
+    m.setCrmno(Integer.parseInt(req.getParameter("classroom")));
+    m.setMrno(Integer.parseInt(req.getParameter("manager")));
     
     res.setContentType("text/html;charset=UTF-8");
     PrintWriter out = res.getWriter();
@@ -49,9 +54,9 @@ public class Servlet03 extends GenericServlet {
       DBConnectionPool conPool = new DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
       
       // DAO에 DB커넥션 풀을 전달한다. 
-      LectureDao memberDao = new LectureDao(conPool);
+      LectureDao lectureDao = new LectureDao(conPool);
       
-      memberDao.insert(m);
+      lectureDao.insert(m);
       out.println("<p>등록 성공입니다.</p>");
       
     } catch (Exception e) {

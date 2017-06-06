@@ -13,12 +13,39 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import hs_croom.Classroom;
+
 public class ManagerDao {
   
   DBConnectionPool conPool;
   
   public ManagerDao(DBConnectionPool conPool) {
     this.conPool = conPool;
+  }
+  
+  public List<Manager> selectNameList() throws Exception { 
+    // 
+    Connection con = conPool.getConnection();
+    try ( 
+      PreparedStatement stmt = con.prepareStatement(
+        "select mr.mrno, m.name from mgr mr inner join memb m on mr.mrno=m.mno order by m.name asc");) {
+      
+      ArrayList<Manager> list = new ArrayList<>();
+      try (ResultSet rs = stmt.executeQuery();) {
+        Manager manager = null;
+        while (rs.next()) { 
+          manager = new Manager();
+          manager.setNo(rs.getInt("mrno"));
+          manager.setName(rs.getString("name"));
+          
+          list.add(manager);
+        }
+        return list;
+      }
+      
+    } finally { 
+      conPool.returnConnection(con);
+    }
   }
 
   public List<Manager> selectList(int pageNo, int pageSize) throws Exception { 
