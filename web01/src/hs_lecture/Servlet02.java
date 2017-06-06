@@ -57,7 +57,7 @@ public class Servlet02 extends GenericServlet {
       
       List<Lecture> list = lectureDao.selectList(pageNo, pageSize);
       
-      out.println("<a href='form.html'>새강의</a><br>");
+      out.println("<a href='Servlet03'>새강의</a><br>");
       
       out.println("<table border='1'>");
       out.println("<thead>");

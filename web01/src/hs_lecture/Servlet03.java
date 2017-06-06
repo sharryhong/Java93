@@ -12,6 +12,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
+import hs_croom.Classroom;
+import hs_manager.Manager;
+
 @WebServlet(urlPatterns="/hs_lecture/Servlet03")
 public class Servlet03 extends GenericServlet {
   private static final long serialVersionUID = 1L;
@@ -19,17 +22,6 @@ public class Servlet03 extends GenericServlet {
   @Override
   public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException { 
     req.setCharacterEncoding("UTF-8");
-    
-    Lecture m = new Lecture();
-    m.setTitle(req.getParameter("title"));
-    m.setDescription(req.getParameter("description"));
-    m.setStartDate(req.getParameter("startDate"));
-    m.setEndDate(req.getParameter("endDate"));
-    m.setQuantity(Integer.parseInt(req.getParameter("quantity")));
-    m.setPrice(Integer.parseInt(req.getParameter("price")));
-    m.setThrs(Integer.parseInt(req.getParameter("thrs")));
-    m.setCrmno(Integer.parseInt(req.getParameter("classroom")));
-    m.setMrno(Integer.parseInt(req.getParameter("manager")));
     
     res.setContentType("text/html;charset=UTF-8");
     PrintWriter out = res.getWriter();
@@ -56,14 +48,45 @@ public class Servlet03 extends GenericServlet {
       // DAO에 DB커넥션 풀을 전달한다. 
       LectureDao lectureDao = new LectureDao(conPool);
       
-      lectureDao.insert(m);
-      out.println("<p>등록 성공입니다.</p>");
+      hs_croom.DBConnectionPool conPool2 = new hs_croom.DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
+      hs_croom.ClassroomDao classroomDao = new hs_croom.ClassroomDao(conPool2);
+      List<Classroom> crooms = classroomDao.selectNameList();
+      
+      hs_manager.DBConnectionPool conPool3 = new hs_manager.DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
+      hs_manager.ManagerDao managerDao = new hs_manager.ManagerDao(conPool3);
+      List<Manager> mgrs = managerDao.selectNameList();
+      
+      out.println("<form action='Servlet07' method='post'>");
+      out.printf("강의명: <input type='text' name='title'><br>\n");
+      out.printf("강의설명: <input type='text' name='description'><br>\n");
+      out.printf("시작일: <input type='date' name='startDate'><br>\n");
+      out.printf("종료일: <input type='date' name='endDate'><br>\n");
+      out.printf("수강인원: <input type='text' name='quantity'><br>\n");
+      out.printf("수강료: <input type='text' name='price'><br>\n");
+      out.printf("총시간: <input type='text' name='thrs'><br>\n");
+      out.println("강의실: <select id='fi-classroom' name='classroom'>");
+
+      out.println("<option value='0'>강의실을 선택하세요!</option>");
+      for (Classroom croom : crooms) {
+        out.printf("<option value='%d'>%s</option>", croom.getNo(), croom.getName());
+      }
+//      out.printf("<option value='%d'>%s</option>", lecture.getCrmno(), crooms.get(lecture.getCrmno()).getName());
+      out.println("</select><br>");
+      
+      out.println("매니저: <select id='fi-manager' name='manager'>");
+      out.println("<option value='0'>매니저를 선택하세요!</option>");
+      for (Manager mgr : mgrs) {
+        out.printf("<option value='%d'>%s</option>", mgr.getNo(), mgr.getName());
+      }
+      out.println("</select><br>");
+      out.println("<button>등록</button>");
       
     } catch (Exception e) {
       out.println("오류 발생!");
       out.println("<pre>");
       e.printStackTrace(out);
       out.println("</pre>");
+      out.println("<a href='Servlet02'>목록</a>");
     }
     
     out.println("<a href='Servlet02'>목록</a>");
