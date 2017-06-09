@@ -2,6 +2,27 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>web01</display-name>
   
+  <!-- 리스너 등록 -->
+  <!--
+  <listener>
+    <listener-class>step09.Listener01</listener-class>
+  </listener>
+  -->
+  
+  <!-- 필터 등록 -->
+  <!-- 1) 필터 클래스 등록 -->
+  <!--
+  <filter>
+    <filter-name>step10.Filter01</filter-name>
+    <filter-class>step10.Filter01</filter-class>
+  </filter> -->
+  <!-- 2) 필터 클래스에 URL 적용 -->
+  <!--
+  <filter-mapping>
+    <filter-name>step10.Filter01</filter-name>
+    <url-pattern>/step10/*</url-pattern>
+  </filter-mapping> -->
+  
   <!-- 서블릿 클래스 등록 -->
   <servlet>
     <servlet-name>HelloServlet</servlet-name> <!-- 서블릿 클래스의 별명 지정. 클래스이름으로 하면 편리하다. -->
@@ -14,7 +35,15 @@
     <servlet-class>servlets.step01.Servlet01</servlet-class>
   </servlet>
    -->
-  
+   
+   <!-- 
+   <servlet>
+    <servlet-name>step08.Servlet02</servlet-name>
+    <servlet-class>step08.Servlet02</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+   -->
+
   <!-- 서블릿에 URL을 연결(매핑)한다 -->
   <servlet-mapping>
     <servlet-name>HelloServlet</servlet-name> <!-- 서블릿 클래스의 별명 -->
@@ -31,4 +60,5 @@
     <url-pattern>/step01/Servlet01</url-pattern>
   </servlet-mapping> 
   -->
+
 </web-app>

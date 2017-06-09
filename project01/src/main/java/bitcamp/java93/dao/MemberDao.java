@@ -79,6 +79,32 @@ public class MemberDao {
     }
   }
   
+  public Member selectOneByEmailPassword(String email, String password) throws Exception { 
+    Connection con = conPool.getConnection();
+    try (  // try()괄호 안에는 객체를 준비하는 코드만 들어갈 수 있다.
+      PreparedStatement stmt = con.prepareStatement(
+        "select mno, name, tel, email from memb where email=? and pwd=password(?)");) {
+      
+      stmt.setString(1, email);
+      stmt.setString(2, password);
+      
+      try (ResultSet rs = stmt.executeQuery();) { 
+        if (!rs.next()) {
+          return null;
+        }
+        Member member = new Member(); 
+        member.setNo(rs.getInt("mno")); 
+        member.setName(rs.getString("name"));
+        member.setTel(rs.getString("tel"));
+        member.setEmail(rs.getString("email"));
+        return member;
+      }
+      
+    } finally { // 다 쓴 커넥션 반납위해 필요하다. finally는 try블록을 벗어나기 전에 반드시 실행되므로.. try문에서 return문장 실행전에 실행된다. 
+      conPool.returnConnection(con);
+    }
+  }
+  
 //아예 Member member에 담아서 온다.
   public int insert(Member member) throws Exception { // 1) Member member 인스턴스 주소를 받아서 
     Connection con = conPool.getConnection();

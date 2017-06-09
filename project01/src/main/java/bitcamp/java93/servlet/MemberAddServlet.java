@@ -20,8 +20,7 @@ public class MemberAddServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException { 
-    req.setCharacterEncoding("UTF-8");
+  public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException { 
     
     Member m = new Member();
     m.setName(req.getParameter("name"));

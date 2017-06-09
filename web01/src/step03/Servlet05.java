@@ -37,7 +37,7 @@ public class Servlet05 extends GenericServlet {
     out.println("<title>회원관리</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>회원 등록</h1>");
+    out.println("<h1>회원 변경</h1>");
     
     
     String jdbcDriver = "com.mysql.jdbc.Driver";

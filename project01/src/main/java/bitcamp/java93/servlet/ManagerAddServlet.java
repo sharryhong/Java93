@@ -21,7 +21,6 @@ public class ManagerAddServlet extends HttpServlet {
 
   @Override
   public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException { 
-    req.setCharacterEncoding("UTF-8");
     
     Manager mr = new Manager();
     mr.setName(req.getParameter("name"));

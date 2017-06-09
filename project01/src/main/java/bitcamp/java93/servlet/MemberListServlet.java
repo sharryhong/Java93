@@ -23,7 +23,8 @@ public class MemberListServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException { 
+  public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException { 
+    
     // 페이지 번호, 페이지당 출력 개수
     int pageNo = 1;
     int pageSize = 5;
@@ -50,6 +51,9 @@ public class MemberListServlet extends HttpServlet {
     
     out.println("</head>");
     out.println("<body>");
+    
+    Member loginMember = (Member)this.getServletContext().getAttribute("id_" + req.getParameter("sessionId"));
+    out.printf("<p>%s(%s)</p>\n", loginMember.getName(), loginMember.getEmail()); // 로그인 정보 출력
     out.println("<h1>회원 목록</h1>");
     
     try {
