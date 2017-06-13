@@ -1,7 +1,4 @@
 package bitcamp.java93.servlet;
-/* ServletContext 보관소에 저장된 MemberDao 이용하기 
- */
-
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,11 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bitcamp.java93.dao.MemberDao;
-import bitcamp.java93.domain.Member;
+import bitcamp.java93.domain.Teacher;
+import bitcamp.java93.service.TeacherService;
 
-@WebServlet(urlPatterns="/member/detail")
-public class MemberDetailServlet extends HttpServlet {
+@WebServlet(urlPatterns="/teacher/detail")
+public class TeacherDetailServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -29,7 +26,7 @@ public class MemberDetailServlet extends HttpServlet {
     out.println("<html>");
     out.println("<head>");
     out.println("  <meta charset='UTF-8'>");
-    out.println("  <title>회원관리</title>");
+    out.println("  <title>강사관리</title>");
     
     // including 기법을 사용하여 각 페이지에 기본 CSS 스타일 코드를 출력한다.
     RequestDispatcher rd = req.getRequestDispatcher("/style/core");
@@ -41,22 +38,25 @@ public class MemberDetailServlet extends HttpServlet {
     rd = req.getRequestDispatcher("/header");
     rd.include(req, res);
     
-    out.println("<h1>회원 조회</h1>");
+    out.println("<h1>강사 조회</h1>");
     
     try {
-      MemberDao memberDao = (MemberDao)this.getServletContext().getAttribute("memberDao");      
       int no = Integer.parseInt(req.getParameter("no"));
+      TeacherService teacherService = (TeacherService)this.getServletContext().getAttribute("teacherService");      
       
-      Member member = memberDao.selectOne(no);
-      if (member == null) {
-        throw new Exception(no + "번 회원이 없습니다.");
+      Teacher teacher = teacherService.get(no);
+      if (teacher == null) {
+        throw new Exception(no + "번 강사가 없습니다.");
       }
       
       out.printf("<form action='update' method='POST'>\n");
-      out.printf("번호:<input type='text' name='no' value='%d' readonly><br>\n", member.getNo());
-      out.printf("이름:<input type='text' name='name' value='%s'><br>\n", member.getName());
-      out.printf("전화:<input type='text' name='tel' value='%s'><br>\n", member.getTel());
-      out.printf("이메일:<input type='text' name='email' value='%s'><br>\n", member.getEmail());
+      out.printf("번호:<input type='text' name='no' value='%d' readonly><br>\n", teacher.getNo());
+      out.printf("이름:<input type='text' name='name' value='%s'><br>\n", teacher.getName());
+      out.printf("전화:<input type='text' name='tel' value='%s'><br>\n", teacher.getTel());
+      out.printf("이메일:<input type='text' name='email' value='%s'><br>\n", teacher.getEmail());
+      out.printf("홈페이지:<input type='text' name='homepage' value='%s'><br>\n", teacher.getHomepage());
+      out.printf("페이스북:<input type='text' name='facebook' value='%s'><br>\n", teacher.getFacebook());
+      out.printf("트위터:<input type='text' name='twitter' value='%s'><br>\n", teacher.getTwitter());
       out.println("암호:<input type='password' name='password'><br>");
       out.println("<button>변경</button>");
       out.println("<button type='button' onclick='doDelete()'>삭제</button>");

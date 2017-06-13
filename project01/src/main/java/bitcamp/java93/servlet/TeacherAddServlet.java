@@ -1,7 +1,4 @@
 package bitcamp.java93.servlet;
-/* ServletContext 보관소에 저장된 MemberDao 이용하기 
- */
-
 
 import java.io.IOException;
 
@@ -13,23 +10,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java93.dao.MemberDao;
-import bitcamp.java93.domain.Member;
+import bitcamp.java93.dao.TeacherDao;
+import bitcamp.java93.domain.Teacher;
+import bitcamp.java93.service.TeacherService;
 
-@WebServlet(urlPatterns="/member/add")
-public class MemberAddServlet extends HttpServlet {
+@WebServlet(urlPatterns="/teacher/add")
+public class TeacherAddServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-    Member m = new Member();
-    m.setName(req.getParameter("name"));
-    m.setTel(req.getParameter("tel"));
-    m.setEmail(req.getParameter("email"));
-    m.setPassword(req.getParameter("password"));
+    Teacher t = new Teacher();
+    t.setName(req.getParameter("name"));
+    t.setTel(req.getParameter("tel"));
+    t.setEmail(req.getParameter("email"));
+    t.setPassword(req.getParameter("password"));
+    t.setHomepage(req.getParameter("homepage"));
+    t.setFacebook(req.getParameter("facebook"));
+    t.setTwitter(req.getParameter("twitter"));
     
     try {
-      MemberDao memberDao = (MemberDao)this.getServletContext().getAttribute("memberDao");
-      memberDao.insert(m);
+      TeacherService teacherService = (TeacherService)this.getServletContext().getAttribute("teacherService");
+      teacherService.add(t);
 
       res.sendRedirect("list");
       

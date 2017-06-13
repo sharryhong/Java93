@@ -5,10 +5,9 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import bitcamp.java93.dao.ClassroomDao;
-import bitcamp.java93.dao.LectureDao;
-import bitcamp.java93.dao.ManagerDao;
 import bitcamp.java93.dao.MemberDao;
+import bitcamp.java93.dao.TeacherDao;
+import bitcamp.java93.service.TeacherService;
 import bitcamp.java93.utill.DBConnectionPool;
 
 @WebListener
@@ -27,16 +26,21 @@ public class ContextLoaderListener implements ServletContextListener {
       // DBConnectionPool의 객체주소를 memberDao가 가지고 있으므로 메서드 호출이 끝나더라도 누군가 주소를 가지고 있으면 heap에 유지되어있다.
       // 현재는 memberDao를 ServletContext에 보관해놓았다. 
       MemberDao memberDao = new MemberDao(conPool);
-      ClassroomDao classroomDao = new ClassroomDao(conPool);
-      LectureDao lectureDao = new LectureDao(conPool);
-      ManagerDao managerDao = new ManagerDao(conPool);
+//      ClassroomDao classroomDao = new ClassroomDao(conPool);
+//      LectureDao lectureDao = new LectureDao(conPool);
+//      ManagerDao managerDao = new ManagerDao(conPool);
+      TeacherDao teacherDao = new TeacherDao(conPool);
+      
+      TeacherService teacherService = new TeacherService();
+      teacherService.setMemberDao(memberDao);
+      teacherService.setTeacherDao(teacherDao);
       
       // 모든 서블릿이 사용할 수 있도록 memberDao 객체를 ServletContext에 보관한다.
       ServletContext sc = sce.getServletContext();
-      sc.setAttribute("memberDao", memberDao);
-      sc.setAttribute("classroomDao", classroomDao);
-      sc.setAttribute("lectureDao", lectureDao);
-      sc.setAttribute("managerDao", managerDao);
+//      sc.setAttribute("classroomDao", classroomDao);
+//      sc.setAttribute("lectureDao", lectureDao);
+//      sc.setAttribute("managerDao", managerDao);
+      sc.setAttribute("teacherService", teacherService);
       
     } catch (Exception e) {
       e.printStackTrace();

@@ -9,6 +9,7 @@ package bitcamp.java93.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,13 +111,22 @@ public class MemberDao {
     Connection con = conPool.getConnection();
     try (
         PreparedStatement stmt = con.prepareStatement(
-            "insert into memb(name,tel,email,pwd) values(?,?,?,password(?))"); // 3) 인파라미터에 채워놓고
+            "insert into memb(name,tel,email,pwd) values(?,?,?,password(?))",
+            Statement.RETURN_GENERATED_KEYS);
       ) {
         stmt.setString(1, member.getName()); // 2) 그 주소의 인스턴스 해당 값을 꺼내서
         stmt.setString(2, member.getTel());
         stmt.setString(3, member.getEmail());
         stmt.setString(4, member.getPassword());
-        return stmt.executeUpdate(); // 4) insert실행  
+        int count = stmt.executeUpdate(); 
+        
+        // 자동 생성된 PK값 꺼내기
+        try (ResultSet rs = stmt.getGeneratedKeys();) {
+          rs.next();
+          member.setNo(rs.getInt(1)); // 꺼낸걸 리턴하는게 아니라, 주소에 담는다. 
+        }
+        return count;
+        
       } finally {  
         conPool.returnConnection(con);
       }

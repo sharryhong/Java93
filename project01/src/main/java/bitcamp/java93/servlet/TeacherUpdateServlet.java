@@ -1,6 +1,4 @@
 package bitcamp.java93.servlet;
-/* ServletContext 보관소에 저장된 MemberDao 이용하기 
- */
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,20 +11,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java93.dao.MemberDao;
-import bitcamp.java93.domain.Member;
+import bitcamp.java93.dao.TeacherDao;
+import bitcamp.java93.domain.Teacher;
+import bitcamp.java93.service.TeacherService;
 
-@WebServlet(urlPatterns="/member/update") 
-public class MemberUpdateServlet  extends HttpServlet {
+@WebServlet(urlPatterns="/teacher/update") 
+public class TeacherUpdateServlet  extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-    Member m = new Member();
-    m.setNo(Integer.parseInt(req.getParameter("no")));
-    m.setName(req.getParameter("name"));
-    m.setTel(req.getParameter("tel"));
-    m.setEmail(req.getParameter("email"));
-    m.setPassword(req.getParameter("password"));
+    Teacher t = new Teacher();
+    t.setNo(Integer.parseInt(req.getParameter("no")));
+    t.setName(req.getParameter("name"));
+    t.setTel(req.getParameter("tel"));
+    t.setEmail(req.getParameter("email"));
+    t.setPassword(req.getParameter("password"));
+    t.setHomepage(req.getParameter("homepage"));
+    t.setFacebook(req.getParameter("facebook"));
+    t.setTwitter(req.getParameter("twitter"));
     
     res.setContentType("text/html;charset=UTF-8");
     PrintWriter out = res.getWriter();
@@ -35,7 +38,7 @@ public class MemberUpdateServlet  extends HttpServlet {
     out.println("<html>");
     out.println("<head>");
     out.println("  <meta charset='UTF-8'>");
-    out.println("  <title>회원관리</title>");
+    out.println("  <title>강사관리</title>");
     
     // including 기법을 사용하여 각 페이지에 기본 CSS 스타일 코드를 출력한다.
     RequestDispatcher rd = req.getRequestDispatcher("/style/core");
@@ -43,14 +46,12 @@ public class MemberUpdateServlet  extends HttpServlet {
         
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>회원 변경</h1>");
+    out.println("<h1>강사 변경</h1>");
     
     try {
-      MemberDao memberDao = (MemberDao)this.getServletContext().getAttribute("memberDao");
-      int count = memberDao.update(m);
-      if (count < 1) {
-        throw new Exception(m.getNo() + "번 회원을 찾을 수 없습니다.");
-      }
+      TeacherService teacherService = (TeacherService)this.getServletContext().getAttribute("teacherService");
+      teacherService.update(t);
+      
       out.println("<p>변경 성공입니다.</p>");
       
       // 버퍼의 내용물이 클라이언트에게 전달되기 전이라면
