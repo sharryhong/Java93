@@ -111,10 +111,9 @@ router.get('/form.do', function(request, response) {
   classroomService.listName(function(classrooms) {
     managerService.listName(function(managers) {
       response.render('lecture/view', {
-        'classrooms': classrooms,
-        'managers': managers
+        classrooms: classrooms,
+        managers: managers
       })
-
     }, function(error) {
       response.render('error', {
         'message': '매니저 데이터를 가져오는 중 오류가 발생했습니다.'})

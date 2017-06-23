@@ -14,7 +14,7 @@ public class DBConnectionPool {
   ArrayList<Connection> conList = new ArrayList<>();
   
   public DBConnectionPool(String driver, String url, String username, String password) throws Exception {
-    Class.forName(driver);
+    Class.forName(driver); // 해당 driver를 못찾았을 때 예외처리
     this.url = url;
     this.username = username;
     this.password = password;

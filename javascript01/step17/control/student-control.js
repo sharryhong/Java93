@@ -13,6 +13,7 @@ studentService.setMemberDao(memberDao)
 
 const router = express.Router()
 
+// (request, response)는 express용이므로 오리지널과 다르다. document참고
 router.get('/list.json', (request, response) => {
   var pageNo = 1,
       pageSize = 3;
@@ -26,7 +27,7 @@ router.get('/list.json', (request, response) => {
     response.json({'list': results, 'totalCount': totalCount})
   }, function(error) {
     response.status(200)
-            .set('Content-Type', 'text/plain;charset=UTF-8')
+            .set('Content-Type', 'text/plain;charset-UTF-8')
             .end('error')
     console.log(error)
   })
@@ -36,10 +37,9 @@ router.get('/detail.json', function(request, response) {
   var no = parseInt(request.query.no)
   studentService.detail(no, function(result) {
     response.json(result)
-
   }, function(error) {
     response.status(200)
-            .set('Content-Type', 'text/plain;charset=UTF-8')
+            .set('Content-Type', 'text/plain;charset-UTF-8')
             .end('error')
     console.log(error)
   })
@@ -56,10 +56,9 @@ router.post('/update.json', function(request, response) {
     password: '1111'
   }, function(result) {
     response.json({'result': 'yes'})
-
   }, function(error) {
     response.status(200)
-            .set('Content-Type', 'text/plain;charset=UTF-8')
+            .set('Content-Type', 'text/plain;charset-UTF-8')
             .end('error')
     console.log(error)
   })
@@ -69,10 +68,9 @@ router.get('/delete.json', function(request, response) {
   var no = parseInt(request.query.no)
   studentService.delete(no, function(result) {
     response.json({'result': 'yes'})
-
   }, function(error) {
     response.status(200)
-            .set('Content-Type', 'text/plain;charset=UTF-8')
+            .set('Content-Type', 'text/plain;charset-UTF-8')
             .end('error')
     console.log(error)
   })
@@ -91,14 +89,10 @@ router.post('/add.json', function(request, response) {
 
   }, function(error) {
     response.status(200)
-            .set('Content-Type', 'text/plain;charset=UTF-8')
+            .set('Content-Type', 'text/plain;charset-UTF-8')
             .end('error')
     console.log(error)
   })
 })
-
-
-
-
 
 module.exports = router

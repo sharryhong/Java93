@@ -16,9 +16,9 @@ public class Test07_hs {
     String nickname;
   }
   
-  class messenger implements Runnable {
+  class CalculatorJob implements Runnable {
     Socket socket;
-    public messenger(Socket socket) {
+    public CalculatorJob(Socket socket) {
       this.socket = socket;
       System.out.println("클라이언트와 연결되었음!");
     }
@@ -41,15 +41,15 @@ public class Test07_hs {
           Value value = gson.fromJson(json, Value.class); // json으로부터 받아 Value class 자바 객체로 만든다.
                       // .class : class변수이다. class정보가 담겨있다.나중에 Reflection배울때 자세히 배움
 
-//          System.out.println(value.toString());
+          System.out.println(value.toString());
           String result = "";
           if (count == 0) { // 처음 접속 시
             result = value.nickname + "님이 입장하였습니다.";
             count++;
           } else {
-            result = "[" + value.nickname + "] " + value.msgBox;
+            result = "[" + value.nickname + "]" + value.msgBox;
           }
-          out.println(result);
+          out.print(result);
           out.flush(); // 캐쉬에 있는 것 방출
         }
         System.out.println("=> 클라이언트와 연결 끊김");
@@ -63,8 +63,8 @@ public class Test07_hs {
     System.out.println("서버 실행 중...");
     
     while (true) {
-//      messenger job = new messenger(serverSocket.accept()); // 한번 사용하기 때문에 임시변수 사용하지 않아도된다. 아래처럼
-      new Thread(new messenger(serverSocket.accept())).start(); // Runnable 규칙에 따라 만든 것이 들어온다. 
+//      CalculatorJob job = new CalculatorJob(serverSocket.accept()); // 한번 사용하기 때문에 임시변수 사용하지 않아도된다. 아래처럼
+      new Thread(new CalculatorJob(serverSocket.accept())).start(); // Runnable 규칙에 따라 만든 것이 들어온다. 
     }
   }
   

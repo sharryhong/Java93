@@ -1,56 +1,41 @@
 package bitcamp.java93.listener;
 
+import java.util.HashMap;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import bitcamp.java93.dao.MemberDao;
-import bitcamp.java93.dao.TeacherDao;
-import bitcamp.java93.service.TeacherService;
-import bitcamp.java93.utill.DBConnectionPool;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @WebListener
 public class ContextLoaderListener implements ServletContextListener {
+  // 객체를 담을 바구니 준비. 인스턴스 필드 
+  HashMap<String, Object> objMap = new HashMap<>();
 
   @Override
   public void contextInitialized(ServletContextEvent sce) {
-    // 웹 애플리케이션이 시작될 때 DAO를 생성하여 ServletContext 보관소에 저장한다. 
-    String jdbcDriver = "com.mysql.jdbc.Driver";
-    String jdbcUrl = "jdbc:mysql://localhost:3306/webappdb";
-    String jdbcUsername = "webapp";
-    String jdbcPassword = "1111";
-
     try {
-      DBConnectionPool conPool = new DBConnectionPool(jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
-      // DBConnectionPool의 객체주소를 memberDao가 가지고 있으므로 메서드 호출이 끝나더라도 누군가 주소를 가지고 있으면 heap에 유지되어있다.
-      // 현재는 memberDao를 ServletContext에 보관해놓았다. 
-      MemberDao memberDao = new MemberDao(conPool);
-//      ClassroomDao classroomDao = new ClassroomDao(conPool);
-//      LectureDao lectureDao = new LectureDao(conPool);
-//      ManagerDao managerDao = new ManagerDao(conPool);
-      TeacherDao teacherDao = new TeacherDao(conPool);
-      
-      TeacherService teacherService = new TeacherService();
-      teacherService.setMemberDao(memberDao);
-      teacherService.setTeacherDao(teacherDao);
-      
-      // 모든 서블릿이 사용할 수 있도록 memberDao 객체를 ServletContext에 보관한다.
       ServletContext sc = sce.getServletContext();
-//      sc.setAttribute("classroomDao", classroomDao);
-//      sc.setAttribute("lectureDao", lectureDao);
-//      sc.setAttribute("managerDao", managerDao);
-      sc.setAttribute("teacherService", teacherService);
+      // 1) Spring IoC 컨테이너 객체 생성
+      // 경로가 배포폴더여야한다. 
+      // => Spring IoC 컨테이너는 지정한 경로의 파일을 읽어서 객체를 준비한다.
+      ApplicationContext appCtx = new ClassPathXmlApplicationContext(
+          "bitcamp/java93/application-context.xml");
+      
+      // 2) 프론트 컨트롤러에서 Spring IoC 컨테이너를 사용할 수 있도록 
+      // ServletContext보관소에 저장한다. 
+      sc.setAttribute("beanContainer", appCtx);
       
     } catch (Exception e) {
       e.printStackTrace();
     }
-  
   }
-
+  
   @Override
   public void contextDestroyed(ServletContextEvent sce) {
-    
   }
-  
+
 }

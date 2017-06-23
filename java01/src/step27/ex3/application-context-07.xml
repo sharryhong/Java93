@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+   <!-- java.sql.Date.valueof("2017-06-21") 호출하기 
+    -->
+   <!-- <bean id="d1"  class="java.sql.Date"  factory-method="valueOf">
+      <constructor-arg value="2017-06-21"/>
+   </bean> -->
+
+   <bean id="t1" class="step27.ex3.Tire">
+      <property name="maker" value="비트타이어"/>
+      <property name="inch"  value="14"/>
+      <property name="createdDate">
+        <bean class="java.sql.Date" factory-method="valueOf">
+          <constructor-arg value="2017-06-21"/>
+        </bean>
+      </property>
+   </bean>
+   
+</beans>

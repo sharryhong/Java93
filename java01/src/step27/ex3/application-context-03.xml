@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+  
+  <!-- static factory method 호출하여 객체 생성하기 -->
+  <bean id="c1" class="step27.ex3.CarFactory" factory-method="createCar">
+    <constructor-arg value="tico"/>
+  </bean>
+  
+  <bean id="c2" class="step27.ex3.CarFactory" factory-method="createCar">
+    <constructor-arg value="tico"/>
+  </bean>
+  
+  <bean id="c3" class="step27.ex3.CarFactory" factory-method="createCar">
+    <constructor-arg value="sonata"/>
+  </bean>
+
+</beans>

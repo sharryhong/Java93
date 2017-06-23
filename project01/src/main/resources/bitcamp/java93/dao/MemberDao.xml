@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mybatis에서 dao구현체를 자동으로 만들때는, sql맵퍼타입의 namespace값이 dao인터페이스와 같아야한다. -->
+<mapper namespace="bitcamp.java93.dao.MemberDao">
+
+   <resultMap type="member" id="memberMap">
+         <id column="mno" property="no"/> <!-- mno가 Pk이다는 것을 명시 -->
+         <!-- mno값은 no값에 들어간다. -->
+         <result column="email" property="email"/>
+         <result column="name" property="name"/>
+         <result column="tel" property="tel"/>
+         <result column="pwd" property="pwd"/>
+   </resultMap>
+   
+   <!-- 반복적으로 사용하는 sql코드는 별도의 태그에 분리해두고 재사용할 수 있다. -->
+   <sql id="select1">
+     select mno, name, tel, email
+      from memb
+   </sql>
+   
+   <!--  -->
+   <select id="selectList"  resultMap="memberMap" parameterType="map">
+      <!-- map 객체가 넘어온다는 의미 -->
+      <include refid="select1"/>
+      <if test="search != null">   <!-- parameterType="map" 객체에 search가 있다면 -->
+	      <where>
+	        <choose>
+	          <when test="search == 'email'">email = #{value}</when>
+	          <when test="search == 'name'">name like concat('%', #{value}, '%')</when>
+	          <when test="search == 'tel'">tel like concat('%', #{value}, '%')</when>
+	        </choose>
+	      </where>
+      </if>
+      order by name asc
+      limit #{startIndex}, #{pageSize}
+   </select>
+   
+   <select id="selectListByNames"  resultMap="memberMap" parameterType="map">
+      <include refid="select1"/>
+      <if test="names != null">
+        <where>
+          name in 
+          <foreach collection="names" item="name" open="(" close=")" separator=",">
+            #{name}
+          </foreach>
+        </where>
+      </if>
+      order by name asc
+      limit #{startIndex}, #{pageSize}
+   </select>
+   
+   <select id="selectListByEmail"  resultMap="memberMap"    parameterType="map">
+      <include refid="select1"/>
+      where email=#{email}
+      order by name asc
+      limit #{startIndex}, #{pageSize}
+   </select>
+   
+   <select id="selectListByName"  resultMap="memberMap"    parameterType="map">
+      <include refid="select1"/>
+      where name like concat('%', #{name}, '%')
+      order by name asc
+      limit #{startIndex}, #{pageSize}
+   </select>
+   
+   <select id="selectListByTel"  resultMap="memberMap"    parameterType="map">
+      <include refid="select1"/>
+      where tel like concat('%', #{tel}, '%')
+      order by name asc
+      limit #{startIndex}, #{pageSize}
+   </select>
+
+   <select id="selectOne"  resultMap="memberMap" parameterType="int">
+      <include refid="select1"/>
+      where mno=#{memberNo}
+   </select>
+
+   <select id="selectOneByEmailPassword"  resultMap="memberMap"  parameterType="map">
+      <include refid="select1"/>
+      where email=#{email} and pwd=password(#{password})
+   </select>
+
+   <insert id="insert" parameterType="member"
+           useGeneratedKeys="true" keyColumn="mno" keyProperty="no">
+      insert into memb(name,tel,email,pwd)
+      values(#{name},#{tel},#{email},password(#{password}))
+   </insert>
+
+   <update id="update"  parameterType="member">
+      update memb set
+      name=#{name},
+      tel= #{tel},
+      email= #{email},
+      pwd=password(#{password})
+      where mno=#{no}
+   </update>
+
+   <delete id="delete"  parameterType="int">
+      delete from memb 
+      where mno=#{memberNo} <!-- 이름 아무거나 -->
+   </delete>
+
+</mapper>

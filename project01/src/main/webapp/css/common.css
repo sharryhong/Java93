@@ -1,5 +1,4 @@
 @CHARSET "UTF-8";
-
 address {
   display: inline-block;
 }
@@ -13,9 +12,11 @@ address {
 .header {
   color: white;
   background-color: navy;
-  height: 25px;
-  line-height: 25px;
+  height: 20px;
   padding: 5px 10px;
+}
+.photo1 {
+  height: 100px;
 }
 #logo {
   float: left;
@@ -28,5 +29,10 @@ address {
 	text-decoration: none;
 }
 .header a:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
+
+
+
+
+

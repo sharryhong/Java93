@@ -1,6 +1,6 @@
 package bitcamp.java93.filter;
 
-/* 역할: 로그인 여부를 검사하는 필터 */
+/* 역할: HttpSession 객체에 로그인 회원 정보가 있는 검사한다. */
 
 import java.io.IOException;
 
@@ -29,9 +29,8 @@ public class AuthCheckFilter implements Filter {
     HttpServletResponse httpResponse = (HttpServletResponse) response;
     
     Member loginMember = (Member)httpRequest.getSession().getAttribute("loginMember");
-    
-    if (loginMember == null) { // 쿠키에 sessionId가 없다면 로그인 화면으로 보낸다.
-      httpResponse.sendRedirect("../auth/login");
+    if (loginMember == null) { // 쿠키에 세션ID가 없다면 로그인 화면으로 보낸다.
+      httpResponse.sendRedirect("../auth/login.do");
       return;
     }
     

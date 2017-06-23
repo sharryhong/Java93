@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <environments default="development">
+    <environment id="development">  <!-- DBMS 접속 정보. 여러개로 관리할 수 있다. -->
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/webappdb"/>
+        <property name="username" value="webapp"/>
+        <property name="password" value="1111"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers> <!-- SQL문이 들어있는 XML파일의 경로 -->
+    <mapper resource="step28/ex2/MemberDao.xml"/>
+  </mappers>
+</configuration>

@@ -32,6 +32,59 @@ select la.lano,
 from lect_appy la
   inner join lect l on la.lno = l.lno;
 
+/* 2) from 절에 서브쿼리 사용하기 */
+--
+select mr.mrno, m.name
+from mgr mr inner join memb m on mr.mrno = m.mno;
+
+--
+select lno, titl, mrno
+from lect;
+
+-- 강의번호와 강의명, 매니저이름 데이터 뽑기
+-- 방법 1_ 일반 조인으로 해결하기
+select l.lno, l.titl, m.name
+from lect l
+  left outer join memb m on l.mrno = m.mno;
+
+-- 방법 2_ 서브 쿼리를 사용하여 조인하기
+-- memb테이블 이름 자리에 매니저이름 뽑는 쿼리를 넣는다.
+select l.lno, l.titl, t1.name
+from lect l
+  left outer join (
+    select mr.mrno, m.name
+    from mgr mr inner join memb m on mr.mrno = m.mno) t1
+    on l.mrno = t1.mrno;
+-- 매니저 1이 담당하는 강의만 뽑고 싶다면
+select l.lno, l.titl, t1.name
+from lect l
+  inner join (
+    select mr.mrno, m.name
+    from mgr mr inner join memb m on mr.mrno = m.mno
+    where m.name = '매니저1') t1
+    on l.mrno = t1.mrno;
+
+/*  3) where 절에 서브쿼리 사용하기
+ 강남 강의실이 배정된 강의번호와 강의명, 강의실명을 출력하라.
+ 출력데이터 : 강의번호, 강의명 */
+
+-- 일단 강의 정보 추출
+select lno, titl, crmno
+from lect;
+-- 강남 강의실 정보 추출
+select crmno, name
+from croom
+where name like '강남%';
+-- 위 두개 결합하기
+-- where절에 서브쿼리를 넣어 강남강의실이 배정된 강의정보 추출
+select lno, titl, crmno
+from lect l
+where l.crmno in (select crmno from croom where name like '강남%');
+
+
+
+
+
 
 
 

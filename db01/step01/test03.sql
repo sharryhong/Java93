@@ -12,7 +12,7 @@ select lno, crmno as classRommNo, mrno managerNo, titl as 'class name'
 from lect;
 
 /* 그럼 주로 언제쓰나??
---
+count(*) : lect 테이블의 row개수를 알려준다. 이걸 cnt라고 별명을 주어 사용한다.
 */
 select count(*) as cnt from lect;
 -- concat은 mysql에서 제공하는 함수
